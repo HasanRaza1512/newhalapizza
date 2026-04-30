@@ -1,4 +1,5 @@
 export const categories = [
+  'Offers',
   'Pizza',
   'Pasta',
   'Snacks',
@@ -6,7 +7,6 @@ export const categories = [
   'Dips',
   'Desserts',
   'Drinks',
-  'Offers',
 ]
 
 export const heroSlides = [
