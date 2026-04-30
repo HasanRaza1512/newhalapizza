@@ -1,40 +1,54 @@
-function ProductCard({ image, title, price, onAddToCart, onClick }) {
+import { motion } from 'framer-motion'
+
+function ProductCard({ image, title, price, description, isNew, onAddToCart, onClick }) {
   return (
     <article
-      className="group cursor-pointer overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm ring-1 ring-slate-900/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+      className="group flex flex-col cursor-pointer overflow-hidden transition-all duration-300"
       onClick={onClick}
-      onKeyDown={(event) => {
-        if (event.key === 'Enter' || event.key === ' ') {
-          event.preventDefault()
-          onClick?.()
-        }
-      }}
-      role="button"
-      tabIndex={0}
-      aria-label={`View details for ${title}`}
     >
-      <img
-        src={image}
-        alt={title}
-        className="h-44 w-full object-cover transition-transform duration-500 group-hover:scale-105 sm:h-48"
-        loading="lazy"
-      />
-      <div className="space-y-4 p-4 sm:p-5">
-        <h3 className="truncate text-base font-semibold tracking-tight text-slate-900">
+      {/* Product Image */}
+      <div className="relative aspect-square w-full overflow-hidden rounded-full bg-slate-50">
+        <motion.img
+          src={image}
+          alt={title}
+          whileHover={{ scale: 1.15 }}
+          transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+          className="h-full w-full object-cover"
+          loading="lazy"
+        />
+      </div>
+
+      <div className="flex flex-1 flex-col space-y-2 py-4">
+        {/* New Tag */}
+        {isNew && (
+          <div className="flex">
+            <span className="inline-flex items-center rounded-full bg-[#FF6900] px-2 py-0.5 text-[10px] font-bold text-white uppercase tracking-wider">
+              new
+            </span>
+          </div>
+        )}
+
+        {/* Product Title */}
+        <h3 className="text-lg font-bold leading-tight text-slate-900 group-hover:text-[#FF6900] transition-colors">
           {title}
         </h3>
 
-        <div className="flex items-center justify-between gap-3">
-          <p className="text-lg font-bold text-slate-900">${price.toFixed(2)}</p>
+        {/* Product Description */}
+        <p className="line-clamp-3 text-xs leading-relaxed text-slate-500">
+          {description}
+        </p>
+
+        {/* Price / Add Button */}
+        <div className="mt-auto pt-4">
           <button
             type="button"
             onClick={(event) => {
               event.stopPropagation()
               onAddToCart?.(event)
             }}
-            className="rounded-lg bg-orange-500 px-3 py-2 text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-orange-400"
+            className="inline-flex items-center rounded-full bg-[#FFF0E6] px-5 py-2.5 text-sm font-bold text-[#D15700] transition-all duration-200 hover:bg-[#FFE0CC] active:scale-95"
           >
-            Add to Cart
+            AED from {price.toFixed(0)}
           </button>
         </div>
       </div>

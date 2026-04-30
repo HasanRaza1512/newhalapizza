@@ -96,7 +96,9 @@ function HomePage() {
                   key={product.id}
                   image={product.image}
                   title={product.name}
+                  description={product.description}
                   price={product.price}
+                  isNew={product.id <= 4}
                   onAddToCart={(event) => {
                     addItem(product)
                     if (event) {

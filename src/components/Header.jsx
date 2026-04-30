@@ -8,7 +8,7 @@ function Header() {
 
   return (
     <>
-      <header className="w-full bg-white font-sans">
+      <header className="w-full bg-white">
         {/* Top Bar */}
         <div className="border-b border-slate-100 bg-white">
           <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-4 px-4 py-2.5 text-[13px] font-medium text-slate-600 sm:px-6 lg:px-8">
