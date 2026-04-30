@@ -41,7 +41,7 @@ function Header() {
             </a>
 
             <div className="hidden flex-col md:flex">
-              <span className="text-sm font-bold text-slate-900">Pizza delivery Dubai</span>
+              <span className="text-sm font-bold text-slate-900">Pizza delivery Quetta</span>
               <span className="text-[13px] text-slate-500">
                 30 min • 4.75 <span className="text-[#FFD800]">★</span>
               </span>
@@ -49,7 +49,7 @@ function Header() {
 
             <div className="hidden flex-col lg:flex">
               <a href="tel:+971527556627" className="text-sm font-bold text-slate-900 transition-colors hover:text-[#FF6900]">
-                +971527556627
+                +92 1234567890
               </a>
               <span className="text-[13px] text-slate-500">Call</span>
             </div>
