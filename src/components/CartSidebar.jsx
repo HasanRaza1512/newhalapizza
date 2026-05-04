@@ -140,7 +140,7 @@ function CartSidebar({ isOpen, onClose }) {
                                 >
                                   -
                                 </button>
-                                <motion.span 
+                                <motion.span
                                   key={item.quantity}
                                   initial={{ scale: 0.5, opacity: 0 }}
                                   animate={{ scale: 1, opacity: 1 }}
@@ -171,7 +171,7 @@ function CartSidebar({ isOpen, onClose }) {
               <div className="space-y-4">
                 <div className="flex items-center justify-between text-sm text-slate-600">
                   <span>Subtotal ({cartCount} items)</span>
-                  <motion.span 
+                  <motion.span
                     key={cartSubtotal}
                     initial={{ y: -5, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
@@ -186,7 +186,7 @@ function CartSidebar({ isOpen, onClose }) {
                 </div>
                 <div className="flex items-center justify-between border-t border-slate-200 pt-4 text-lg font-bold text-slate-900">
                   <span>Total</span>
-                  <motion.span 
+                  <motion.span
                     key={grandTotal}
                     initial={{ y: -5, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
