@@ -8,55 +8,55 @@ function Header() {
 
   return (
     <>
-      <header className="w-full bg-white">
+      <header className="sticky top-0 z-50 w-full border-b border-gray-800/50 bg-[#0B0B0F]/80 backdrop-blur-md">
         {/* Top Bar */}
-        <div className="border-b border-slate-100 bg-white">
-          <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-4 px-4 py-2.5 text-[13px] font-medium text-slate-600 sm:px-6 lg:px-8">
-            <button className="flex items-center gap-1.5 transition-colors hover:text-slate-900">
-              <FiGlobe className="h-4 w-4" />
+        <div className="border-b border-gray-800/30 bg-black/20">
+          <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-4 px-4 py-2 text-[12px] font-medium text-gray-400 sm:px-6 lg:px-8">
+            <button className="flex items-center gap-1.5 transition-colors hover:text-white">
+              <FiGlobe className="h-3.5 w-3.5" />
               <span>Language</span>
             </button>
             <div className="flex flex-wrap items-center gap-4 sm:gap-6">
               <span className="flex items-center gap-1.5">
-                <span className="h-1.5 w-1.5 rounded-full bg-rose-400"></span>
+                <span className="h-1.5 w-1.5 rounded-full bg-orange-500 shadow-[0_0_8px_rgba(249,115,22,0.5)]"></span>
                 Live
               </span>
-              <a href="#" className="transition-colors hover:text-slate-900">Franchise</a>
-              <a href="#" className="transition-colors hover:text-slate-900">About us</a>
-              <a href="#" className="transition-colors hover:text-slate-900">Store info</a>
+              <a href="#" className="transition-colors hover:text-white">Franchise</a>
+              <a href="#" className="transition-colors hover:text-white">About us</a>
+              <a href="#" className="transition-colors hover:text-white">Store info</a>
             </div>
           </div>
         </div>
 
         {/* Middle Bar */}
-        <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-4 sm:px-6 sm:py-5 lg:px-8">
+        <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
           {/* Logo & Delivery Info */}
           <div className="flex items-center gap-6 lg:gap-10">
             <a href="/" className="flex items-center gap-3">
-              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#FF6900] text-2xl font-black text-white">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-500 text-2xl font-black text-white shadow-lg shadow-orange-500/20">
               </div>
-              <span className="hidden text-2xl font-black tracking-tight text-slate-900 sm:block uppercase">
+              <span className="hidden text-xl font-black tracking-tight text-white sm:block uppercase">
                 Hala Pizza
               </span>
             </a>
 
             <div className="hidden flex-col md:flex">
-              <span className="text-sm font-bold text-slate-900">Pizza delivery Quetta</span>
-              <span className="text-[13px] text-slate-500">
-                30 min • 4.75 <span className="text-[#FFD800]">★</span>
+              <span className="text-sm font-bold text-white">Pizza delivery Quetta</span>
+              <span className="text-[12px] text-gray-400">
+                30 min • 4.75 <span className="text-orange-500">★</span>
               </span>
             </div>
 
             <div className="hidden flex-col lg:flex">
-              <a href="tel:+971527556627" className="text-sm font-bold text-slate-900 transition-colors hover:text-[#FF6900]">
+              <a href="tel:+921234567890" className="text-sm font-bold text-white transition-colors hover:text-orange-500">
                 +92 1234567890
               </a>
-              <span className="text-[13px] text-slate-500">Call</span>
+              <span className="text-[12px] text-gray-400">Call</span>
             </div>
           </div>
 
           {/* Login Button */}
-          <button className="rounded-full bg-slate-100 px-5 py-2.5 text-sm font-semibold text-slate-800 transition-colors hover:bg-slate-200">
+          <button className="rounded-full bg-gray-800 px-5 py-2 text-sm font-semibold text-gray-200 transition-all hover:bg-gray-700 hover:text-white active:scale-95">
             Log in
           </button>
         </div>

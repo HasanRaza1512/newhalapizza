@@ -86,7 +86,7 @@ function HomePage() {
             }}
             className="scroll-mt-44 space-y-4"
           >
-            <h3 className="text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">
+            <h3 className="text-xl font-black tracking-tight text-white sm:text-2xl uppercase">
               {category}
             </h3>
 

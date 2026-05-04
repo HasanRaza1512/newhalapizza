@@ -105,7 +105,7 @@ function HeroSlider({ slides = fallbackSlides, activeIndex = 0, onChange }) {
       <button
         type="button"
         onClick={() => setIndex(currentIndex - 1)}
-        className="absolute left-3 top-1/2 z-20 -translate-y-1/2 rounded-full bg-white/80 p-2 text-slate-900 backdrop-blur transition hover:bg-white"
+        className="absolute left-3 top-1/2 z-20 -translate-y-1/2 rounded-full bg-black/40 p-2 text-white backdrop-blur-md transition hover:bg-black/60"
         aria-label="Previous slide"
       >
         <FiChevronLeft className="h-5 w-5" />
@@ -113,7 +113,7 @@ function HeroSlider({ slides = fallbackSlides, activeIndex = 0, onChange }) {
       <button
         type="button"
         onClick={() => setIndex(currentIndex + 1)}
-        className="absolute right-3 top-1/2 z-20 -translate-y-1/2 rounded-full bg-white/80 p-2 text-slate-900 backdrop-blur transition hover:bg-white"
+        className="absolute right-3 top-1/2 z-20 -translate-y-1/2 rounded-full bg-black/40 p-2 text-white backdrop-blur-md transition hover:bg-black/60"
         aria-label="Next slide"
       >
         <FiChevronRight className="h-5 w-5" />

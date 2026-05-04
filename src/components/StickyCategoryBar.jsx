@@ -8,7 +8,7 @@ function StickyCategoryBar({ categories, activeCategory, onCategoryClick }) {
   const cartSubtotal = items.reduce((total, item) => total + item.price * item.quantity, 0)
 
   return (
-    <div className="sticky top-0 z-50 w-full border-b border-slate-100 bg-white/95 py-3 backdrop-blur-md shadow-sm transition-all">
+    <div className="sticky top-[108px] z-40 w-full border-b border-gray-800/50 bg-[#0B0B0F]/80 py-3 backdrop-blur-xl transition-all">
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
         
         {/* Navigation Links */}
@@ -18,16 +18,16 @@ function StickyCategoryBar({ categories, activeCategory, onCategoryClick }) {
               key={category}
               type="button"
               onClick={() => onCategoryClick(category)}
-              className={`shrink-0 whitespace-nowrap text-[15px] font-semibold transition-colors ${
+              className={`shrink-0 whitespace-nowrap text-[14px] font-bold uppercase tracking-wider transition-all duration-300 ${
                 activeCategory === category
-                  ? 'text-[#FF6900]'
-                  : 'text-slate-900 hover:text-[#FF6900]'
+                  ? 'text-orange-500'
+                  : 'text-gray-400 hover:text-white'
               }`}
             >
               {category}
             </button>
           ))}
-          <button className="flex shrink-0 items-center gap-1.5 rounded-full bg-slate-100 px-3.5 py-1.5 text-[15px] font-semibold text-slate-900 transition-colors hover:bg-slate-200">
+          <button className="flex shrink-0 items-center gap-1.5 rounded-full bg-gray-800 px-4 py-1.5 text-[13px] font-bold text-gray-300 transition-all hover:bg-gray-700 hover:text-white">
             See more <FiChevronDown className="h-4 w-4" />
           </button>
         </nav>
@@ -36,9 +36,9 @@ function StickyCategoryBar({ categories, activeCategory, onCategoryClick }) {
         <button
           type="button"
           onClick={openCart}
-          className="ml-4 shrink-0 rounded-full bg-[#FF6900] px-5 py-2.5 text-[15px] font-bold text-white transition-all hover:-translate-y-0.5 hover:bg-[#FF822B] hover:shadow-md"
+          className="ml-4 shrink-0 rounded-full bg-orange-500 px-6 py-2.5 text-[14px] font-black text-white uppercase tracking-tight transition-all hover:bg-orange-600 hover:shadow-[0_0_20px_rgba(249,115,22,0.3)] active:scale-95"
         >
-          {items.length > 0 ? `My order • $${cartSubtotal.toFixed(2)}` : 'My order'}
+          {items.length > 0 ? `My order • AED ${cartSubtotal.toFixed(0)}` : 'My order'}
         </button>
       </div>
     </div>

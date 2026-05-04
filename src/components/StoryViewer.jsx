@@ -48,7 +48,7 @@ function StoryViewer({ story, isOpen, onClose, duration = 5000 }) {
           onClick={onClose}
         >
           <div 
-            className="relative h-full max-h-[800px] w-full max-w-[450px] overflow-hidden rounded-2xl bg-slate-900 shadow-2xl"
+            className="relative h-full max-h-[800px] w-full max-w-[450px] overflow-hidden rounded-2xl bg-gray-950 shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Progress Bar Container */}
@@ -96,7 +96,7 @@ function StoryViewer({ story, isOpen, onClose, duration = 5000 }) {
                    initial={{ y: 20, opacity: 0 }}
                    animate={{ y: 0, opacity: 1 }}
                    transition={{ delay: 0.3 }}
-                   className="mt-2 text-slate-200"
+                   className="mt-2 text-gray-300"
                  >
                    {story.description}
                  </motion.p>

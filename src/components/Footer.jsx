@@ -2,12 +2,12 @@ import { FiFacebook, FiInstagram, FiTwitter, FiPhone, FiMail, FiMapPin } from 'r
 
 function Footer() {
   return (
-    <footer className="mt-auto bg-slate-900 text-slate-400">
+    <footer className="mt-auto bg-[#0B0B0F] border-t border-gray-800/50 text-gray-500">
       <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-4">
           {/* Brand and Description */}
           <div className="col-span-1 md:col-span-1">
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-black text-white uppercase tracking-tight">
               Hala<span className="text-orange-500">Pizza</span>
             </h2>
             <p className="mt-4 text-sm leading-relaxed">
