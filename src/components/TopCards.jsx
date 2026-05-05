@@ -55,7 +55,7 @@ function TopCards() {
           return (
           <div
             key={card.title}
-            className={`group relative h-40 w-56 shrink-0 overflow-hidden rounded-3xl bg-gradient-to-br ${card.gradient} p-5 text-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-black/40`}
+            className={`group relative h-40 w-56 shrink-0 overflow-hidden rounded-3xl bg-gradient-to-br ${card.gradient} p-5 text-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-orange-200`}
           >
             <div className="absolute -right-6 -top-6 rounded-full bg-white/20 p-6 blur-sm" />
             <Icon className="relative z-10 h-6 w-6" />

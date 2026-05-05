@@ -2,12 +2,12 @@ import { FiFacebook, FiInstagram, FiTwitter, FiPhone, FiMail, FiMapPin } from 'r
 
 function Footer() {
   return (
-    <footer className="mt-auto bg-[#0B0B0F] border-t border-gray-800/50 text-gray-500">
+    <footer className="mt-auto bg-gray-50 border-t border-gray-200 text-gray-600">
       <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-4">
           {/* Brand and Description */}
           <div className="col-span-1 md:col-span-1">
-            <h2 className="text-2xl font-black text-white uppercase tracking-tight">
+            <h2 className="text-2xl font-black text-gray-900 uppercase tracking-tight">
               Hala<span className="text-orange-500">Pizza</span>
             </h2>
             <p className="mt-4 text-sm leading-relaxed">
@@ -29,29 +29,29 @@ function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wider text-white">Menu</h3>
+            <h3 className="text-sm font-semibold uppercase tracking-wider text-gray-900">Menu</h3>
             <ul className="mt-4 space-y-2">
-              <li><a href="#" className="text-sm hover:text-white transition-colors">Bestsellers</a></li>
-              <li><a href="#" className="text-sm hover:text-white transition-colors">New Arrivals</a></li>
-              <li><a href="#" className="text-sm hover:text-white transition-colors">Special Offers</a></li>
-              <li><a href="#" className="text-sm hover:text-white transition-colors">Combos</a></li>
+              <li><a href="#" className="text-sm hover:text-orange-500 transition-colors">Bestsellers</a></li>
+              <li><a href="#" className="text-sm hover:text-orange-500 transition-colors">New Arrivals</a></li>
+              <li><a href="#" className="text-sm hover:text-orange-500 transition-colors">Special Offers</a></li>
+              <li><a href="#" className="text-sm hover:text-orange-500 transition-colors">Combos</a></li>
             </ul>
           </div>
 
           {/* Support */}
           <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wider text-white">Support</h3>
+            <h3 className="text-sm font-semibold uppercase tracking-wider text-gray-900">Support</h3>
             <ul className="mt-4 space-y-2">
-              <li><a href="#" className="text-sm hover:text-white transition-colors">Contact Us</a></li>
-              <li><a href="#" className="text-sm hover:text-white transition-colors">FAQs</a></li>
-              <li><a href="#" className="text-sm hover:text-white transition-colors">Delivery Info</a></li>
-              <li><a href="#" className="text-sm hover:text-white transition-colors">Track Order</a></li>
+              <li><a href="#" className="text-sm hover:text-orange-500 transition-colors">Contact Us</a></li>
+              <li><a href="#" className="text-sm hover:text-orange-500 transition-colors">FAQs</a></li>
+              <li><a href="#" className="text-sm hover:text-orange-500 transition-colors">Delivery Info</a></li>
+              <li><a href="#" className="text-sm hover:text-orange-500 transition-colors">Track Order</a></li>
             </ul>
           </div>
 
           {/* Contact Info */}
           <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wider text-white">Contact</h3>
+            <h3 className="text-sm font-semibold uppercase tracking-wider text-gray-900">Contact</h3>
             <ul className="mt-4 space-y-3">
               <li className="flex items-center gap-3">
                 <FiPhone className="h-4 w-4 text-orange-500" />
@@ -70,14 +70,14 @@ function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-12 border-t border-slate-800 pt-8 flex flex-col items-center justify-between gap-4 sm:flex-row">
+        <div className="mt-12 border-t border-gray-200 pt-8 flex flex-col items-center justify-between gap-4 sm:flex-row">
           <p className="text-xs">
             © {new Date().getFullYear()} Hala Pizza Inc. All rights reserved.
           </p>
           <div className="flex gap-6">
-            <a href="#" className="text-xs hover:text-white transition-colors">Privacy Policy</a>
-            <a href="#" className="text-xs hover:text-white transition-colors">Terms of Service</a>
-            <a href="#" className="text-xs hover:text-white transition-colors">Cookie Policy</a>
+            <a href="#" className="text-xs hover:text-orange-500 transition-colors">Privacy Policy</a>
+            <a href="#" className="text-xs hover:text-orange-500 transition-colors">Terms of Service</a>
+            <a href="#" className="text-xs hover:text-orange-500 transition-colors">Cookie Policy</a>
           </div>
         </div>
       </div>

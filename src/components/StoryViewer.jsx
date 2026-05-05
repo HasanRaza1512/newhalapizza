@@ -44,18 +44,18 @@ function StoryViewer({ story, isOpen, onClose, duration = 5000 }) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 p-4 sm:p-8"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-md p-4 sm:p-8"
           onClick={onClose}
         >
           <div 
-            className="relative h-full max-h-[800px] w-full max-w-[450px] overflow-hidden rounded-2xl bg-gray-950 shadow-2xl"
+            className="relative h-full max-h-[800px] w-full max-w-[450px] overflow-hidden rounded-2xl bg-white shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Progress Bar Container */}
             <div className="absolute left-0 right-0 top-0 z-20 flex gap-1 p-3">
-              <div className="h-1 flex-1 overflow-hidden rounded-full bg-white/20">
+              <div className="h-1 flex-1 overflow-hidden rounded-full bg-black/10">
                 <motion.div
-                  className="h-full bg-white"
+                  className="h-full bg-orange-500"
                   style={{ width: `${progress}%` }}
                 />
               </div>
@@ -64,7 +64,7 @@ function StoryViewer({ story, isOpen, onClose, duration = 5000 }) {
             {/* Close Button */}
             <button
               onClick={onClose}
-              className="absolute right-4 top-4 z-20 rounded-full bg-black/20 p-2 text-white backdrop-blur-md transition-colors hover:bg-black/40"
+              className="absolute right-4 top-4 z-20 rounded-full bg-white/40 p-2 text-gray-900 backdrop-blur-md transition-colors hover:bg-white/60"
             >
               <FiX className="h-6 w-6" />
             </button>
@@ -82,12 +82,12 @@ function StoryViewer({ story, isOpen, onClose, duration = 5000 }) {
               />
               
               {/* Overlay for text */}
-              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent p-8 pt-20">
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-white via-white/40 to-transparent p-8 pt-20">
                 <motion.h2 
                   initial={{ y: 20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: 0.2 }}
-                  className="text-2xl font-bold text-white sm:text-3xl"
+                  className="text-2xl font-bold text-gray-900 sm:text-3xl"
                 >
                   {story.title}
                 </motion.h2>
@@ -96,7 +96,7 @@ function StoryViewer({ story, isOpen, onClose, duration = 5000 }) {
                    initial={{ y: 20, opacity: 0 }}
                    animate={{ y: 0, opacity: 1 }}
                    transition={{ delay: 0.3 }}
-                   className="mt-2 text-gray-300"
+                   className="mt-2 text-gray-600"
                  >
                    {story.description}
                  </motion.p>

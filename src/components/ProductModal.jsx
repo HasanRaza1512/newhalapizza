@@ -60,8 +60,8 @@ function SizeSelector({ selectedSize, onSelect }) {
               onClick={() => onSelect(size.label)}
               className={`relative flex flex-col items-center gap-1 rounded-2xl border-2 px-3 py-4 text-sm font-semibold transition-all duration-200 cursor-pointer ${
                 isActive
-                  ? 'border-orange-500 bg-orange-500/10 text-orange-500 shadow-lg shadow-orange-500/20'
-                  : 'border-gray-800 bg-gray-800/40 text-gray-400 hover:border-gray-700 hover:bg-gray-800'
+                  ? 'border-orange-500 bg-orange-50/80 text-orange-600 shadow-lg shadow-orange-500/10'
+                  : 'border-gray-100 bg-gray-50 text-gray-500 hover:border-gray-200 hover:bg-gray-100'
               }`}
             >
               {/* Animated size circle */}
@@ -71,7 +71,7 @@ function SizeSelector({ selectedSize, onSelect }) {
                   height: size.label === 'Small' ? 28 : size.label === 'Medium' ? 38 : 48,
                 }}
                 className={`rounded-full border-2 border-dashed mb-1 transition-colors ${
-                  isActive ? 'border-orange-500 bg-orange-500/20' : 'border-gray-700 bg-gray-800'
+                  isActive ? 'border-orange-500 bg-orange-500/10' : 'border-gray-200 bg-white'
                 }`}
               />
               <span>{size.label}</span>
@@ -114,8 +114,8 @@ function CrustSelector({ selectedCrust, onSelect }) {
               onClick={() => onSelect(crust.label)}
               className={`flex w-full items-center gap-3 rounded-xl border-2 px-4 py-3 text-left transition-all duration-200 cursor-pointer ${
                 isActive
-                  ? 'border-orange-500 bg-orange-500/10 shadow-lg shadow-orange-500/10'
-                  : 'border-gray-800 bg-gray-800/40 hover:border-gray-700 hover:bg-gray-800'
+                  ? 'border-orange-500 bg-orange-50/80 shadow-lg shadow-orange-500/5'
+                  : 'border-gray-100 bg-gray-50 hover:border-gray-200 hover:bg-gray-100'
               }`}
             >
               <span className="text-xl leading-none">{crust.icon}</span>
@@ -132,7 +132,7 @@ function CrustSelector({ selectedCrust, onSelect }) {
               {/* Radio indicator */}
               <div
                 className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 transition-all ${
-                  isActive ? 'border-orange-500 bg-orange-500' : 'border-gray-700 bg-gray-800'
+                  isActive ? 'border-orange-500 bg-orange-500' : 'border-gray-200 bg-white'
                 }`}
               >
                 {isActive && (
@@ -178,8 +178,8 @@ function ToppingsSelector({ selectedToppings, onToggle }) {
               whileTap={{ scale: 0.99 }}
               className={`flex cursor-pointer items-center gap-3 rounded-xl border-2 px-4 py-3 transition-all duration-200 ${
                 isChecked
-                  ? 'border-orange-500 bg-orange-500/10 shadow-lg shadow-orange-500/10'
-                  : 'border-gray-800 bg-gray-800/40 hover:border-gray-700 hover:bg-gray-800'
+                  ? 'border-orange-500 bg-orange-50/80 shadow-lg shadow-orange-500/5'
+                  : 'border-gray-100 bg-gray-50 hover:border-gray-200 hover:bg-gray-100'
               }`}
             >
               <span className="text-lg leading-none">{topping.icon}</span>
@@ -194,7 +194,7 @@ function ToppingsSelector({ selectedToppings, onToggle }) {
                 className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-md border-2 transition-all ${
                   isChecked
                     ? 'border-orange-500 bg-orange-500'
-                    : 'border-gray-700 bg-gray-800'
+                    : 'border-gray-200 bg-white'
                 }`}
               >
                 {isChecked && (
@@ -301,7 +301,7 @@ function ProductModalContent({ product, onClose, onAddToCart }) {
 
       {/* Modal panel */}
       <motion.section
-        className="relative z-10 w-full max-w-4xl overflow-hidden rounded-t-3xl bg-gray-900 shadow-2xl sm:rounded-3xl border border-gray-800"
+        className="relative z-10 w-full max-w-4xl overflow-hidden rounded-t-3xl bg-white shadow-2xl sm:rounded-3xl border border-gray-100"
         variants={modalVariants}
         onClick={(e) => e.stopPropagation()}
         role="dialog"
@@ -310,14 +310,16 @@ function ProductModalContent({ product, onClose, onAddToCart }) {
       >
         <div className="grid md:grid-cols-[1fr_1.1fr]">
           {/* ── Left: Image section ── */}
-          <div className="relative h-56 sm:h-64 md:h-full md:min-h-[560px]">
-            <img
+          <div className="relative flex h-64 items-center justify-center bg-gray-50/50 p-6 sm:h-80 md:h-full md:min-h-[560px] md:p-12">
+            <motion.img
+              initial={{ scale: 0.8, opacity: 0, rotate: -10 }}
+              animate={{ scale: 1, opacity: 1, rotate: 0 }}
+              transition={{ type: 'spring', stiffness: 100, damping: 20 }}
               src={product.image}
               alt={product.name}
-              className="h-full w-full object-cover"
+              className="aspect-square w-full max-w-[280px] sm:max-w-[340px] md:max-w-[420px] object-cover rounded-full shadow-2xl shadow-black/10"
             />
-            {/* Gradient overlay on image */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent md:bg-gradient-to-r md:from-transparent md:via-transparent md:to-white/10" />
+            {/* Gradient overlay removed or adjusted */}
 
             {/* Category badge on image */}
             <motion.span
@@ -358,17 +360,17 @@ function ProductModalContent({ product, onClose, onAddToCart }) {
                 <motion.div variants={fadeUp} className="hidden md:block">
                   <div className="flex items-start justify-between gap-4">
                     <div>
-                      <h3 className="text-2xl font-black text-white tracking-tight uppercase">
+                      <h3 className="text-2xl font-black text-gray-900 tracking-tight uppercase">
                         {product.name}
                       </h3>
-                      <p className="mt-2 text-sm leading-relaxed text-gray-400">
+                      <p className="mt-2 text-sm leading-relaxed text-gray-600">
                         {product.description || 'Customize your meal with preferred size, crust, and toppings.'}
                       </p>
                     </div>
                     <button
                       type="button"
                       onClick={onClose}
-                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gray-800 text-gray-400 transition hover:bg-gray-700 hover:text-white cursor-pointer"
+                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gray-100 text-gray-500 transition hover:bg-gray-200 hover:text-gray-900 cursor-pointer"
                       aria-label="Close"
                     >
                       <FiX className="h-4 w-4" strokeWidth={2.5} />
@@ -377,7 +379,7 @@ function ProductModalContent({ product, onClose, onAddToCart }) {
                 </motion.div>
 
                 {/* Description (mobile) */}
-                <motion.p variants={fadeUp} className="text-sm leading-relaxed text-slate-500 md:hidden">
+                <motion.p variants={fadeUp} className="text-sm leading-relaxed text-gray-600 md:hidden">
                   {product.description || 'Customize your meal with preferred size, crust, and toppings.'}
                 </motion.p>
 
@@ -395,7 +397,7 @@ function ProductModalContent({ product, onClose, onAddToCart }) {
                 </motion.div>
 
                 {/* Divider */}
-                <motion.hr variants={fadeUp} className="border-slate-100" />
+                <motion.hr variants={fadeUp} className="border-gray-100" />
 
                 {/* Size selector */}
                 <SizeSelector
@@ -420,7 +422,7 @@ function ProductModalContent({ product, onClose, onAddToCart }) {
             </div>
 
             {/* ── Sticky footer ── */}
-            <div className="shrink-0 border-t border-gray-800 bg-gray-900/95 backdrop-blur-md p-5 sm:p-6">
+            <div className="shrink-0 border-t border-gray-100 bg-white/95 backdrop-blur-md p-5 sm:p-6">
               <div className="flex items-center justify-between gap-4">
                 <div>
                   <p className="text-[10px] font-bold uppercase tracking-widest text-gray-500">
@@ -430,7 +432,7 @@ function ProductModalContent({ product, onClose, onAddToCart }) {
                     key={livePrice.toFixed(0)}
                     initial={{ y: -8, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
-                    className="text-3xl font-black text-white"
+                    className="text-3xl font-black text-gray-900"
                   >
                     AED {livePrice.toFixed(0)}
                   </motion.p>

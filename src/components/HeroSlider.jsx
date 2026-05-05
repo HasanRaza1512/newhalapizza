@@ -83,7 +83,7 @@ function HeroSlider({ slides = fallbackSlides, activeIndex = 0, onChange }) {
             alt={slide.title}
             className="absolute inset-0 h-full w-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/85 via-slate-950/50 to-slate-900/20" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent" />
 
           <div className="relative z-10 flex h-full flex-col justify-center px-5 py-6 sm:px-8 lg:px-10">
             <p className="max-w-xl text-2xl font-bold tracking-tight text-white sm:text-4xl">
@@ -105,7 +105,7 @@ function HeroSlider({ slides = fallbackSlides, activeIndex = 0, onChange }) {
       <button
         type="button"
         onClick={() => setIndex(currentIndex - 1)}
-        className="absolute left-3 top-1/2 z-20 -translate-y-1/2 rounded-full bg-black/40 p-2 text-white backdrop-blur-md transition hover:bg-black/60"
+        className="absolute left-3 top-1/2 z-20 -translate-y-1/2 rounded-full bg-white/20 p-2 text-white backdrop-blur-md transition hover:bg-white/40"
         aria-label="Previous slide"
       >
         <FiChevronLeft className="h-5 w-5" />
@@ -113,7 +113,7 @@ function HeroSlider({ slides = fallbackSlides, activeIndex = 0, onChange }) {
       <button
         type="button"
         onClick={() => setIndex(currentIndex + 1)}
-        className="absolute right-3 top-1/2 z-20 -translate-y-1/2 rounded-full bg-black/40 p-2 text-white backdrop-blur-md transition hover:bg-black/60"
+        className="absolute right-3 top-1/2 z-20 -translate-y-1/2 rounded-full bg-white/20 p-2 text-white backdrop-blur-md transition hover:bg-white/40"
         aria-label="Next slide"
       >
         <FiChevronRight className="h-5 w-5" />

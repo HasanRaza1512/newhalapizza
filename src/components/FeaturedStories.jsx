@@ -61,7 +61,7 @@ function FeaturedStories() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => setSelectedStory(story)}
-            className="group relative aspect-[4/5] w-full overflow-hidden rounded-[2rem] bg-gray-900 text-left shadow-lg transition-all hover:shadow-2xl hover:shadow-orange-500/10 focus:outline-none focus:ring-2 focus:ring-orange-500"
+            className="group relative aspect-[4/5] w-full overflow-hidden rounded-[2rem] bg-gray-50 text-left shadow-lg transition-all hover:shadow-2xl hover:shadow-orange-500/5 focus:outline-none focus:ring-2 focus:ring-orange-500"
           >
             {/* Background Image */}
             <img

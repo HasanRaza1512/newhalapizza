@@ -57,11 +57,11 @@ function MenuPage() {
 
   return (
     <div className="space-y-5 sm:space-y-6 lg:space-y-8">
-      <section className="rounded-2xl border border-gray-800 bg-gray-900/50 p-5 shadow-sm sm:p-6">
-        <h1 className="text-2xl font-black tracking-tight text-white sm:text-3xl uppercase">
+      <section className="rounded-2xl border border-gray-100 bg-gray-50/50 p-5 shadow-sm sm:p-6">
+        <h1 className="text-2xl font-black tracking-tight text-gray-900 sm:text-3xl uppercase">
           Explore Our Menu
         </h1>
-        <p className="mt-2 max-w-2xl text-sm leading-6 text-gray-400 sm:text-base">
+        <p className="mt-2 max-w-2xl text-sm leading-6 text-gray-600 sm:text-base">
           Pick a category, browse our favorites, and customize any item before
           adding it to your cart.
         </p>
@@ -89,8 +89,8 @@ function MenuPage() {
               id={category}
               className="scroll-mt-[180px] space-y-4 sm:space-y-5"
             >
-              <h2 className="text-2xl font-black text-white uppercase tracking-tight">{category}</h2>
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5 xl:grid-cols-4">
+              <h2 className="text-2xl font-black text-gray-900 uppercase tracking-tight">{category}</h2>
+              <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {isLoading ? (
                   categoryProducts.map((_, index) => (
                     <ProductSkeleton key={index} />
