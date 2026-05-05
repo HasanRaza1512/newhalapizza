@@ -2,6 +2,7 @@ import AppLayout from './components/AppLayout'
 import CheckoutPage from './pages/CheckoutPage'
 import HomePage from './pages/HomePage'
 import MenuPage from './pages/MenuPage'
+import AdminPage from './pages/AdminPage'
 import { Navigate, Route, Routes } from 'react-router-dom'
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/menu" element={<MenuPage />} />
         <Route path="/checkout" element={<CheckoutPage />} />
+        <Route path="/admin" element={<AdminPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </AppLayout>

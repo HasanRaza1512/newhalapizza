@@ -3,8 +3,10 @@ import ProductCard from '../components/ProductCard'
 import ProductModal from '../components/ProductModal'
 import StickyCategoryBar from '../components/StickyCategoryBar'
 import FeaturedStories from '../components/FeaturedStories'
-import { categories, products } from '../data/products'
+import ProductSkeleton from '../components/ProductSkeleton'
+import { categories } from '../data/products'
 import { useCartStore } from '../store'
+import { useProductStore } from '../store/useProductStore'
 
 
 function HomePage() {
@@ -13,6 +15,13 @@ function HomePage() {
   const sectionRefs = useRef({})
   const addItem = useCartStore((state) => state.addItem)
   const addFlyingImage = useCartStore((state) => state.addFlyingImage)
+  
+  const { products, isLoading, subscribeToProducts } = useProductStore()
+
+  useEffect(() => {
+    const unsubscribe = subscribeToProducts()
+    return () => unsubscribe()
+  }, [subscribeToProducts])
 
   const productsByCategory = useMemo(
     () =>
@@ -20,7 +29,7 @@ function HomePage() {
         acc[category] = products.filter((product) => product.category === category)
         return acc
       }, {}),
-    [],
+    [products],
   )
 
   useEffect(() => {
@@ -90,7 +99,9 @@ function HomePage() {
             </div>
 
             <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {productsByCategory[category].length > 0 ? (
+              {isLoading ? (
+                Array.from({ length: 4 }).map((_, i) => <ProductSkeleton key={i} />)
+              ) : productsByCategory[category].length > 0 ? (
                 productsByCategory[category].map((product) => (
                   <ProductCard
                     key={product.id}
@@ -98,7 +109,7 @@ function HomePage() {
                     title={product.name}
                     description={product.description}
                     price={product.price}
-                    isNew={product.id <= 4}
+                    isNew={product.isNew}
                     onAddToCart={(event) => {
                       addItem(product)
                       if (event) {

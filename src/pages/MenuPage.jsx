@@ -1,27 +1,37 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import ProductCard from '../components/ProductCard'
+import ProductModal from '../components/ProductModal'
+import ProductSkeleton from '../components/ProductSkeleton'
 import StickyCategoryBar from '../components/StickyCategoryBar'
 import TopCards from '../components/TopCards'
-import ProductCard from '../components/ProductCard'
-import ProductSkeleton from '../components/ProductSkeleton'
-import ProductModal from '../components/ProductModal'
-import { categories, products as initialProducts } from '../data/products'
+import { categories } from '../data/products'
 import { useCartStore } from '../store'
-
+import { useProductStore } from '../store/useProductStore'
 
 function MenuPage() {
   const [activeCategory, setActiveCategory] = useState(categories[0])
   const [selectedProduct, setSelectedProduct] = useState(null)
-  const [isLoading, setIsLoading] = useState(true)
-  const [products, setProducts] = useState([])
+  const sectionRefs = useRef({})
   const addItem = useCartStore((state) => state.addItem)
   const addFlyingImage = useCartStore((state) => state.addFlyingImage)
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setProducts(initialProducts)
-      setIsLoading(false)
-    }, 1500)
+  const { products, isLoading, subscribeToProducts } = useProductStore()
 
+  useEffect(() => {
+    const unsubscribe = subscribeToProducts()
+    return () => unsubscribe()
+  }, [subscribeToProducts])
+
+  const productsByCategory = useMemo(
+    () =>
+      categories.reduce((acc, category) => {
+        acc[category] = products.filter((product) => product.category === category)
+        return acc
+      }, {}),
+    [products],
+  )
+
+  useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -31,7 +41,6 @@ function MenuPage() {
         })
       },
       {
-        // Adjust the margins to trigger when the section reaches near the top (under sticky bar)
         rootMargin: '-120px 0px -70% 0px',
       }
     )
@@ -79,17 +88,14 @@ function MenuPage() {
 
       <div className="space-y-0 px-4 sm:px-6 lg:px-8">
         {categories.map((category) => {
-          const categoryProducts = isLoading 
-            ? Array.from({ length: 4 })
-            : products.filter((product) => product.category === category)
-
-          if (!isLoading && categoryProducts.length === 0) return null
-
+          const categoryProducts = productsByCategory[category] || []
+          
           return (
             <section
               key={category}
               id={category}
               className="scroll-mt-[180px] py-12 border-b border-gray-100 last:border-0"
+              ref={(el) => (sectionRefs.current[category] = el)}
             >
               <div className="mb-8 flex items-center justify-between">
                 <h2 className="text-2xl font-black text-gray-900 uppercase tracking-tight">{category}</h2>
@@ -99,7 +105,7 @@ function MenuPage() {
               </div>
               <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {isLoading ? (
-                  categoryProducts.map((_, index) => (
+                  Array.from({ length: 4 }).map((_, index) => (
                     <ProductSkeleton key={index} />
                   ))
                 ) : categoryProducts.length > 0 ? (

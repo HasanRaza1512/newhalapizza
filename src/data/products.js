@@ -38,6 +38,15 @@ export const heroSlides = [
 
 export const products = [
   {
+    id: 0,
+    name: 'Hala Special Pizza',
+    category: 'Pizza',
+    price: 19.99,
+    description: 'Our signature pizza with a secret blend of spices, premium toppings, and extra cheesy goodness.',
+    image: 'https://img.magnific.com/free-photo/mix-pizza-with-tomato-slices-mushroom-olive_140725-185.jpg',
+    isNew: true,
+  },
+  {
     id: 1,
     name: 'Margherita Pizza',
     category: 'Pizza',
@@ -45,6 +54,7 @@ export const products = [
     description: 'Classic Italian pizza with fresh mozzarella, ripe tomatoes, and fragrant basil on a golden crust.',
     image:
       'https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?auto=format&fit=crop&w=900&q=80',
+    isNew: true,
   },
   {
     id: 2,
@@ -54,6 +64,7 @@ export const products = [
     description: 'Loaded with spicy pepperoni, melted mozzarella, and our signature tangy tomato sauce.',
     image:
       'https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?auto=format&fit=crop&w=900&q=80',
+    isNew: true,
   },
   {
     id: 3,
@@ -180,5 +191,6 @@ export const products = [
     description: 'Two large pizzas, garlic bread, chicken wings, and a 2L drink. Feeds the whole family.',
     image:
       'https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&w=900&q=80',
+    isNew: true,
   },
 ]

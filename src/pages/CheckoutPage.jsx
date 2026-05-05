@@ -1,10 +1,26 @@
 import { useMemo, useState } from 'react'
 import { useCartStore } from '../store'
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
+import { db } from '../lib/firebase'
+import { motion, AnimatePresence } from 'framer-motion'
+import { FiCheckCircle, FiAlertCircle } from 'react-icons/fi'
+import { useNavigate } from 'react-router-dom'
 
 function CheckoutPage() {
   const items = useCartStore((state) => state.items)
+  const clearCart = useCartStore((state) => state.clearCart)
+  const navigate = useNavigate()
+
   const [fulfillmentType, setFulfillmentType] = useState('delivery')
   const [paymentMethod, setPaymentMethod] = useState('cod')
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [orderStatus, setOrderStatus] = useState({ type: '', message: '' })
+
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    address: ''
+  })
 
   const cartCount = useMemo(
     () => items.reduce((total, item) => total + item.quantity, 0),
@@ -19,152 +35,221 @@ function CheckoutPage() {
   const deliveryFee = fulfillmentType === 'delivery' && items.length ? 2.99 : 0
   const total = subtotal + deliveryFee
 
+  const handlePlaceOrder = async (e) => {
+    e.preventDefault()
+    if (items.length === 0) return
+
+    setIsSubmitting(true)
+    setOrderStatus({ type: '', message: '' })
+
+    try {
+      const ordersCol = collection(db, 'orders')
+      const orderData = {
+        customer: formData,
+        items: items.map(item => ({
+          id: item.id,
+          name: item.name,
+          price: item.price,
+          quantity: item.quantity,
+          options: item.options
+        })),
+        fulfillment: fulfillmentType,
+        payment: paymentMethod,
+        subtotal,
+        deliveryFee,
+        total,
+        createdAt: serverTimestamp(),
+        status: 'pending'
+      }
+
+      await addDoc(ordersCol, orderData)
+      
+      setOrderStatus({ type: 'success', message: 'Order placed successfully! Redirecting...' })
+      
+      // Clear cart and redirect
+      setTimeout(() => {
+        clearCart()
+        navigate('/')
+      }, 3000)
+
+    } catch (err) {
+      console.error("Order error:", err)
+      setOrderStatus({ type: 'error', message: 'Failed to place order. Please try again.' })
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
   return (
-    <div className="grid gap-5 lg:grid-cols-[1fr_22rem] lg:gap-6">
-      <section className="space-y-5 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm sm:p-6">
+    <div className="grid gap-5 lg:grid-cols-[1fr_22rem] lg:gap-10">
+      <section className="space-y-8 rounded-3xl border border-gray-100 bg-white p-6 shadow-sm sm:p-10">
         <div>
-          <h1 className="text-2xl font-black tracking-tight text-gray-900 sm:text-3xl uppercase">
+          <h1 className="text-3xl font-black tracking-tight text-gray-900 sm:text-4xl uppercase">
             Checkout
           </h1>
-          <p className="mt-2 text-sm leading-6 text-gray-600">
-            Fill in your details and review your order before placing it.
+          <p className="mt-2 text-sm text-gray-500">
+            Complete your order by providing your delivery details.
           </p>
         </div>
 
-        <form className="space-y-5 sm:space-y-6">
-          <div className="grid gap-4 sm:grid-cols-2">
-            <label className="space-y-1.5 text-sm font-bold text-gray-500">
-              Name
+        <form onSubmit={handlePlaceOrder} className="space-y-8">
+          <div className="grid gap-6 sm:grid-cols-2">
+            <div className="space-y-2">
+              <label className="text-[11px] font-black uppercase tracking-widest text-gray-400">Name</label>
               <input
+                required
                 type="text"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 placeholder="John Doe"
-                className="w-full rounded-xl border border-gray-200 bg-gray-50 px-3 py-2.5 text-sm text-gray-900 outline-none transition-all duration-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20"
+                className="w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-900 outline-none transition-all duration-200 focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10"
               />
-            </label>
-            <label className="space-y-1.5 text-sm font-bold text-gray-500">
-              Phone
+            </div>
+            <div className="space-y-2">
+              <label className="text-[11px] font-black uppercase tracking-widest text-gray-400">Phone</label>
               <input
+                required
                 type="tel"
-                placeholder="+92 123 4567890"
-                className="w-full rounded-xl border border-gray-200 bg-gray-50 px-3 py-2.5 text-sm text-gray-900 outline-none transition-all duration-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20"
+                value={formData.phone}
+                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                placeholder="+971 50 123 4567"
+                className="w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-900 outline-none transition-all duration-200 focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10"
               />
-            </label>
-          </div>
-
-          <label className="block space-y-1.5 text-sm font-bold text-gray-500">
-            Address
-            <textarea
-              placeholder="Street, building, floor, apartment..."
-              rows={3}
-              className="w-full resize-none rounded-xl border border-gray-200 bg-gray-50 px-3 py-2.5 text-sm text-gray-900 outline-none transition-all duration-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20"
-            />
-          </label>
-
-          <div className="space-y-3">
-            <p className="text-sm font-bold text-gray-900 uppercase tracking-wider">Delivery option</p>
-            <div className="grid grid-cols-2 gap-3">
-              {[
-                { id: 'delivery', label: 'Delivery' },
-                { id: 'pickup', label: 'Pickup' },
-              ].map((option) => (
-                <button
-                  key={option.id}
-                  type="button"
-                  onClick={() => setFulfillmentType(option.id)}
-                    className={`rounded-xl border-2 px-3 py-3 text-sm font-bold transition-all duration-200 ${
-                    fulfillmentType === option.id
-                      ? 'border-orange-500 bg-orange-50 text-orange-600 shadow-lg shadow-orange-500/10'
-                      : 'border-gray-100 bg-gray-50 text-gray-500 hover:border-gray-200 hover:bg-gray-100'
-                  }`}
-                >
-                  {option.label}
-                </button>
-              ))}
             </div>
           </div>
 
-          <div className="space-y-3">
-            <p className="text-sm font-bold text-gray-900 uppercase tracking-wider">Payment method</p>
-            <div className="grid grid-cols-2 gap-3">
-              {[
-                { id: 'cod', label: 'Cash on Delivery' },
-                { id: 'card', label: 'Card Payment' },
-              ].map((method) => (
-                <button
-                  key={method.id}
-                  type="button"
-                  onClick={() => setPaymentMethod(method.id)}
-                    className={`rounded-xl border-2 px-3 py-3 text-sm font-bold transition-all duration-200 ${
-                    paymentMethod === method.id
-                      ? 'border-orange-500 bg-orange-50 text-orange-600 shadow-lg shadow-orange-500/10'
-                      : 'border-gray-100 bg-gray-50 text-gray-500 hover:border-gray-200 hover:bg-gray-100'
-                  }`}
-                >
-                  {method.label}
-                </button>
-              ))}
+          <div className="space-y-2">
+            <label className="text-[11px] font-black uppercase tracking-widest text-gray-400">Delivery Address</label>
+            <textarea
+              required
+              value={formData.address}
+              onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+              placeholder="Street name, building, apartment number..."
+              rows={3}
+              className="w-full resize-none rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-900 outline-none transition-all duration-200 focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10"
+            />
+          </div>
+
+          <div className="grid gap-6 sm:grid-cols-2">
+            <div className="space-y-3">
+              <p className="text-[11px] font-black uppercase tracking-widest text-gray-400">Delivery option</p>
+              <div className="flex gap-3">
+                {[
+                  { id: 'delivery', label: 'Delivery' },
+                  { id: 'pickup', label: 'Pickup' },
+                ].map((option) => (
+                  <button
+                    key={option.id}
+                    type="button"
+                    onClick={() => setFulfillmentType(option.id)}
+                    className={`flex-1 rounded-2xl border-2 py-3 text-sm font-bold transition-all duration-300 ${
+                      fulfillmentType === option.id
+                        ? 'border-orange-500 bg-orange-50 text-orange-600 shadow-lg shadow-orange-500/5'
+                        : 'border-gray-50 bg-gray-50 text-gray-400 hover:border-gray-200'
+                    }`}
+                  >
+                    {option.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <p className="text-[11px] font-black uppercase tracking-widest text-gray-400">Payment</p>
+              <div className="flex gap-3">
+                {[
+                  { id: 'cod', label: 'Cash' },
+                  { id: 'card', label: 'Card' },
+                ].map((method) => (
+                  <button
+                    key={method.id}
+                    type="button"
+                    onClick={() => setPaymentMethod(method.id)}
+                    className={`flex-1 rounded-2xl border-2 py-3 text-sm font-bold transition-all duration-300 ${
+                      paymentMethod === method.id
+                        ? 'border-orange-500 bg-orange-50 text-orange-600 shadow-lg shadow-orange-500/5'
+                        : 'border-gray-50 bg-gray-50 text-gray-400 hover:border-gray-200'
+                    }`}
+                  >
+                    {method.label}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         </form>
       </section>
 
-      <aside className="h-fit space-y-6 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm sm:p-6">
+      <aside className="h-fit space-y-6 rounded-3xl border border-gray-100 bg-white p-6 shadow-sm sm:p-8">
         <div>
-          <h2 className="text-lg font-black text-gray-900 uppercase tracking-tight">Order Summary</h2>
+          <h2 className="text-xl font-black text-gray-900 uppercase tracking-tight">Summary</h2>
           <p className="mt-1 text-sm text-gray-500">
-            {cartCount} item{cartCount === 1 ? '' : 's'} in your cart
+            {cartCount} item{cartCount === 1 ? '' : 's'} to be ordered
           </p>
         </div>
 
-        {items.length === 0 ? (
-          <p className="rounded-xl bg-gray-50 px-3 py-4 text-sm text-gray-400 italic">
-            No items in cart yet. Add products from menu first.
-          </p>
-        ) : (
-          <ul className="max-h-64 space-y-3 overflow-auto pr-1 custom-scrollbar">
-            {items.map((item) => (
-              <li
-                key={item.cartKey}
-                className="flex items-start justify-between gap-2 rounded-xl border border-gray-100 bg-gray-50/50 px-3 py-3"
-              >
-                <div className="min-w-0">
-                  <p className="truncate text-sm font-bold text-gray-900">
-                    {item.name}
-                  </p>
-                  <p className="text-xs text-gray-500">
-                    {item.quantity} x AED {item.price.toFixed(0)}
-                  </p>
-                </div>
-                <p className="text-sm font-black text-gray-900">
-                  AED {(item.quantity * item.price).toFixed(0)}
+        <ul className="max-h-64 space-y-4 overflow-auto pr-1 custom-scrollbar">
+          {items.map((item) => (
+            <li
+              key={item.cartKey}
+              className="flex items-start justify-between gap-4 rounded-2xl border border-gray-50 bg-gray-50/50 p-4"
+            >
+              <div className="min-w-0">
+                <p className="truncate text-sm font-bold text-gray-900">
+                  {item.name}
                 </p>
-              </li>
-            ))}
-          </ul>
-        )}
+                <p className="text-xs text-gray-500">
+                  {item.quantity} x AED {item.price.toFixed(0)}
+                </p>
+              </div>
+              <p className="text-sm font-black text-gray-900">
+                AED {(item.quantity * item.price).toFixed(0)}
+              </p>
+            </li>
+          ))}
+        </ul>
 
-        <div className="space-y-3 border-t border-gray-100 pt-5 text-sm">
-          <div className="flex items-center justify-between text-gray-500">
+        <div className="space-y-4 border-t border-gray-100 pt-6">
+          <div className="flex items-center justify-between text-sm text-gray-500">
             <span>Subtotal</span>
             <span className="font-bold text-gray-900">AED {subtotal.toFixed(0)}</span>
           </div>
-          <div className="flex items-center justify-between text-gray-500">
+          <div className="flex items-center justify-between text-sm text-gray-500">
             <span>Delivery</span>
             <span className="font-bold text-gray-900">AED {deliveryFee.toFixed(0)}</span>
           </div>
-          <div className="flex items-center justify-between border-t border-gray-100 pt-4 text-lg font-black text-gray-900 uppercase tracking-tight">
+          <div className="flex items-center justify-between border-t border-gray-100 pt-6 text-2xl font-black text-gray-900 uppercase tracking-tight">
             <span>Total</span>
-            <span>AED {total.toFixed(0)}</span>
+            <span className="text-orange-600">AED {total.toFixed(0)}</span>
           </div>
         </div>
 
-        <button
-          type="button"
-          disabled={items.length === 0}
-          className="w-full rounded-2xl bg-orange-500 px-4 py-4 text-sm font-black text-white uppercase tracking-widest shadow-lg shadow-orange-500/20 transition-all duration-300 hover:bg-orange-600 hover:shadow-orange-500/30 disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-400 disabled:shadow-none active:scale-[0.98]"
-        >
-          Place Order
-        </button>
+        <div className="space-y-4">
+          <button
+            type="button"
+            onClick={handlePlaceOrder}
+            disabled={items.length === 0 || isSubmitting}
+            className="w-full rounded-2xl bg-orange-500 py-5 text-[15px] font-black text-white uppercase tracking-widest shadow-xl shadow-orange-500/20 transition-all duration-300 hover:bg-orange-600 active:scale-95 disabled:bg-gray-100 disabled:text-gray-400 disabled:shadow-none"
+          >
+            {isSubmitting ? 'Processing...' : 'Place Order'}
+          </button>
+
+          <AnimatePresence>
+            {orderStatus.message && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0 }}
+                className={`flex items-center gap-3 rounded-2xl p-4 text-sm font-bold ${
+                  orderStatus.type === 'success' ? 'bg-emerald-50 text-emerald-600' : 'bg-rose-50 text-rose-600'
+                }`}
+              >
+                {orderStatus.type === 'success' ? <FiCheckCircle className="shrink-0" /> : <FiAlertCircle className="shrink-0" />}
+                {orderStatus.message}
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       </aside>
     </div>
   )

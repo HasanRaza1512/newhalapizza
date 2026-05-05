@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import { useCartStore } from '../store'
 import CartSidebar from './CartSidebar'
 import { FiGlobe, FiUser, FiShoppingBag } from 'react-icons/fi'
-import { motion, AnimatePresence } from 'framer-motion'
 
 function Header() {
   const isCartOpen = useCartStore((state) => state.isCartOpen)
@@ -15,52 +14,41 @@ function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20)
+      // Use a slightly larger threshold for stability
+      setIsScrolled(window.scrollY > 40)
     }
-    window.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   return (
     <>
-      <header 
-        className={`sticky top-0 z-50 w-full transition-all duration-300 ${
-          isScrolled 
-            ? 'bg-white/90 shadow-lg backdrop-blur-lg border-b border-gray-200/50' 
-            : 'bg-white border-b border-transparent'
-        }`}
-      >
-        {/* Top Bar - Hide on scroll for cleaner look */}
-        <AnimatePresence>
-          {!isScrolled && (
-            <motion.div 
-              initial={{ height: 'auto', opacity: 1 }}
-              animate={{ height: 'auto', opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              className="overflow-hidden border-b border-gray-100 bg-gray-50/50"
-            >
-              <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-4 py-2 text-[11px] font-bold text-gray-500 uppercase tracking-wider sm:px-6 lg:px-8">
-                <button className="flex items-center gap-1.5 transition-colors hover:text-orange-500">
-                  <FiGlobe className="h-3 w-3" />
-                  <span>Language</span>
-                </button>
-                <div className="flex items-center gap-5">
-                  <span className="flex items-center gap-1.5">
-                    <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-orange-500 shadow-[0_0_8px_rgba(249,115,22,0.8)]"></span>
-                    Live
-                  </span>
-                  <a href="#" className="transition-colors hover:text-black">Franchise</a>
-                  <a href="#" className="transition-colors hover:text-black">Store info</a>
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+      {/* Top Bar - Non-sticky, scrolls away naturally */}
+      <div className="hidden border-b border-gray-100 bg-gray-50/50 sm:block">
+        <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-4 py-2 text-[11px] font-bold text-gray-500 uppercase tracking-wider sm:px-6 lg:px-8">
+          <button className="flex items-center gap-1.5 transition-colors hover:text-orange-500">
+            <FiGlobe className="h-3 w-3" />
+            <span>Language</span>
+          </button>
+          <div className="flex items-center gap-5">
+            <span className="flex items-center gap-1.5">
+              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-orange-500 shadow-[0_0_8px_rgba(249,115,22,0.8)]"></span>
+              Live
+            </span>
+            <a href="#" className="transition-colors hover:text-black">Franchise</a>
+            <a href="#" className="transition-colors hover:text-black">Store info</a>
+          </div>
+        </div>
+      </div>
 
-        {/* Middle Bar */}
-        <div className={`mx-auto flex w-full max-w-6xl items-center justify-between px-4 transition-all duration-300 sm:px-6 lg:px-8 ${
-          isScrolled ? 'py-2' : 'py-3'
-        }`}>
+      {/* Main Header - Sticky and Stable */}
+      <header
+        className={`sticky top-0 z-50 w-full transition-all duration-300 ${isScrolled
+          ? 'bg-white/95 shadow-lg backdrop-blur-md border-b border-gray-200/50'
+          : 'bg-white border-b border-transparent'
+          }`}
+      >
+        <div className="mx-auto flex h-[72px] items-center justify-between px-4 max-w-6xl sm:px-6 lg:px-8">
           {/* Logo & Info */}
           <div className="flex items-center gap-8 lg:gap-12">
             <a href="/" className="group flex items-center gap-3">
@@ -85,8 +73,9 @@ function Header() {
             <button className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-50 text-gray-600 transition-all hover:bg-gray-100 hover:text-gray-900 active:scale-90">
               <FiUser className="h-5 w-5" />
             </button>
-            
-            <button 
+
+            <button
+              id="header-cart-btn"
               onClick={openCart}
               className="relative flex h-10 items-center gap-2 rounded-full bg-orange-500 px-4 font-black text-white shadow-lg shadow-orange-500/20 transition-all hover:bg-orange-600 hover:shadow-orange-500/30 active:scale-95"
             >
