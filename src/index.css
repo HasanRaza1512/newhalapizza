@@ -33,6 +33,16 @@
   button,
   textarea,
   select {
+    font-family: inherit;
+    font-size: inherit;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  button:active {
+    transform: scale(0.96);
+  }
+  textarea,
+  select {
     font: inherit;
   }
 

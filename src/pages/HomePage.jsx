@@ -60,7 +60,7 @@ function HomePage() {
   }
 
   return (
-    <div className="space-y-6 sm:space-y-8">
+    <div className="space-y-12 pb-12 sm:space-y-16 lg:space-y-20">
       <FeaturedStories />
 
       <StickyCategoryBar
@@ -69,13 +69,7 @@ function HomePage() {
         onCategoryClick={scrollToCategory}
       />
 
-      <section className="space-y-2 sm:space-y-4">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          {/* <h2 className="text-xl font-semibold text-slate-900 sm:text-2xl">
-            Browse Full Menu
-          </h2> */}
-          {/* <p className="text-sm text-slate-500">All categories on one page</p> */}
-        </div>
+      <section className="px-4 sm:px-6 lg:px-8">
 
         {categories.map((category) => (
           <section
@@ -84,30 +78,43 @@ function HomePage() {
             ref={(element) => {
               sectionRefs.current[category] = element
             }}
-            className="scroll-mt-44 space-y-4"
+            className="scroll-mt-44 py-12 border-b border-gray-100 last:border-0"
           >
-            <h3 className="text-xl font-black tracking-tight text-gray-900 sm:text-2xl uppercase">
-              {category}
-            </h3>
+            <div className="mb-8 flex items-center justify-between">
+              <h3 className="text-2xl font-black tracking-tight text-gray-900 sm:text-3xl uppercase">
+                {category}
+              </h3>
+              <span className="text-sm font-bold text-gray-400">
+                {productsByCategory[category].length} items
+              </span>
+            </div>
 
-            <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {productsByCategory[category].map((product) => (
-                <ProductCard
-                  key={product.id}
-                  image={product.image}
-                  title={product.name}
-                  description={product.description}
-                  price={product.price}
-                  isNew={product.id <= 4}
-                  onAddToCart={(event) => {
-                    addItem(product)
-                    if (event) {
-                      addFlyingImage(product.image, event.clientX, event.clientY)
-                    }
-                  }}
-                  onClick={() => setSelectedProduct(product)}
-                />
-              ))}
+            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              {productsByCategory[category].length > 0 ? (
+                productsByCategory[category].map((product) => (
+                  <ProductCard
+                    key={product.id}
+                    image={product.image}
+                    title={product.name}
+                    description={product.description}
+                    price={product.price}
+                    isNew={product.id <= 4}
+                    onAddToCart={(event) => {
+                      addItem(product)
+                      if (event) {
+                        addFlyingImage(product.image, event.clientX, event.clientY)
+                      }
+                    }}
+                    onClick={() => setSelectedProduct(product)}
+                  />
+                ))
+              ) : (
+                <div className="col-span-full rounded-3xl border-2 border-dashed border-gray-100 py-16 text-center">
+                  <p className="text-sm font-black uppercase tracking-widest text-gray-300">
+                    No items found in this category
+                  </p>
+                </div>
+              )}
             </div>
           </section>
         ))}

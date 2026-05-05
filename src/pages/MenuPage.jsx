@@ -56,18 +56,20 @@ function MenuPage() {
   }
 
   return (
-    <div className="space-y-5 sm:space-y-6 lg:space-y-8">
-      <section className="rounded-2xl border border-gray-100 bg-gray-50/50 p-5 shadow-sm sm:p-6">
-        <h1 className="text-2xl font-black tracking-tight text-gray-900 sm:text-3xl uppercase">
-          Explore Our Menu
+    <div className="space-y-12 pb-12 sm:space-y-16 lg:space-y-20">
+      <section className="mx-4 rounded-3xl border border-gray-100 bg-gray-50/50 p-8 shadow-sm sm:mx-6 sm:p-12 lg:mx-8">
+        <h1 className="text-3xl font-black tracking-tight text-gray-900 sm:text-5xl uppercase">
+          Full Menu
         </h1>
-        <p className="mt-2 max-w-2xl text-sm leading-6 text-gray-600 sm:text-base">
-          Pick a category, browse our favorites, and customize any item before
-          adding it to your cart.
+        <p className="mt-4 max-w-2xl text-base leading-relaxed text-gray-500 sm:text-lg">
+          Explore our wide range of authentic pizzas and sides, crafted with 
+          the freshest ingredients and baked to perfection.
         </p>
       </section>
 
-      <TopCards />
+      <div className="px-4 sm:px-6 lg:px-8">
+        <TopCards />
+      </div>
 
       <StickyCategoryBar
         categories={categories}
@@ -75,7 +77,7 @@ function MenuPage() {
         onCategoryClick={scrollToCategory}
       />
 
-      <div className="space-y-12 pb-12">
+      <div className="space-y-0 px-4 sm:px-6 lg:px-8">
         {categories.map((category) => {
           const categoryProducts = isLoading 
             ? Array.from({ length: 4 })
@@ -87,15 +89,20 @@ function MenuPage() {
             <section
               key={category}
               id={category}
-              className="scroll-mt-[180px] space-y-4 sm:space-y-5"
+              className="scroll-mt-[180px] py-12 border-b border-gray-100 last:border-0"
             >
-              <h2 className="text-2xl font-black text-gray-900 uppercase tracking-tight">{category}</h2>
-              <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              <div className="mb-8 flex items-center justify-between">
+                <h2 className="text-2xl font-black text-gray-900 uppercase tracking-tight">{category}</h2>
+                <span className="text-sm font-bold text-gray-400">
+                   {isLoading ? '...' : categoryProducts.length} items
+                </span>
+              </div>
+              <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {isLoading ? (
                   categoryProducts.map((_, index) => (
                     <ProductSkeleton key={index} />
                   ))
-                ) : (
+                ) : categoryProducts.length > 0 ? (
                   categoryProducts.map((product) => (
                     <ProductCard
                       key={product.id}
@@ -111,6 +118,12 @@ function MenuPage() {
                       onClick={() => setSelectedProduct(product)}
                     />
                   ))
+                ) : (
+                  <div className="col-span-full rounded-3xl border-2 border-dashed border-gray-100 py-16 text-center">
+                    <p className="text-sm font-black uppercase tracking-widest text-gray-300">
+                      No items found in this category
+                    </p>
+                  </div>
                 )}
               </div>
             </section>

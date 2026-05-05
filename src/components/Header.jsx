@@ -1,64 +1,105 @@
+import { useState, useEffect } from 'react'
 import { useCartStore } from '../store'
 import CartSidebar from './CartSidebar'
-import { FiGlobe } from 'react-icons/fi'
+import { FiGlobe, FiUser, FiShoppingBag } from 'react-icons/fi'
+import { motion, AnimatePresence } from 'framer-motion'
 
 function Header() {
   const isCartOpen = useCartStore((state) => state.isCartOpen)
+  const openCart = useCartStore((state) => state.openCart)
   const closeCart = useCartStore((state) => state.closeCart)
+  const items = useCartStore((state) => state.items)
+  const [isScrolled, setIsScrolled] = useState(false)
+
+  const cartCount = items.reduce((total, item) => total + item.quantity, 0)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20)
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   return (
     <>
-      <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white/80 backdrop-blur-md shadow-sm">
-        {/* Top Bar */}
-        <div className="border-b border-gray-100 bg-gray-50/50">
-          <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-4 px-4 py-2 text-[12px] font-medium text-gray-500 sm:px-6 lg:px-8">
-            <button className="flex items-center gap-1.5 transition-colors hover:text-black">
-              <FiGlobe className="h-3.5 w-3.5" />
-              <span>Language</span>
-            </button>
-            <div className="flex flex-wrap items-center gap-4 sm:gap-6">
-              <span className="flex items-center gap-1.5">
-                <span className="h-1.5 w-1.5 rounded-full bg-orange-500 shadow-[0_0_8px_rgba(249,115,22,0.5)]"></span>
-                Live
-              </span>
-              <a href="#" className="transition-colors hover:text-black">Franchise</a>
-              <a href="#" className="transition-colors hover:text-black">About us</a>
-              <a href="#" className="transition-colors hover:text-black">Store info</a>
-            </div>
-          </div>
-        </div>
+      <header 
+        className={`sticky top-0 z-50 w-full transition-all duration-300 ${
+          isScrolled 
+            ? 'bg-white/90 shadow-lg backdrop-blur-lg border-b border-gray-200/50' 
+            : 'bg-white border-b border-transparent'
+        }`}
+      >
+        {/* Top Bar - Hide on scroll for cleaner look */}
+        <AnimatePresence>
+          {!isScrolled && (
+            <motion.div 
+              initial={{ height: 'auto', opacity: 1 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              className="overflow-hidden border-b border-gray-100 bg-gray-50/50"
+            >
+              <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-4 py-2 text-[11px] font-bold text-gray-500 uppercase tracking-wider sm:px-6 lg:px-8">
+                <button className="flex items-center gap-1.5 transition-colors hover:text-orange-500">
+                  <FiGlobe className="h-3 w-3" />
+                  <span>Language</span>
+                </button>
+                <div className="flex items-center gap-5">
+                  <span className="flex items-center gap-1.5">
+                    <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-orange-500 shadow-[0_0_8px_rgba(249,115,22,0.8)]"></span>
+                    Live
+                  </span>
+                  <a href="#" className="transition-colors hover:text-black">Franchise</a>
+                  <a href="#" className="transition-colors hover:text-black">Store info</a>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* Middle Bar */}
-        <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
-          {/* Logo & Delivery Info */}
-          <div className="flex items-center gap-6 lg:gap-10">
-            <a href="/" className="flex items-center gap-3">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-500 text-2xl font-black text-white shadow-lg shadow-orange-500/20">
+        <div className={`mx-auto flex w-full max-w-6xl items-center justify-between px-4 transition-all duration-300 sm:px-6 lg:px-8 ${
+          isScrolled ? 'py-2' : 'py-3'
+        }`}>
+          {/* Logo & Info */}
+          <div className="flex items-center gap-8 lg:gap-12">
+            <a href="/" className="group flex items-center gap-3">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-500 text-2xl font-black text-white shadow-lg shadow-orange-500/20 transition-transform group-hover:scale-110">
+                <span className="leading-none">H</span>
               </div>
-              <span className="hidden text-xl font-black tracking-tight text-gray-900 sm:block uppercase">
-                Hala Pizza
+              <span className="hidden text-xl font-black tracking-tighter text-gray-900 sm:block uppercase">
+                Hala<span className="text-orange-500">Pizza</span>
               </span>
             </a>
 
             <div className="hidden flex-col md:flex">
-              <span className="text-sm font-bold text-gray-900">Pizza delivery Quetta</span>
-              <span className="text-[12px] text-gray-500">
+              <span className="text-sm font-black text-gray-900 uppercase tracking-tight">Delivery Quetta</span>
+              <span className="text-[11px] font-bold text-gray-400">
                 30 min • 4.75 <span className="text-orange-500">★</span>
               </span>
             </div>
-
-            <div className="hidden flex-col lg:flex">
-              <a href="tel:+921234567890" className="text-sm font-bold text-gray-900 transition-colors hover:text-orange-500">
-                +92 1234567890
-              </a>
-              <span className="text-[12px] text-gray-500">Call</span>
-            </div>
           </div>
 
-          {/* Login Button */}
-          <button className="rounded-full bg-gray-100 px-5 py-2 text-sm font-semibold text-gray-700 transition-all hover:bg-gray-200 hover:text-gray-900 active:scale-95">
-            Log in
-          </button>
+          {/* Right Actions */}
+          <div className="flex items-center gap-3">
+            <button className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-50 text-gray-600 transition-all hover:bg-gray-100 hover:text-gray-900 active:scale-90">
+              <FiUser className="h-5 w-5" />
+            </button>
+            
+            <button 
+              onClick={openCart}
+              className="relative flex h-10 items-center gap-2 rounded-full bg-orange-500 px-4 font-black text-white shadow-lg shadow-orange-500/20 transition-all hover:bg-orange-600 hover:shadow-orange-500/30 active:scale-95"
+            >
+              <FiShoppingBag className="h-5 w-5" />
+              {cartCount > 0 && (
+                <span className="text-sm">{cartCount}</span>
+              )}
+            </button>
+
+            <button className="hidden rounded-full bg-gray-900 px-6 py-2 text-sm font-black text-white uppercase tracking-wider transition-all hover:bg-black active:scale-95 sm:block">
+              Login
+            </button>
+          </div>
         </div>
       </header>
 

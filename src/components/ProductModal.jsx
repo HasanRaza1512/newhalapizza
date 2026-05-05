@@ -423,7 +423,12 @@ function ProductModalContent({ product, onClose, onAddToCart }) {
 
             {/* ── Sticky footer ── */}
             <div className="shrink-0 border-t border-gray-100 bg-white/95 backdrop-blur-md p-5 sm:p-6">
-              <div className="flex items-center justify-between gap-4">
+              <motion.div 
+                className="flex items-center justify-between gap-4"
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.4 }}
+              >
                 <div>
                   <p className="text-[10px] font-bold uppercase tracking-widest text-gray-500">
                     Total
@@ -444,7 +449,7 @@ function ProductModalContent({ product, onClose, onAddToCart }) {
                   whileTap={{ scale: 0.96 }}
                   onClick={handleAddToCart}
                   disabled={addedFeedback}
-                  className={`flex items-center gap-2 rounded-2xl px-7 py-3.5 text-sm font-bold shadow-lg transition-all duration-300 cursor-pointer ${
+                  className={`flex flex-1 items-center justify-center gap-3 rounded-2xl px-7 py-4 text-[15px] font-black uppercase tracking-widest shadow-xl transition-all duration-300 cursor-pointer ${
                     addedFeedback
                       ? 'bg-emerald-500 text-white shadow-emerald-200/50'
                       : 'bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-orange-300/40 hover:shadow-xl hover:shadow-orange-300/50'
@@ -476,7 +481,7 @@ function ProductModalContent({ product, onClose, onAddToCart }) {
                     )}
                   </AnimatePresence>
                 </motion.button>
-              </div>
+              </motion.div>
             </div>
           </div>
         </div>
