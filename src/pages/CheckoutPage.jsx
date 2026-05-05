@@ -1,11 +1,8 @@
 import { useMemo, useState } from 'react'
 import { useCartStore } from '../store'
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
-import { db } from '../lib/firebase'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiCheckCircle, FiAlertCircle } from 'react-icons/fi'
 import { useNavigate } from 'react-router-dom'
-
 function CheckoutPage() {
   const items = useCartStore((state) => state.items)
   const clearCart = useCartStore((state) => state.clearCart)
@@ -43,7 +40,7 @@ function CheckoutPage() {
     setOrderStatus({ type: '', message: '' })
 
     try {
-      const ordersCol = collection(db, 'orders')
+      // Mock order data
       const orderData = {
         customer: formData,
         items: items.map(item => ({
@@ -58,11 +55,14 @@ function CheckoutPage() {
         subtotal,
         deliveryFee,
         total,
-        createdAt: serverTimestamp(),
+        createdAt: new Date().toISOString(),
         status: 'pending'
       }
 
-      await addDoc(ordersCol, orderData)
+      console.log("Mocking order placement:", orderData)
+      
+      // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 1500))
       
       setOrderStatus({ type: 'success', message: 'Order placed successfully! Redirecting...' })
       

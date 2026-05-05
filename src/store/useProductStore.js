@@ -1,16 +1,4 @@
 import { create } from 'zustand'
-import { 
-  collection, 
-  getDocs, 
-  addDoc, 
-  deleteDoc, 
-  doc, 
-  query, 
-  orderBy,
-  onSnapshot
-} from 'firebase/firestore'
-import { db } from '../lib/firebase'
-
 import { products as dummyProducts } from '../data/products'
 
 export const useProductStore = create((set) => ({
@@ -18,68 +6,29 @@ export const useProductStore = create((set) => ({
   isLoading: false,
   error: null,
 
-  // Fetch products from Firestore
+  // Mock fetch products (already initialized with dummy data)
   fetchProducts: async () => {
-    const { products } = useProductStore.getState()
-    if (products.length === 0) set({ isLoading: true, error: null })
-    try {
-      const productsCol = collection(db, 'products')
-      const q = query(productsCol, orderBy('category'))
-      const snapshot = await getDocs(q)
-      const productList = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }))
-      set({ products: productList, isLoading: false })
-    } catch (err) {
-      console.error("Error fetching products:", err)
-      set({ error: err.message, isLoading: false })
-    }
+    set({ isLoading: false, error: null })
   },
 
-  // Real-time subscription to products
+  // Mock real-time subscription
   subscribeToProducts: () => {
-    const { products } = useProductStore.getState()
-    if (products.length === 0) set({ isLoading: true })
-    const productsCol = collection(db, 'products')
-    const q = query(productsCol, orderBy('category'))
-    
-    return onSnapshot(q, (snapshot) => {
-      const productList = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }))
-      set({ products: productList, isLoading: false })
-    }, (err) => {
-      console.error("Subscription error:", err)
-      set({ error: err.message, isLoading: false })
-    })
+    set({ isLoading: false })
+    // Return a no-op unsubscribe function
+    return () => {}
   },
 
-  // Add new product (Admin)
+  // Mock add new product
   addProduct: async (productData) => {
-    try {
-      const productsCol = collection(db, 'products')
-      await addDoc(productsCol, {
-        ...productData,
-        createdAt: new Date().toISOString()
-      })
-      return { success: true }
-    } catch (err) {
-      console.error("Error adding product:", err)
-      return { success: false, error: err.message }
-    }
+    console.log("Mocking add product:", productData)
+    // Optionally: set({ products: [...useProductStore.getState().products, { id: Date.now(), ...productData }] })
+    return { success: true }
   },
 
-  // Delete product (Admin)
+  // Mock delete product
   deleteProduct: async (productId) => {
-    try {
-      const productRef = doc(db, 'products', productId)
-      await deleteDoc(productRef)
-      return { success: true }
-    } catch (err) {
-      console.error("Error deleting product:", err)
-      return { success: false, error: err.message }
-    }
+    console.log("Mocking delete product:", productId)
+    // Optionally: set({ products: useProductStore.getState().products.filter(p => p.id !== productId) })
+    return { success: true }
   }
 }))
