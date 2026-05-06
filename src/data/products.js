@@ -43,7 +43,7 @@ export const products = [
     category: 'Pizza',
     price: 19.99,
     description: 'Our signature pizza with a secret blend of spices, premium toppings, and extra cheesy goodness.',
-    image: 'https://img.magnific.com/free-photo/mix-pizza-with-tomato-slices-mushroom-olive_140725-185.jpg',
+    image: 'https://media.dodostatic.com/image/r:292x292/019dd43f953173018f6e70d857e6b052.avif',
     isNew: true,
   },
   {
@@ -53,7 +53,7 @@ export const products = [
     price: 12.99,
     description: 'Classic Italian pizza with fresh mozzarella, ripe tomatoes, and fragrant basil on a golden crust.',
     image:
-      'https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?auto=format&fit=crop&w=900&q=80',
+      'https://media.dodostatic.com/image/r:292x292/019d9a72697b77c1882cf622cfa68e93.avif',
     isNew: true,
   },
   {
@@ -63,7 +63,7 @@ export const products = [
     price: 15.5,
     description: 'Loaded with spicy pepperoni, melted mozzarella, and our signature tangy tomato sauce.',
     image:
-      'https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?auto=format&fit=crop&w=900&q=80',
+      'https://media.dodostatic.com/image/r:292x292/019d9a74aa297405ad4b73a38eb810b7.avif',
     isNew: true,
   },
   {
