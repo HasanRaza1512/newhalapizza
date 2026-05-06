@@ -87,7 +87,7 @@ function HomePage() {
             ref={(element) => {
               sectionRefs.current[category] = element
             }}
-            className="scroll-mt-44 py-12 border-b border-gray-100 last:border-0"
+            className="scroll-mt-44 py-16 border-b border-gray-100 last:border-0"
           >
             <div className="mb-8 flex items-center justify-between">
               <h3 className="text-2xl font-black tracking-tight text-gray-900 sm:text-3xl uppercase">
@@ -98,7 +98,7 @@ function HomePage() {
               </span>
             </div>
 
-            <div className="grid grid-cols-1 gap-x-12 gap-y-16 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <div className="grid grid-cols-1 gap-x-16 gap-y-20 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {isLoading ? (
                 Array.from({ length: 4 }).map((_, i) => <ProductSkeleton key={i} />)
               ) : productsByCategory[category].length > 0 ? (
