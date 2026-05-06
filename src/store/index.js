@@ -40,9 +40,12 @@ export const useCartStore = create(
     (set) => ({
       items: [],
       isCartOpen: false,
+      isDeliveryPopupOpen: false,
       fulfillment: null, // { type: 'delivery' | 'pickup', phone: string, address?: string }
       openCart: () => set({ isCartOpen: true }),
       closeCart: () => set({ isCartOpen: false }),
+      openDeliveryPopup: () => set({ isDeliveryPopupOpen: true }),
+      closeDeliveryPopup: () => set({ isDeliveryPopupOpen: false }),
       clearCart: () => set({ items: [] }),
       setFulfillment: (details) => set({ fulfillment: details }),
 

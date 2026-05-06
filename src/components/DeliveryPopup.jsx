@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FiTruck, FiShoppingBag, FiArrowLeft, FiMapPin, FiPhone, FiCheck } from 'react-icons/fi'
+import { FiTruck, FiShoppingBag, FiArrowLeft, FiMapPin, FiPhone, FiCheck, FiX } from 'react-icons/fi'
 import { useCartStore } from '../store'
 import AreaSelector from './AreaSelector'
 
@@ -22,8 +22,10 @@ const modalVariants = {
 function DeliveryPopup() {
   const fulfillment = useCartStore((state) => state.fulfillment)
   const setFulfillment = useCartStore((state) => state.setFulfillment)
+  const isDeliveryPopupOpen = useCartStore((state) => state.isDeliveryPopupOpen)
+  const openDeliveryPopup = useCartStore((state) => state.openDeliveryPopup)
+  const closeDeliveryPopup = useCartStore((state) => state.closeDeliveryPopup)
   
-  const [isOpen, setIsOpen] = useState(false)
   const [step, setStep] = useState(1) // 1: Select type, 2: Enter details
   const [type, setType] = useState(null) // 'delivery' or 'pickup'
   const [formData, setFormData] = useState({
@@ -32,11 +34,22 @@ function DeliveryPopup() {
   })
   const [errors, setErrors] = useState({})
 
+  // Initialize form data if fulfillment exists
   useEffect(() => {
-    if (!fulfillment) {
-      setIsOpen(true)
+    if (fulfillment) {
+      setType(fulfillment.type)
+      setFormData({
+        phone: fulfillment.phone,
+        address: fulfillment.address || ''
+      })
     }
   }, [fulfillment])
+
+  useEffect(() => {
+    if (!fulfillment) {
+      openDeliveryPopup()
+    }
+  }, [fulfillment, openDeliveryPopup])
 
   const handleSelectType = (selectedType) => {
     setType(selectedType)
@@ -58,15 +71,15 @@ function DeliveryPopup() {
         phone: formData.phone,
         address: type === 'delivery' ? formData.address : undefined
       })
-      setIsOpen(false)
+      closeDeliveryPopup()
     }
   }
 
-  if (!isOpen) return null
+  if (!isDeliveryPopupOpen) return null
 
   return (
     <AnimatePresence>
-      {isOpen && (
+      {isDeliveryPopupOpen && (
         <motion.div
           className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6"
           variants={overlayVariants}
@@ -92,7 +105,15 @@ function DeliveryPopup() {
                     exit={{ opacity: 0, x: 20 }}
                     className="space-y-10"
                   >
-                    <div className="text-center space-y-3">
+                    <div className="relative text-center space-y-3">
+                      {fulfillment && (
+                        <button
+                          onClick={closeDeliveryPopup}
+                          className="absolute -top-4 -right-4 flex h-10 w-10 items-center justify-center rounded-full bg-gray-50 text-gray-400 transition-all hover:bg-gray-100 hover:text-gray-900"
+                        >
+                          <FiX className="h-5 w-5" />
+                        </button>
+                      )}
                       <h2 className="text-2xl font-black text-gray-900 leading-tight">CHOOSE YOUR ORDER TYPE</h2>
                       <p className="text-sm font-medium text-gray-400">Select how you'd like to receive your food</p>
                     </div>
@@ -127,16 +148,24 @@ function DeliveryPopup() {
                     exit={{ opacity: 0, x: -20 }}
                     className="space-y-8"
                   >
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center justify-between">
                       <button
                         onClick={() => setStep(1)}
-                        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gray-100 text-gray-500 transition-all hover:bg-gray-200 hover:text-gray-900"
+                        className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 text-gray-400 transition-all hover:bg-gray-200 hover:text-gray-900"
                       >
                         <FiArrowLeft className="h-5 w-5" />
                       </button>
                       <h2 className="text-xl font-black text-gray-900 truncate">
                         {type === 'delivery' ? 'DELIVERY DETAILS' : 'PICKUP DETAILS'}
                       </h2>
+                      {fulfillment && (
+                        <button
+                          onClick={closeDeliveryPopup}
+                          className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 text-gray-400 transition-all hover:bg-gray-200 hover:text-gray-900"
+                        >
+                          <FiX className="h-5 w-5" />
+                        </button>
+                      )}
                     </div>
 
                     <div className="space-y-5">

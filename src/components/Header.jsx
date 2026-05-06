@@ -5,6 +5,8 @@ import { FiGlobe, FiUser, FiShoppingBag, FiTruck } from 'react-icons/fi'
 
 function Header() {
   const fulfillment = useCartStore((state) => state.fulfillment)
+  const isDeliveryPopupOpen = useCartStore((state) => state.isDeliveryPopupOpen)
+  const openDeliveryPopup = useCartStore((state) => state.openDeliveryPopup)
   const isCartOpen = useCartStore((state) => state.isCartOpen)
   const openCart = useCartStore((state) => state.openCart)
   const closeCart = useCartStore((state) => state.closeCart)
@@ -61,19 +63,22 @@ function Header() {
               </span>
             </a>
 
-            <div className="hidden flex-col md:flex">
-              <span className="text-sm font-black text-gray-900 uppercase tracking-tight">
+            <button 
+              onClick={openDeliveryPopup}
+              className="hidden flex-col md:flex text-left group transition-all"
+            >
+              <span className="text-sm font-black text-gray-900 uppercase tracking-tight group-hover:text-orange-500 transition-colors">
                 {fulfillment ? (
                   <span className="flex items-center gap-1.5">
                     {fulfillment.type === 'delivery' ? <FiTruck className="h-3 w-3 text-orange-500" /> : <FiShoppingBag className="h-3 w-3 text-orange-500" />}
                     {fulfillment.type === 'delivery' ? (fulfillment.address?.split(',')[0] || 'Delivery') : 'Pickup'}
                   </span>
-                ) : 'Delivery Quetta'}
+                ) : 'Select Location'}
               </span>
-              <span className="text-[11px] font-bold text-gray-400">
-                {fulfillment ? fulfillment.phone : '30 min • 4.75'} <span className="text-orange-500">★</span>
+              <span className="text-[11px] font-bold text-gray-400 group-hover:text-gray-600 transition-colors">
+                {fulfillment ? fulfillment.phone : 'Click to set location'} <span className="text-orange-500">★</span>
               </span>
-            </div>
+            </button>
           </div>
 
           {/* Right Actions */}
