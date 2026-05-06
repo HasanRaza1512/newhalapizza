@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { useLocation } from 'react-router-dom'
 import FloatingCartButton from './FloatingCartButton'
 import FlyingImages from './FlyingImages'
+import DeliveryPopup from './DeliveryPopup'
 
 function AppLayout({ children }) {
   const location = useLocation()
@@ -26,6 +27,7 @@ function AppLayout({ children }) {
       <Footer />
       <FloatingCartButton />
       <FlyingImages />
+      <DeliveryPopup />
     </div>
   )
 }

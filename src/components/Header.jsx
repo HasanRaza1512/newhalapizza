@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react'
 import { useCartStore } from '../store'
 import CartSidebar from './CartSidebar'
-import { FiGlobe, FiUser, FiShoppingBag } from 'react-icons/fi'
+import { FiGlobe, FiUser, FiShoppingBag, FiTruck } from 'react-icons/fi'
 
 function Header() {
+  const fulfillment = useCartStore((state) => state.fulfillment)
   const isCartOpen = useCartStore((state) => state.isCartOpen)
   const openCart = useCartStore((state) => state.openCart)
   const closeCart = useCartStore((state) => state.closeCart)
@@ -61,9 +62,16 @@ function Header() {
             </a>
 
             <div className="hidden flex-col md:flex">
-              <span className="text-sm font-black text-gray-900 uppercase tracking-tight">Delivery Quetta</span>
+              <span className="text-sm font-black text-gray-900 uppercase tracking-tight">
+                {fulfillment ? (
+                  <span className="flex items-center gap-1.5">
+                    {fulfillment.type === 'delivery' ? <FiTruck className="h-3 w-3 text-orange-500" /> : <FiShoppingBag className="h-3 w-3 text-orange-500" />}
+                    {fulfillment.type === 'delivery' ? (fulfillment.address?.split(',')[0] || 'Delivery') : 'Pickup'}
+                  </span>
+                ) : 'Delivery Quetta'}
+              </span>
               <span className="text-[11px] font-bold text-gray-400">
-                30 min • 4.75 <span className="text-orange-500">★</span>
+                {fulfillment ? fulfillment.phone : '30 min • 4.75'} <span className="text-orange-500">★</span>
               </span>
             </div>
           </div>

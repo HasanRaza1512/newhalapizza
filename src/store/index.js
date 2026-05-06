@@ -40,9 +40,11 @@ export const useCartStore = create(
     (set) => ({
       items: [],
       isCartOpen: false,
+      fulfillment: null, // { type: 'delivery' | 'pickup', phone: string, address?: string }
       openCart: () => set({ isCartOpen: true }),
       closeCart: () => set({ isCartOpen: false }),
       clearCart: () => set({ items: [] }),
+      setFulfillment: (details) => set({ fulfillment: details }),
 
       flyingImages: [],
       addFlyingImage: (url, startX, startY) => set((state) => ({
@@ -120,7 +122,10 @@ export const useCartStore = create(
     }),
     {
       name: 'pizza-cart-storage',
-      partialize: (state) => ({ items: state.items }),
+      partialize: (state) => ({ 
+        items: state.items,
+        fulfillment: state.fulfillment 
+      }),
     },
   ),
 )

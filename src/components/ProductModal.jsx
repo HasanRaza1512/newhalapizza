@@ -257,26 +257,27 @@ function ProductModalContent({ product, onClose, onAddToCart }) {
 
               <motion.button
                 type="button"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                whileHover={{ scale: 1.02, y: -2 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={handleAddToCart}
                 disabled={addedFeedback}
-                className={`flex-1 flex items-center justify-center gap-3 rounded-[2rem] py-5 text-sm font-black uppercase tracking-widest shadow-2xl transition-all duration-500 ${
+                className={`flex-1 flex items-center justify-center gap-3 rounded-[2rem] py-6 text-sm font-black uppercase tracking-widest shadow-2xl transition-all duration-500 ${
                   addedFeedback
-                    ? 'bg-emerald-500 text-white'
-                    : 'bg-orange-500 text-white shadow-orange-500/20 hover:bg-orange-600'
+                    ? 'bg-emerald-500 text-white shadow-emerald-500/20'
+                    : 'bg-orange-500 text-white shadow-orange-500/30 hover:bg-orange-600 hover:shadow-orange-600/40'
                 }`}
               >
                 <AnimatePresence mode="wait">
                   {addedFeedback ? (
                     <motion.div
                       key="added"
-                      initial={{ opacity: 0, scale: 0.5 }}
-                      animate={{ opacity: 1, scale: 1 }}
+                      initial={{ opacity: 0, scale: 0.5, y: 10 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.5, y: -10 }}
                       className="flex items-center gap-2"
                     >
-                      <FiCheck className="h-5 w-5" strokeWidth={4} />
-                      Added to Cart
+                      <FiCheck className="h-6 w-6" strokeWidth={4} />
+                      <span className="translate-y-[1px]">Added to Order</span>
                     </motion.div>
                   ) : (
                     <motion.div
@@ -286,7 +287,7 @@ function ProductModalContent({ product, onClose, onAddToCart }) {
                       className="flex items-center gap-2"
                     >
                       <FiShoppingCart className="h-5 w-5" />
-                      Add to Order
+                      <span className="translate-y-[1px]">Add to Order</span>
                       <FiChevronRight className="h-4 w-4 ml-1" strokeWidth={3} />
                     </motion.div>
                   )}

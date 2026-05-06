@@ -1,7 +1,18 @@
 import { motion } from 'framer-motion'
 import { FiPlus } from 'react-icons/fi'
 
+import { useState } from 'react'
+
 function ProductCard({ image, title, price, description, isNew, onAddToCart, onClick }) {
+  const [isAdded, setIsAdded] = useState(false)
+
+  const handleQuickAdd = (e) => {
+    e.stopPropagation()
+    onAddToCart?.(e)
+    setIsAdded(true)
+    setTimeout(() => setIsAdded(false), 2000)
+  }
+
   return (
     <article
       className="group relative flex flex-col items-center text-center cursor-pointer transition-all duration-300"
@@ -18,7 +29,7 @@ function ProductCard({ image, title, price, description, isNew, onAddToCart, onC
         />
         
         {/* Soft shadow under image on hover */}
-        <div className="absolute inset-0 rounded-full transition-opacity duration-300 opacity-0 group-hover:opacity-100 shadow-[0_15px_30px_rgba(0,0,0,0.1)] pointer-events-none" />
+        <div className="absolute inset-0 rounded-full transition-opacity duration-300 opacity-0 group-hover:opacity-100 shadow-[0_15px_30px_rgba(0,0,0,0.15)] pointer-events-none" />
       </div>
 
       <div className="flex flex-col items-center mt-6 w-full px-4 space-y-3">
@@ -43,13 +54,14 @@ function ProductCard({ image, title, price, description, isNew, onAddToCart, onC
         <div className="pt-2">
           <button
             type="button"
-            onClick={(e) => {
-              e.stopPropagation()
-              onClick?.()
-            }}
-            className="rounded-full bg-orange-100 px-5 py-2 text-sm font-medium text-orange-600 transition-all hover:bg-orange-500 hover:text-white active:scale-95 shadow-sm shadow-orange-200/50 hover:shadow-lg hover:shadow-orange-500/20"
+            onClick={handleQuickAdd}
+            className={`rounded-full px-5 py-2 text-sm font-medium transition-all active:scale-95 shadow-sm ${
+              isAdded 
+                ? 'bg-emerald-500 text-white shadow-emerald-500/20' 
+                : 'bg-orange-100 text-orange-600 shadow-orange-200/50 hover:bg-orange-500 hover:text-white hover:shadow-lg hover:shadow-orange-500/20'
+            }`}
           >
-            AED {price.toFixed(0)}
+            {isAdded ? 'Added!' : `AED ${price.toFixed(0)}`}
           </button>
         </div>
       </div>
