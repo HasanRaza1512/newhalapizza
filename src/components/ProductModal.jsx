@@ -148,13 +148,13 @@ function ProductModalContent({ product, onClose, onAddToCart }) {
         {/* Close Button (Fixed Top-Right) */}
         <button
           onClick={onClose}
-          className="absolute top-6 right-6 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-gray-100/80 backdrop-blur-sm text-gray-500 hover:bg-orange-500 hover:text-white transition-all shadow-sm"
+          className="absolute top-4 right-4 sm:top-6 sm:right-6 z-20 flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-white/80 backdrop-blur-sm text-gray-500 hover:bg-orange-500 hover:text-white transition-all shadow-sm"
         >
           <FiX className="h-5 w-5" strokeWidth={3} />
         </button>
 
         {/* ── Left: Image section ── */}
-        <div className="relative w-full md:w-[45%] flex items-center justify-center bg-gray-50/50 p-8 md:p-12 overflow-hidden">
+        <div className="relative w-full md:w-[45%] flex items-center justify-center bg-gray-50/50 p-6 sm:p-8 md:p-12 overflow-hidden shrink-0">
           <div className="absolute inset-0 opacity-20 pointer-events-none">
             <div className="absolute top-[-10%] left-[-10%] w-[120%] h-[120%] bg-[radial-gradient(circle_at_center,_var(--tw-gradient-from)_0%,_transparent_70%)] from-orange-200"></div>
           </div>
@@ -170,7 +170,7 @@ function ProductModalContent({ product, onClose, onAddToCart }) {
             <img
               src={product.image}
               alt={product.name}
-              className="aspect-square w-full max-w-[320px] sm:max-w-[400px] md:max-w-[480px] object-cover rounded-full shadow-[0_30px_60px_rgba(0,0,0,0.15)] ring-8 ring-white/50"
+              className="aspect-square w-full max-w-[240px] sm:max-w-[400px] md:max-w-[480px] object-cover rounded-full shadow-[0_20px_40px_rgba(0,0,0,0.1)] sm:shadow-[0_30px_60px_rgba(0,0,0,0.15)] ring-4 sm:ring-8 ring-white/50"
             />
           </motion.div>
 
@@ -178,41 +178,41 @@ function ProductModalContent({ product, onClose, onAddToCart }) {
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="absolute bottom-8 left-8"
+            className="absolute bottom-4 left-4 sm:bottom-8 sm:left-8"
           >
-            <span className="bg-white/80 backdrop-blur-md px-4 py-2 rounded-2xl text-[10px] font-black uppercase tracking-widest text-orange-600 shadow-lg border border-orange-100">
+            <span className="bg-white/80 backdrop-blur-md px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl sm:rounded-2xl text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-orange-600 shadow-lg border border-orange-100">
               {product.category}
             </span>
           </motion.div>
         </div>
 
         {/* ── Right: Details & Customization ── */}
-        <div className="flex flex-col flex-1 bg-white">
-          <div className="flex-1 overflow-y-auto custom-scrollbar">
+        <div className="flex flex-col flex-1 bg-white min-h-0">
+          <div className="flex-1 overflow-y-auto no-scrollbar sm:custom-scrollbar">
             <motion.div
-              className="p-8 md:p-12 space-y-10"
+              className="p-6 sm:p-8 md:p-12 space-y-8 sm:space-y-10"
               variants={staggerChildren}
               initial="hidden"
               animate="visible"
             >
               {/* Product Header */}
-              <motion.div variants={fadeUp} className="space-y-4">
-                <h3 className="text-4xl font-black text-gray-900 tracking-tight leading-none uppercase">
+              <motion.div variants={fadeUp} className="space-y-3 sm:space-y-4">
+                <h3 className="text-3xl sm:text-4xl font-black text-gray-900 tracking-tight leading-tight uppercase">
                   {product.name}
                 </h3>
-                <p className="text-sm font-medium text-gray-400 leading-relaxed max-w-md">
+                <p className="text-[13px] sm:text-sm font-medium text-gray-400 leading-relaxed max-w-md">
                   {product.description}
                 </p>
                 
                 {/* Price Display */}
-                <div className="inline-flex items-center gap-4 bg-orange-50/50 border border-orange-100 rounded-2xl px-6 py-3">
-                   <span className="text-[10px] font-black uppercase tracking-widest text-orange-400">Starting at</span>
-                   <span className="text-2xl font-black text-orange-600">AED {product.price.toFixed(2)}</span>
+                <div className="inline-flex items-center gap-3 sm:gap-4 bg-orange-50/50 border border-orange-100 rounded-xl sm:rounded-2xl px-4 py-2 sm:px-6 sm:py-3">
+                   <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-orange-400">Starting at</span>
+                   <span className="text-xl sm:text-2xl font-black text-orange-600">AED {product.price.toFixed(2)}</span>
                 </div>
               </motion.div>
 
               {/* Customization Sections */}
-              <motion.div variants={fadeUp} className="space-y-8">
+              <motion.div variants={fadeUp} className="space-y-6 sm:space-y-8 pb-4">
                 <SizeSelector
                   selectedSize={selectedSize}
                   onSelect={setSelectedSize}
@@ -234,24 +234,24 @@ function ProductModalContent({ product, onClose, onAddToCart }) {
           </div>
 
           {/* ── Sticky footer ── */}
-          <div className="p-8 md:p-12 border-t border-gray-50 bg-white/80 backdrop-blur-md">
+          <div className="p-6 sm:p-8 md:p-12 border-t border-gray-50 bg-white/80 backdrop-blur-md">
             <motion.div 
-              className="flex items-center justify-between gap-6"
+              className="flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6"
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
             >
-              <div className="space-y-1">
-                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Total Amount</p>
+              <div className="flex sm:flex-col items-center sm:items-start justify-between w-full sm:w-auto sm:space-y-1">
+                <p className="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Total Amount</p>
                 <div className="flex items-baseline gap-1">
                   <motion.span
                     key={livePrice}
                     initial={{ y: -10, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
-                    className="text-4xl font-black text-gray-900"
+                    className="text-2xl sm:text-4xl font-black text-gray-900"
                   >
                     {livePrice.toFixed(2)}
                   </motion.span>
-                  <span className="text-sm font-black text-gray-400 ml-2">AED</span>
+                  <span className="text-xs sm:text-sm font-black text-gray-400 ml-1 sm:ml-2">AED</span>
                 </div>
               </div>
 
@@ -261,7 +261,7 @@ function ProductModalContent({ product, onClose, onAddToCart }) {
                 whileTap={{ scale: 0.95 }}
                 onClick={handleAddToCart}
                 disabled={addedFeedback}
-                className={`flex-1 flex items-center justify-center gap-3 rounded-[2rem] py-6 text-sm font-black uppercase tracking-widest shadow-2xl transition-all duration-500 ${
+                className={`w-full sm:flex-1 flex items-center justify-center gap-2 sm:gap-3 rounded-2xl sm:rounded-[2rem] py-4 sm:py-6 text-[13px] sm:text-sm font-black uppercase tracking-widest shadow-xl sm:shadow-2xl transition-all duration-500 ${
                   addedFeedback
                     ? 'bg-emerald-500 text-white shadow-emerald-500/20'
                     : 'bg-orange-500 text-white shadow-orange-500/30 hover:bg-orange-600 hover:shadow-orange-600/40'
@@ -276,7 +276,7 @@ function ProductModalContent({ product, onClose, onAddToCart }) {
                       exit={{ opacity: 0, scale: 0.5, y: -10 }}
                       className="flex items-center gap-2"
                     >
-                      <FiCheck className="h-6 w-6" strokeWidth={4} />
+                      <FiCheck className="h-5 w-5 sm:h-6 sm:w-6" strokeWidth={4} />
                       <span className="translate-y-[1px]">Added to Order</span>
                     </motion.div>
                   ) : (
@@ -286,7 +286,7 @@ function ProductModalContent({ product, onClose, onAddToCart }) {
                       animate={{ opacity: 1 }}
                       className="flex items-center gap-2"
                     >
-                      <FiShoppingCart className="h-5 w-5" />
+                      <FiShoppingCart className="h-4 w-4 sm:h-5 sm:w-5" />
                       <span className="translate-y-[1px]">Add to Order</span>
                       <FiChevronRight className="h-4 w-4 ml-1" strokeWidth={3} />
                     </motion.div>

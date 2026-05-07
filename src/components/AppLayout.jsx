@@ -15,7 +15,7 @@ function AppLayout({ children }) {
       <AnimatePresence mode="wait">
         <motion.main
           key={location.pathname}
-          className="mx-auto w-full max-w-6xl flex-1 px-6 py-12 sm:px-10 sm:py-16 lg:px-12 lg:py-20"
+          className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 sm:px-10 sm:py-16 lg:px-12 lg:py-20"
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 6 }}

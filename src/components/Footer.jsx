@@ -70,11 +70,11 @@ function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-12 border-t border-gray-200 pt-8 flex flex-col items-center justify-between gap-4 sm:flex-row">
-          <p className="text-xs">
+        <div className="mt-12 border-t border-gray-200 pt-8 flex flex-col items-center justify-between gap-6 sm:flex-row">
+          <p className="text-xs text-center sm:text-left">
             © {new Date().getFullYear()} Hala Pizza Inc. All rights reserved.
           </p>
-          <div className="flex gap-6">
+          <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
             <a href="#" className="text-xs hover:text-orange-500 transition-colors">Privacy Policy</a>
             <a href="#" className="text-xs hover:text-orange-500 transition-colors">Terms of Service</a>
             <a href="#" className="text-xs hover:text-orange-500 transition-colors">Cookie Policy</a>

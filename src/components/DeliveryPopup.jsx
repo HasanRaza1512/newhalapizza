@@ -92,10 +92,10 @@ function DeliveryPopup() {
 
           {/* Modal Content */}
           <motion.div
-            className="relative w-full max-w-[440px] overflow-visible rounded-[2rem] bg-white shadow-2xl"
+            className="relative w-[95%] max-w-[440px] sm:max-w-lg overflow-visible rounded-[2rem] bg-white shadow-2xl"
             variants={modalVariants}
           >
-            <div className="p-8 sm:p-10">
+            <div className="p-6 sm:p-10">
               <AnimatePresence mode="wait">
                 {step === 1 ? (
                   <motion.div
@@ -103,19 +103,19 @@ function DeliveryPopup() {
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: 20 }}
-                    className="space-y-10"
+                    className="space-y-8 sm:space-y-10"
                   >
-                    <div className="relative text-center space-y-3">
+                    <div className="relative text-center space-y-2 sm:space-y-3">
                       {fulfillment && (
                         <button
                           onClick={closeDeliveryPopup}
-                          className="absolute -top-4 -right-4 flex h-10 w-10 items-center justify-center rounded-full bg-gray-50 text-gray-400 transition-all hover:bg-gray-100 hover:text-gray-900"
+                          className="absolute -top-2 -right-2 sm:-top-4 sm:-right-4 flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-gray-50 text-gray-400 transition-all hover:bg-gray-100 hover:text-gray-900"
                         >
                           <FiX className="h-5 w-5" />
                         </button>
                       )}
-                      <h2 className="text-2xl font-black text-gray-900 leading-tight">CHOOSE YOUR ORDER TYPE</h2>
-                      <p className="text-sm font-medium text-gray-400">Select how you'd like to receive your food</p>
+                      <h2 className="text-xl sm:text-2xl font-black text-gray-900 leading-tight">CHOOSE YOUR ORDER TYPE</h2>
+                      <p className="text-[13px] sm:text-sm font-medium text-gray-400">Select how you'd like to receive your food</p>
                     </div>
 
                     <div className="grid grid-cols-2 gap-5">

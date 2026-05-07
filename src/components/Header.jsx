@@ -51,50 +51,50 @@ function Header() {
           : 'bg-white border-b border-transparent'
           }`}
       >
-        <div className="mx-auto flex h-[72px] items-center justify-between px-4 max-w-6xl sm:px-6 lg:px-8">
+        <div className="mx-auto flex h-[64px] sm:h-[72px] items-center justify-between px-4 max-w-6xl sm:px-6 lg:px-8">
           {/* Logo & Info */}
-          <div className="flex items-center gap-8 lg:gap-12">
-            <a href="/" className="group flex items-center gap-3">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-500 text-2xl font-black text-white shadow-lg shadow-orange-500/20 transition-transform group-hover:scale-110">
+          <div className="flex items-center gap-4 sm:gap-8 lg:gap-12">
+            <a href="/" className="group flex items-center gap-2 sm:gap-3">
+              <div className="flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-xl bg-orange-500 text-xl sm:text-2xl font-black text-white shadow-lg shadow-orange-500/20 transition-transform group-hover:scale-110">
                 <span className="leading-none">H</span>
               </div>
-              <span className="hidden text-xl font-black tracking-tighter text-gray-900 sm:block uppercase">
+              <span className="hidden text-lg sm:text-xl font-black tracking-tighter text-gray-900 min-[400px]:block uppercase">
                 Hala<span className="text-orange-500">Pizza</span>
               </span>
             </a>
 
             <button 
               onClick={openDeliveryPopup}
-              className="hidden flex-col md:flex text-left group transition-all"
+              className="flex flex-col text-left group transition-all max-w-[120px] sm:max-w-none"
             >
-              <span className="text-sm font-black text-gray-900 uppercase tracking-tight group-hover:text-orange-500 transition-colors">
+              <span className="text-[10px] sm:text-sm font-black text-gray-900 uppercase tracking-tight group-hover:text-orange-500 transition-colors truncate">
                 {fulfillment ? (
-                  <span className="flex items-center gap-1.5">
-                    {fulfillment.type === 'delivery' ? <FiTruck className="h-3 w-3 text-orange-500" /> : <FiShoppingBag className="h-3 w-3 text-orange-500" />}
-                    {fulfillment.type === 'delivery' ? (fulfillment.address?.split(',')[0] || 'Delivery') : 'Pickup'}
+                  <span className="flex items-center gap-1 sm:gap-1.5">
+                    {fulfillment.type === 'delivery' ? <FiTruck className="h-3 w-3 text-orange-500 shrink-0" /> : <FiShoppingBag className="h-3 w-3 text-orange-500 shrink-0" />}
+                    <span className="truncate">{fulfillment.type === 'delivery' ? (fulfillment.address?.split(',')[0] || 'Delivery') : 'Pickup'}</span>
                   </span>
-                ) : 'Select Location'}
+                ) : 'Location'}
               </span>
-              <span className="text-[11px] font-bold text-gray-400 group-hover:text-gray-600 transition-colors">
-                {fulfillment ? fulfillment.phone : 'Click to set location'} <span className="text-orange-500">★</span>
+              <span className="text-[9px] sm:text-[11px] font-bold text-gray-400 group-hover:text-gray-600 transition-colors truncate">
+                {fulfillment ? fulfillment.phone : 'Set location'} <span className="text-orange-500">★</span>
               </span>
             </button>
           </div>
 
           {/* Right Actions */}
-          <div className="flex items-center gap-3">
-            <button className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-50 text-gray-600 transition-all hover:bg-gray-100 hover:text-gray-900 active:scale-90">
-              <FiUser className="h-5 w-5" />
+          <div className="flex items-center gap-2 sm:gap-3">
+            <button className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-gray-50 text-gray-600 transition-all hover:bg-gray-100 hover:text-gray-900 active:scale-90">
+              <FiUser className="h-4 w-4 sm:h-5 sm:w-5" />
             </button>
 
             <button
               id="header-cart-btn"
               onClick={openCart}
-              className="relative flex h-10 items-center gap-2 rounded-full bg-orange-500 px-4 font-black text-white shadow-lg shadow-orange-500/20 transition-all hover:bg-orange-600 hover:shadow-orange-500/30 active:scale-95"
+              className="relative flex h-9 sm:h-10 items-center gap-1.5 sm:gap-2 rounded-full bg-orange-500 px-3 sm:px-4 font-black text-white shadow-lg shadow-orange-500/20 transition-all hover:bg-orange-600 hover:shadow-orange-500/30 active:scale-95"
             >
-              <FiShoppingBag className="h-5 w-5" />
+              <FiShoppingBag className="h-4 w-4 sm:h-5 sm:w-5" />
               {cartCount > 0 && (
-                <span className="text-sm">{cartCount}</span>
+                <span className="text-xs sm:text-sm">{cartCount}</span>
               )}
             </button>
 
