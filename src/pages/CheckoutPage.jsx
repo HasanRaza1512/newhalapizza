@@ -3,8 +3,7 @@ import { useCartStore } from '../store'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiCheckCircle, FiAlertCircle, FiPackage, FiTruck, FiMapPin, FiPhone, FiUser, FiArrowLeft, FiStar, FiSend } from 'react-icons/fi'
 import { useNavigate } from 'react-router-dom'
-import { db } from '../lib/firebase'
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
+import { submitOrder } from '../services/orderService'
 
 function CheckoutPage() {
   const items = useCartStore((state) => state.items)
@@ -69,34 +68,24 @@ function CheckoutPage() {
         subtotal,
         deliveryFee,
         total,
-        createdAt: serverTimestamp(),
+        createdAt: new Date().toISOString(),
         status: 'pending'
       }
 
-      // Save to Firestore
-      const docRef = await addDoc(collection(db, "orders"), orderData)
+      // Submit order using service
+      const result = await submitOrder(orderData)
       
       setOrderStatus({ 
         type: 'success', 
         message: 'Order placed successfully!', 
-        orderId: docRef.id 
+        orderId: result.orderId 
       })
       
       clearCart()
 
     } catch (err) {
       console.error("Order error:", err)
-      // Fallback to success for demo if firebase is not configured properly but code is correct
-      if (err.message.includes('API_KEY')) {
-         setOrderStatus({ 
-           type: 'success', 
-           message: 'Order placed! (Demo Mode)', 
-           orderId: 'DEMO-' + Math.random().toString(36).substr(2, 9).toUpperCase() 
-         })
-         clearCart()
-      } else {
-         setOrderStatus({ type: 'error', message: 'Failed to place order. Please check your connection.' })
-      }
+      setOrderStatus({ type: 'error', message: 'Failed to place order. Please check your connection.' })
     } finally {
       setIsSubmitting(false)
     }
