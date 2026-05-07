@@ -28,6 +28,7 @@ function AppLayout({ children }) {
       <FloatingCartButton />
       <FlyingImages />
       <DeliveryPopup />
+
     </div>
   )
 }
