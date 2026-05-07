@@ -16,9 +16,18 @@ function HomePage() {
   const addItem = useCartStore((state) => state.addItem)
   const addFlyingImage = useCartStore((state) => state.addFlyingImage)
   
-  const { products, isLoading, subscribeToProducts } = useProductStore()
+  const { products, isLoading, subscribeToProducts, initializeData } = useProductStore()
 
   useEffect(() => {
+    // Initialize product data when component mounts
+    initializeData()
+    
+    // Safety check for subscribeToProducts
+    if (!subscribeToProducts) {
+      console.error('subscribeToProducts is not available')
+      return
+    }
+    
     const unsubscribe = subscribeToProducts()
     return () => unsubscribe()
   }, [subscribeToProducts])
