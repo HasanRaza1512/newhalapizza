@@ -395,7 +395,7 @@ function CheckoutPage() {
               type="button"
               onClick={handlePlaceOrder}
               disabled={items.length === 0 || isSubmitting}
-              className="w-full rounded-[2rem] bg-orange-500 py-6 text-base font-black text-white uppercase tracking-widest shadow-2xl shadow-orange-500/30 transition-all duration-500 hover:bg-orange-600 hover:-translate-y-1 active:scale-95 disabled:bg-gray-100 disabled:text-gray-400 disabled:shadow-none"
+              className="w-full rounded-4xl bg-orange-500 py-6 text-base font-black text-white uppercase tracking-widest shadow-2xl shadow-orange-500/30 transition-all duration-500 hover:bg-orange-600 hover:-translate-y-1 active:scale-95 disabled:bg-gray-100 disabled:text-gray-400 disabled:shadow-none"
             >
               {isSubmitting ? 'Processing Order...' : 'Place Order Now'}
             </button>
