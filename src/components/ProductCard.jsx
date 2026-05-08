@@ -34,7 +34,7 @@ function ProductCard({ image, title, price, description, isNew, onAddToCart, onC
 
       <div className="flex flex-col items-center mt-4 sm:mt-6 w-full px-2 sm:px-4 space-y-2 sm:space-y-3">
         {/* Title & Badge */}
-        <div className="flex flex-col items-center gap-1 min-h-[2.5rem] sm:min-h-[3rem] justify-center">
+        <div className="flex flex-col items-center gap-1 min-h-10 sm:min-h-12 justify-center">
           {isNew && (
             <span className="inline-flex items-center rounded-full bg-orange-500 px-2 py-0.5 text-[8px] sm:text-[9px] font-bold text-white uppercase tracking-wider mb-1">
               New
@@ -46,7 +46,7 @@ function ProductCard({ image, title, price, description, isNew, onAddToCart, onC
         </div>
 
         {/* Product Description */}
-        <p className="line-clamp-2 text-[11px] sm:text-xs leading-relaxed text-gray-400 font-medium max-w-[200px]">
+        <p className="line-clamp-2 text-[11px] sm:text-xs leading-relaxed text-gray-400 font-medium max-w-48">
           {description}
         </p>
 
@@ -55,7 +55,7 @@ function ProductCard({ image, title, price, description, isNew, onAddToCart, onC
           <button
             type="button"
             onClick={handleQuickAdd}
-            className={`rounded-full px-4 py-2 sm:px-5 sm:py-2 text-[13px] sm:text-sm font-medium transition-all active:scale-95 shadow-sm min-h-[40px] sm:min-h-0 ${
+            className={`rounded-full px-4 py-2 sm:px-5 sm:py-2 text-[13px] sm:text-sm font-medium transition-all active:scale-95 shadow-sm min-h-10 sm:min-h-0 ${
               isAdded 
                 ? 'bg-emerald-500 text-white shadow-emerald-500/20' 
                 : 'bg-orange-100 text-orange-600 shadow-orange-200/50 hover:bg-orange-500 hover:text-white hover:shadow-lg hover:shadow-orange-500/20'
