@@ -121,7 +121,7 @@ function ProductModalContent({ product, onClose, onAddToCart }) {
 
   return (
     <motion.div
-      className="fixed inset-0 z-[60] flex items-center justify-center p-0 sm:p-4 perspective-1000"
+      className="fixed inset-0 z-60 flex items-center justify-center p-0 sm:p-4 perspective-1000"
       variants={overlayVariants}
       initial="hidden"
       animate="visible"
@@ -138,7 +138,7 @@ function ProductModalContent({ product, onClose, onAddToCart }) {
 
       {/* Modal panel */}
       <motion.section
-        className="relative z-10 w-full max-w-5xl h-full sm:h-auto sm:max-h-[90vh] overflow-hidden rounded-none sm:rounded-[3rem] bg-white shadow-2xl flex flex-col md:flex-row border border-gray-100"
+        className="relative z-10 w-full max-w-5xl h-full sm:h-auto sm:max-h-[90vh] overflow-hidden rounded-none sm:rounded-3xl bg-white shadow-2xl flex flex-col md:flex-row border border-gray-100"
         variants={modalVariants}
         onClick={(e) => e.stopPropagation()}
         role="dialog"
@@ -156,7 +156,7 @@ function ProductModalContent({ product, onClose, onAddToCart }) {
         {/* ── Left: Image section ── */}
         <div className="relative w-full md:w-[45%] flex items-center justify-center bg-gray-50/50 p-6 sm:p-8 md:p-12 overflow-hidden shrink-0">
           <div className="absolute inset-0 opacity-20 pointer-events-none">
-            <div className="absolute top-[-10%] left-[-10%] w-[120%] h-[120%] bg-[radial-gradient(circle_at_center,_var(--tw-gradient-from)_0%,_transparent_70%)] from-orange-200"></div>
+            <div className="absolute top-[-10%] left-[-10%] w-[120%] h-[120%] bg-[radial-gradient(circle_at_center,var(--tw-gradient-from)_0%,transparent_70%)] from-orange-200"></div>
           </div>
           
           <motion.div
@@ -170,7 +170,7 @@ function ProductModalContent({ product, onClose, onAddToCart }) {
             <img
               src={product.image}
               alt={product.name}
-              className="aspect-square w-full max-w-[240px] sm:max-w-[400px] md:max-w-[480px] object-cover rounded-full shadow-[0_20px_40px_rgba(0,0,0,0.1)] sm:shadow-[0_30px_60px_rgba(0,0,0,0.15)] ring-4 sm:ring-8 ring-white/50"
+              className="aspect-square w-full max-w-60 sm:max-w-100 md:max-w-120 object-cover rounded-full shadow-[0_20px_40px_rgba(0,0,0,0.1)] sm:shadow-[0_30px_60px_rgba(0,0,0,0.15)] ring-4 sm:ring-8 ring-white/50"
             />
           </motion.div>
 
@@ -261,7 +261,7 @@ function ProductModalContent({ product, onClose, onAddToCart }) {
                 whileTap={{ scale: 0.95 }}
                 onClick={handleAddToCart}
                 disabled={addedFeedback}
-                className={`w-full sm:flex-1 flex items-center justify-center gap-2 sm:gap-3 rounded-2xl sm:rounded-[2rem] py-4 sm:py-6 text-[13px] sm:text-sm font-black uppercase tracking-widest shadow-xl sm:shadow-2xl transition-all duration-500 ${
+                className={`w-full sm:flex-1 flex items-center justify-center gap-2 sm:gap-3 rounded-2xl sm:rounded-3xl py-4 sm:py-6 text-[13px] sm:text-sm font-black uppercase tracking-widest shadow-xl sm:shadow-2xl transition-all duration-500 ${
                   addedFeedback
                     ? 'bg-emerald-500 text-white shadow-emerald-500/20'
                     : 'bg-orange-500 text-white shadow-orange-500/30 hover:bg-orange-600 hover:shadow-orange-600/40'
@@ -277,7 +277,7 @@ function ProductModalContent({ product, onClose, onAddToCart }) {
                       className="flex items-center gap-2"
                     >
                       <FiCheck className="h-5 w-5 sm:h-6 sm:w-6" strokeWidth={4} />
-                      <span className="translate-y-[1px]">Added to Order</span>
+                      <span className="translate-y-px">Added to Order</span>
                     </motion.div>
                   ) : (
                     <motion.div
@@ -287,7 +287,7 @@ function ProductModalContent({ product, onClose, onAddToCart }) {
                       className="flex items-center gap-2"
                     >
                       <FiShoppingCart className="h-4 w-4 sm:h-5 sm:w-5" />
-                      <span className="translate-y-[1px]">Add to Order</span>
+                      <span className="translate-y-px">Add to Order</span>
                       <FiChevronRight className="h-4 w-4 ml-1" strokeWidth={3} />
                     </motion.div>
                   )}

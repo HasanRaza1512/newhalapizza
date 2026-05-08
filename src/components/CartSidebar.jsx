@@ -28,14 +28,14 @@ function CartSidebar({ isOpen, onClose }) {
     <AnimatePresence>
       {isOpen ? (
         <motion.div
-          className="fixed inset-0 z-[70] bg-black/60 backdrop-blur-md"
+          className="fixed inset-0 z-70 bg-black/60 backdrop-blur-md"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose}
         >
           <motion.aside
-            className="absolute right-0 top-0 flex h-full w-full flex-col bg-white shadow-2xl md:w-[450px] border-l border-gray-100"
+            className="absolute right-0 top-0 flex h-full w-full flex-col bg-white shadow-2xl md:w-112.5 border-l border-gray-100"
             initial={{ x: '100%' }}
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
@@ -46,7 +46,7 @@ function CartSidebar({ isOpen, onClose }) {
             aria-label="Shopping cart"
           >
             {/* Header */}
-            <header className="flex items-center justify-between border-b border-gray-50 px-4 py-4 sm:px-6 sm:py-6">
+            <header className="flex items-center justify-between p-6 border-b border-gray-100 mb-6">
               <div className="flex items-center gap-3 sm:gap-4">
                 <div className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-xl sm:rounded-2xl bg-orange-100 text-orange-600">
                   <FiShoppingBag className="h-5 w-5 sm:h-6 sm:w-6" />
@@ -80,7 +80,7 @@ function CartSidebar({ isOpen, onClose }) {
                   <h3 className="text-lg sm:text-xl font-black text-gray-900 uppercase">
                     Your cart is empty
                   </h3>
-                  <p className="mt-3 max-w-[240px] text-[13px] sm:text-sm font-medium leading-relaxed text-gray-400">
+                  <p className="mt-3 max-w-60 text-[13px] sm:text-sm font-medium leading-relaxed text-gray-400">
                     Looks like you haven't discovered our delicious pizzas yet!
                   </p>
                   <button
@@ -106,7 +106,7 @@ function CartSidebar({ isOpen, onClose }) {
                         key={item.cartKey}
                         className="group relative flex items-center gap-3 sm:gap-4 rounded-2xl sm:rounded-3xl border border-gray-50 bg-white p-3 sm:p-4 transition-all hover:border-orange-100 hover:shadow-xl hover:shadow-orange-500/5"
                       >
-                        <div className="relative h-16 w-16 sm:h-20 sm:w-20 flex-shrink-0 overflow-hidden rounded-full bg-gray-50 shadow-inner">
+                        <div className="relative h-16 w-16 sm:h-20 sm:w-20 shrink-0 overflow-hidden rounded-full bg-gray-50 shadow-inner">
                           <img
                             src={item.image}
                             alt={item.name}
@@ -146,7 +146,7 @@ function CartSidebar({ isOpen, onClose }) {
                                 key={item.quantity}
                                 initial={{ y: -5, opacity: 0 }}
                                 animate={{ y: 0, opacity: 1 }}
-                                className="min-w-[1rem] sm:min-w-[1.5rem] text-center text-xs sm:text-sm font-black text-gray-900"
+                                className="min-w-4 sm:min-w-6 text-center text-xs sm:text-sm font-black text-gray-900"
                               >
                                 {item.quantity}
                               </motion.span>

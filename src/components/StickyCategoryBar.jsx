@@ -9,7 +9,7 @@ function StickyCategoryBar({ categories, activeCategory, onCategoryClick }) {
   const cartCount = items.reduce((total, item) => total + item.quantity, 0)
 
   return (
-    <div className="sticky top-[64px] z-40 w-full border-b border-gray-100 bg-white/80 py-2.5 backdrop-blur-xl transition-all duration-300 sm:top-[72px] sm:py-3">
+    <div className="sticky top-16 z-40 w-full border-b border-gray-100 bg-white/80 py-2.5 backdrop-blur-xl transition-all duration-300 sm:top-18 sm:py-3">
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
         
         {/* Navigation Links */}
