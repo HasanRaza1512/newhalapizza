@@ -1,12 +1,12 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useEffect } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { FiX, FiCheck, FiShoppingCart, FiChevronRight } from 'react-icons/fi'
 import { useCartStore } from '../store'
 
-import { sizeOptions, crustOptions, toppingOptions } from '../data/options'
-import SizeSelector from './SizeSelector'
-import CrustSelector from './CrustSelector'
-import ToppingsSelector from './ToppingsSelector'
+import { sizeOptions, simpleSizeOptions, drinkSizeOptions, toppingOptions } from '../data/options'
+import PizzaCustomizer from './PizzaCustomizer'
+import SimpleCustomizer from './SimpleCustomizer'
+import DrinkCustomizer from './DrinkCustomizer'
 
 /* ───────────────── framer motion variants ───────────────────── */
 
@@ -47,20 +47,29 @@ const fadeUp = {
 /* ───────────────── main modal content ───────────────────────── */
 
 function ProductModalContent({ product, onClose, onAddToCart }) {
-  const [selectedSize, setSelectedSize] = useState(sizeOptions[1].label)
-  const [selectedCrust, setSelectedCrust] = useState(crustOptions[0].label)
+  const category = product.category.toLowerCase()
+
+  // Default values based on category
+  const [selectedSize, setSelectedSize] = useState(() => {
+    if (category === 'pizza') return sizeOptions[1].label
+    if (category === 'drinks') return drinkSizeOptions[0].label
+    return simpleSizeOptions[0].label
+  })
+
+  const [selectedCrust, setSelectedCrust] = useState('Classic Hand Tossed')
   const [selectedToppings, setSelectedToppings] = useState([])
+  const [quantity, setQuantity] = useState(1)
   const [addedFeedback, setAddedFeedback] = useState(false)
 
-  const selectedSizeOption = useMemo(
-    () => sizeOptions.find((s) => s.label === selectedSize) ?? sizeOptions[1],
-    [selectedSize],
-  )
+  // Reset state when product changes
+  useEffect(() => {
+    if (category === 'pizza') setSelectedSize(sizeOptions[1].label)
+    else if (category === 'drinks') setSelectedSize(drinkSizeOptions[0].label)
+    else setSelectedSize(simpleSizeOptions[0].label)
 
-  const selectedCrustOption = useMemo(
-    () => crustOptions.find((c) => c.label === selectedCrust) ?? crustOptions[0],
-    [selectedCrust],
-  )
+    setQuantity(1)
+    setSelectedToppings([])
+  }, [product, category])
 
   const toppingsTotal = useMemo(
     () =>
@@ -72,12 +81,22 @@ function ProductModalContent({ product, onClose, onAddToCart }) {
 
   const livePrice = useMemo(() => {
     if (!product) return 0
-    let base = product.price * selectedSizeOption.multiplier + toppingsTotal
-    if (product.category === 'Pizza') {
-      base += selectedCrustOption.price
+    let total = product.price
+
+    if (category === 'pizza') {
+      const sizeOpt = sizeOptions.find(s => s.label === selectedSize) || sizeOptions[1]
+      total = product.price * sizeOpt.multiplier + toppingsTotal
+      // Note: Crust price could be added here if needed, but keeping it simple for now
+    } else if (category === 'drinks') {
+      const sizeOpt = drinkSizeOptions.find(s => s.label === selectedSize) || drinkSizeOptions[0]
+      total = product.price + sizeOpt.extraPrice
+    } else {
+      const sizeOpt = simpleSizeOptions.find(s => s.label === selectedSize) || simpleSizeOptions[0]
+      total = product.price + sizeOpt.extraPrice
     }
-    return base
-  }, [product, selectedSizeOption, toppingsTotal, selectedCrustOption])
+
+    return total * quantity
+  }, [product, category, selectedSize, toppingsTotal, quantity])
 
   const toggleTopping = (toppingId) => {
     setSelectedToppings((current) =>
@@ -90,18 +109,20 @@ function ProductModalContent({ product, onClose, onAddToCart }) {
   const addFlyingImage = useCartStore((state) => state.addFlyingImage)
 
   const handleAddToCart = (event) => {
-    onAddToCart(product, {
+    const options = {
       size: selectedSize,
-      crust: product.category === 'Pizza' ? selectedCrust : undefined,
-      toppings: toppingOptions
+      crust: category === 'pizza' ? selectedCrust : undefined,
+      toppings: category === 'pizza' ? toppingOptions
         .filter((t) => selectedToppings.includes(t.id))
-        .map((t) => t.label),
-    })
-    
+        .map((t) => t.label) : [],
+    }
+
+    onAddToCart(product, options, quantity)
+
     if (event) {
       addFlyingImage(product.image, event.clientX, event.clientY)
     }
-    
+
     setAddedFeedback(true)
     setTimeout(() => {
       setAddedFeedback(false)
@@ -109,15 +130,15 @@ function ProductModalContent({ product, onClose, onAddToCart }) {
     }, 800)
   }
 
-  // Bonus: Scale image based on size
   const imageScale = useMemo(() => {
+    if (category !== 'pizza') return 1
     switch (selectedSize) {
       case 'Small': return 0.85
       case 'Medium': return 1
       case 'Large': return 1.15
       default: return 1
     }
-  }, [selectedSize])
+  }, [selectedSize, category])
 
   return (
     <motion.div
@@ -127,7 +148,6 @@ function ProductModalContent({ product, onClose, onAddToCart }) {
       animate="visible"
       exit="exit"
     >
-      {/* Backdrop */}
       <motion.div
         className="absolute inset-0 bg-black/60 backdrop-blur-md"
         initial={{ opacity: 0 }}
@@ -136,7 +156,6 @@ function ProductModalContent({ product, onClose, onAddToCart }) {
         onClick={onClose}
       />
 
-      {/* Modal panel */}
       <motion.section
         className="relative z-10 w-full max-w-5xl h-full sm:h-auto sm:max-h-[90vh] overflow-hidden rounded-none sm:rounded-3xl bg-white shadow-2xl flex flex-col md:flex-row border border-gray-100"
         variants={modalVariants}
@@ -145,7 +164,6 @@ function ProductModalContent({ product, onClose, onAddToCart }) {
         aria-modal="true"
         aria-label={`${product.name} details`}
       >
-        {/* Close Button (Fixed Top-Right) */}
         <button
           onClick={onClose}
           className="absolute top-4 right-4 sm:top-6 sm:right-6 z-20 flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-white/80 backdrop-blur-sm text-gray-500 hover:bg-orange-500 hover:text-white transition-all shadow-sm"
@@ -158,12 +176,12 @@ function ProductModalContent({ product, onClose, onAddToCart }) {
           <div className="absolute inset-0 opacity-20 pointer-events-none">
             <div className="absolute top-[-10%] left-[-10%] w-[120%] h-[120%] bg-[radial-gradient(circle_at_center,var(--tw-gradient-from)_0%,transparent_70%)] from-orange-200"></div>
           </div>
-          
+
           <motion.div
-            animate={{ scale: imageScale, rotate: 360 }}
-            transition={{ 
-                scale: { type: 'spring', stiffness: 200, damping: 20 },
-                rotate: { duration: 100, repeat: Infinity, ease: 'linear' }
+            animate={{ scale: imageScale, rotate: category === 'pizza' ? 360 : 0 }}
+            transition={{
+              scale: { type: 'spring', stiffness: 200, damping: 20 },
+              rotate: { duration: 100, repeat: Infinity, ease: 'linear' }
             }}
             className="relative z-10"
           >
@@ -174,7 +192,6 @@ function ProductModalContent({ product, onClose, onAddToCart }) {
             />
           </motion.div>
 
-          {/* Category Badge */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -203,39 +220,44 @@ function ProductModalContent({ product, onClose, onAddToCart }) {
                 <p className="text-[13px] sm:text-sm font-medium text-gray-400 leading-relaxed max-w-md">
                   {product.description}
                 </p>
-                
-                {/* Price Display */}
+
                 <div className="inline-flex items-center gap-3 sm:gap-4 bg-orange-50/50 border border-orange-100 rounded-xl sm:rounded-2xl px-4 py-2 sm:px-6 sm:py-3">
-                   <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-orange-400">Starting at</span>
-                   <span className="text-xl sm:text-2xl font-black text-orange-600">AED {product.price.toFixed(2)}</span>
+                  <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-orange-400">Base Price</span>
+                  <span className="text-xl sm:text-2xl font-black text-orange-600">AED {product.price.toFixed(2)}</span>
                 </div>
               </motion.div>
 
-              {/* Customization Sections */}
-              <motion.div variants={fadeUp} className="space-y-6 sm:space-y-8 pb-4">
-                <SizeSelector
+              {/* Conditional Customizer Rendering */}
+              {category === 'pizza' ? (
+                <PizzaCustomizer
                   selectedSize={selectedSize}
-                  onSelect={setSelectedSize}
-                />
-
-                {product.category === 'Pizza' && (
-                  <CrustSelector
-                    selectedCrust={selectedCrust}
-                    onSelect={setSelectedCrust}
-                  />
-                )}
-
-                <ToppingsSelector
+                  setSelectedSize={setSelectedSize}
+                  selectedCrust={selectedCrust}
+                  setSelectedCrust={setSelectedCrust}
                   selectedToppings={selectedToppings}
-                  onToggle={toggleTopping}
+                  toggleTopping={toggleTopping}
                 />
-              </motion.div>
+              ) : category === 'drinks' ? (
+                <DrinkCustomizer
+                  selectedSize={selectedSize}
+                  setSelectedSize={setSelectedSize}
+                  quantity={quantity}
+                  setQuantity={setQuantity}
+                />
+              ) : (
+                <SimpleCustomizer
+                  selectedSize={selectedSize}
+                  setSelectedSize={setSelectedSize}
+                  quantity={quantity}
+                  setQuantity={setQuantity}
+                />
+              )}
             </motion.div>
           </div>
 
           {/* ── Sticky footer ── */}
           <div className="p-6 sm:p-8 md:p-12 border-t border-gray-50 bg-white/80 backdrop-blur-md">
-            <motion.div 
+            <motion.div
               className="flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6"
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
@@ -261,11 +283,10 @@ function ProductModalContent({ product, onClose, onAddToCart }) {
                 whileTap={{ scale: 0.95 }}
                 onClick={handleAddToCart}
                 disabled={addedFeedback}
-                className={`w-full sm:flex-1 flex items-center justify-center gap-2 sm:gap-3 rounded-2xl sm:rounded-3xl py-4 sm:py-6 text-[13px] sm:text-sm font-black uppercase tracking-widest shadow-xl sm:shadow-2xl transition-all duration-500 ${
-                  addedFeedback
+                className={`w-full sm:flex-1 flex items-center justify-center gap-2 sm:gap-3 rounded-2xl sm:rounded-3xl py-4 sm:py-6 text-[13px] sm:text-sm font-black uppercase tracking-widest shadow-xl sm:shadow-2xl transition-all duration-500 ${addedFeedback
                     ? 'bg-emerald-500 text-white shadow-emerald-500/20'
                     : 'bg-orange-500 text-white shadow-orange-500/30 hover:bg-orange-600 hover:shadow-orange-600/40'
-                }`}
+                  }`}
               >
                 <AnimatePresence mode="wait">
                   {addedFeedback ? (

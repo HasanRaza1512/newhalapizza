@@ -1,39 +1,63 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import { sizeOptions, crustOptions, toppingOptions } from '../data/options'
+import { sizeOptions, simpleSizeOptions, drinkSizeOptions, crustOptions, toppingOptions } from '../data/options'
 import { orderService } from '../services/orderService'
 
 export const calculateItemPrice = (basePrice, category, options) => {
-  let sizeMultiplier = 1;
-  if (options.size) {
-    const sizeOpt = sizeOptions.find(s => s.label === options.size);
-    if (sizeOpt) sizeMultiplier = sizeOpt.multiplier;
-  }
+  const cat = category?.toLowerCase() || ''
   
-  let toppingsPrice = 0;
-  if (options.toppings && options.toppings.length > 0) {
-    options.toppings.forEach(toppingLabel => {
-      const tOpt = toppingOptions.find(t => t.id === toppingLabel || t.label === toppingLabel);
-      if (tOpt) toppingsPrice += tOpt.price;
-    });
+  if (cat === 'pizza') {
+    let sizeMultiplier = 1
+    if (options.size) {
+      const sizeOpt = sizeOptions.find((s) => s.label === options.size)
+      if (sizeOpt) sizeMultiplier = sizeOpt.multiplier
+    }
+
+    let toppingsPrice = 0
+    if (options.toppings && options.toppings.length > 0) {
+      options.toppings.forEach((toppingLabel) => {
+        const tOpt = toppingOptions.find(
+          (t) => t.id === toppingLabel || t.label === toppingLabel,
+        )
+        if (tOpt) toppingsPrice += tOpt.price
+      })
+    }
+
+    let crustPrice = 0
+    if (options.crust) {
+      const cOpt = crustOptions.find((c) => c.label === options.crust)
+      if (cOpt) crustPrice += cOpt.price
+    }
+
+    return Number((basePrice * sizeMultiplier + toppingsPrice + crustPrice).toFixed(2))
   }
 
-  let crustPrice = 0;
-  if (category === 'Pizza' && options.crust) {
-    const cOpt = crustOptions.find(c => c.label === options.crust);
-    if (cOpt) crustPrice += cOpt.price;
+  if (cat === 'drinks') {
+    let extraPrice = 0
+    if (options.size) {
+      const sizeOpt = drinkSizeOptions.find((s) => s.label === options.size)
+      if (sizeOpt) extraPrice = sizeOpt.extraPrice
+    }
+    return Number((basePrice + extraPrice).toFixed(2))
   }
 
-  return Number((basePrice * sizeMultiplier + toppingsPrice + crustPrice).toFixed(2));
+  // Simple categories (Fries, Pasta, Burgers, etc.)
+  let extraPrice = 0
+  if (options.size) {
+    const sizeOpt = simpleSizeOptions.find((s) => s.label === options.size)
+    if (sizeOpt) extraPrice = sizeOpt.extraPrice
+  }
+  return Number((basePrice + extraPrice).toFixed(2))
 }
 
 const buildCartItemKey = (productId, options) => {
-  const size = options.size || 'default';
-  const crust = options.crust || 'default';
-  const toppings = options.toppings && options.toppings.length > 0 
-    ? [...options.toppings].sort().join(',') 
-    : 'none';
-  return `${productId}-${size}-${crust}-${toppings}`;
+  const size = options.size || 'default'
+  const crust = options.crust || 'none'
+  const toppings =
+    options.toppings && options.toppings.length > 0
+      ? [...options.toppings].sort().join(',')
+      : 'none'
+  return `${productId}-${size}-${crust}-${toppings}`
 }
 
 export const useCartStore = create(
@@ -67,29 +91,30 @@ export const useCartStore = create(
       })),
 
       // Cart item management
-      addItem: (product, options = {}) =>
+      addItem: (product, options = {}, quantity = 1) =>
         set((state) => {
+          const cat = product.category?.toLowerCase() || ''
           const defaultOptions = {
-             size: 'Medium',
-             crust: product.category === 'Pizza' ? 'Classic Hand Tossed' : undefined,
-             toppings: [],
-             ...options
-          };
+            size: cat === 'pizza' ? 'Medium' : cat === 'drinks' ? '500ml' : 'Small',
+            crust: cat === 'pizza' ? 'Classic Hand Tossed' : undefined,
+            toppings: [],
+            ...options,
+          }
 
-          const cartKey = buildCartItemKey(product.id, defaultOptions);
-          const existingItem = state.items.find((item) => item.cartKey === cartKey);
+          const cartKey = buildCartItemKey(product.id, defaultOptions)
+          const existingItem = state.items.find((item) => item.cartKey === cartKey)
 
           if (existingItem) {
             return {
               items: state.items.map((item) =>
                 item.cartKey === cartKey
-                  ? { ...item, quantity: item.quantity + 1 }
-                  : item
+                  ? { ...item, quantity: item.quantity + quantity }
+                  : item,
               ),
-            };
+            }
           }
 
-          const price = calculateItemPrice(product.price, product.category, defaultOptions);
+          const price = calculateItemPrice(product.price, product.category, defaultOptions)
 
           return {
             items: [
@@ -102,10 +127,10 @@ export const useCartStore = create(
                 category: product.category,
                 price,
                 options: defaultOptions,
-                quantity: 1,
+                quantity: quantity,
               },
             ],
-          };
+          }
         }),
 
       removeItem: (cartKey) =>

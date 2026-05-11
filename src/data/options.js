@@ -4,6 +4,18 @@ export const sizeOptions = [
   { label: 'Large', shortLabel: 'L', multiplier: 1.4, inches: '16"' },
 ]
 
+export const simpleSizeOptions = [
+  { label: 'Small', extraPrice: 0 },
+  { label: 'Medium', extraPrice: 10 },
+  { label: 'Large', extraPrice: 20 },
+]
+
+export const drinkSizeOptions = [
+  { label: '500ml', extraPrice: 0 },
+  { label: '1.5 Liter', extraPrice: 5 },
+  { label: '2.5 Liter', extraPrice: 10 },
+]
+
 export const crustOptions = [
   { label: 'Classic Hand Tossed', price: 0, icon: '🫓' },
   { label: 'Thin Crust', price: 0, icon: '🥖' },

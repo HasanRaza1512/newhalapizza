@@ -127,7 +127,8 @@ function CartSidebar({ isOpen, onClose }) {
                             </button>
                           </div>
                           <p className="mt-0.5 text-[9px] font-bold text-gray-400 uppercase tracking-widest line-clamp-1">
-                            {item.options?.size} • {item.options?.crust}
+                            {item.options?.size}
+                            {item.category?.toLowerCase() === 'pizza' && item.options?.crust ? ` • ${item.options.crust}` : ''}
                             {item.options?.toppings?.length ? ` • ${item.options.toppings.length} Extra` : ''}
                           </p>
                           <div className="mt-3 flex items-center justify-between">
