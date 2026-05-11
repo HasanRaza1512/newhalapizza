@@ -44,11 +44,11 @@ function StoryViewer({ story, isOpen, onClose, duration = 5000 }) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-md p-4 sm:p-8"
+          className="fixed inset-0 z-100 flex items-center justify-center bg-black/60 backdrop-blur-md p-4 sm:p-8"
           onClick={onClose}
         >
           <div 
-            className="relative h-full max-h-[800px] w-full max-w-[450px] overflow-hidden rounded-2xl bg-white shadow-2xl"
+            className="relative h-full max-h-200 w-full max-w-112.5 overflow-hidden rounded-2xl bg-white shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Progress Bar Container */}
@@ -82,7 +82,7 @@ function StoryViewer({ story, isOpen, onClose, duration = 5000 }) {
               />
               
               {/* Overlay for text */}
-              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-white via-white/40 to-transparent p-8 pt-20">
+              <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-white via-white/40 to-transparent p-8 pt-20">
                 <motion.h2 
                   initial={{ y: 20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
