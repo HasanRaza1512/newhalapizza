@@ -223,7 +223,7 @@ function ProductModalContent({ product, onClose, onAddToCart }) {
 
                 <div className="inline-flex items-center gap-3 sm:gap-4 bg-orange-50/50 border border-orange-100 rounded-xl sm:rounded-2xl px-4 py-2 sm:px-6 sm:py-3">
                   <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-orange-400">Base Price</span>
-                  <span className="text-xl sm:text-2xl font-black text-orange-600">AED {product.price.toFixed(2)}</span>
+                  <span className="text-xl sm:text-2xl font-black text-orange-600">PKR {product.price.toFixed(2)}</span>
                 </div>
               </motion.div>
 
@@ -273,7 +273,7 @@ function ProductModalContent({ product, onClose, onAddToCart }) {
                   >
                     {livePrice.toFixed(2)}
                   </motion.span>
-                  <span className="text-xs sm:text-sm font-black text-gray-400 ml-1 sm:ml-2">AED</span>
+                  <span className="text-xs sm:text-sm font-black text-gray-400 ml-1 sm:ml-2">PKR</span>
                 </div>
               </div>
 
@@ -284,8 +284,8 @@ function ProductModalContent({ product, onClose, onAddToCart }) {
                 onClick={handleAddToCart}
                 disabled={addedFeedback}
                 className={`w-full sm:flex-1 flex items-center justify-center gap-2 sm:gap-3 rounded-2xl sm:rounded-3xl py-4 sm:py-6 text-[13px] sm:text-sm font-black uppercase tracking-widest shadow-xl sm:shadow-2xl transition-all duration-500 ${addedFeedback
-                    ? 'bg-emerald-500 text-white shadow-emerald-500/20'
-                    : 'bg-orange-500 text-white shadow-orange-500/30 hover:bg-orange-600 hover:shadow-orange-600/40'
+                  ? 'bg-emerald-500 text-white shadow-emerald-500/20'
+                  : 'bg-orange-500 text-white shadow-orange-500/30 hover:bg-orange-600 hover:shadow-orange-600/40'
                   }`}
               >
                 <AnimatePresence mode="wait">

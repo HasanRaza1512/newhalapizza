@@ -17,30 +17,30 @@ import OrderSuccess from '../components/checkout/OrderSuccess'
 // Error boundary for debugging
 const ErrorBoundary = ({ children, fallback }) => {
   const [hasError, setHasError] = useState(false)
-  
+
   useEffect(() => {
     const handleError = (error) => {
       console.error('CheckoutPage Error:', error)
       setHasError(true)
     }
-    
+
     window.addEventListener('error', handleError)
     window.addEventListener('unhandledrejection', handleError)
-    
+
     return () => {
       window.removeEventListener('error', handleError)
       window.removeEventListener('unhandledrejection', handleError)
     }
   }, [])
-  
+
   if (hasError) {
     return (
       <div className="min-h-screen bg-red-50 flex items-center justify-center p-4">
         <div className="bg-white rounded-2xl p-8 text-center">
           <h2 className="text-2xl font-bold text-red-600 mb-4">Something went wrong</h2>
           <p className="text-gray-600 mb-6">Please refresh the page and try again.</p>
-          <button 
-            onClick={() => window.location.reload()} 
+          <button
+            onClick={() => window.location.reload()}
             className="bg-red-500 text-white px-6 py-3 rounded-xl hover:bg-red-600"
           >
             Refresh Page
@@ -49,7 +49,7 @@ const ErrorBoundary = ({ children, fallback }) => {
       </div>
     )
   }
-  
+
   try {
     return children
   } catch (error) {
@@ -74,13 +74,13 @@ const validateAddress = (address) => {
 
 function CheckoutPage() {
   const navigate = useNavigate()
-  
+
   // Store hooks
-  const { 
-    items, 
-    fulfillment, 
-    setFulfillment, 
-    clearCart, 
+  const {
+    items,
+    fulfillment,
+    setFulfillment,
+    clearCart,
     submitOrder,
     isSubmittingOrder,
     orderError,
@@ -92,29 +92,29 @@ function CheckoutPage() {
     decreaseQuantity,
     removeItem
   } = useCartStore()
-  
-  const { 
-    selectedArea, 
-    setSelectedArea, 
-    isValidDeliveryArea, 
-    deliveryFee, 
+
+  const {
+    selectedArea,
+    setSelectedArea,
+    isValidDeliveryArea,
+    deliveryFee,
     estimatedDeliveryTime,
     isValidatingArea,
-    deliveryAreas 
+    deliveryAreas
   } = useLocationStore()
-  
-  const { 
+
+  const {
     setLoadingState,
     setError,
     clearError,
-    addNotification 
+    addNotification
   } = useUIStore()
 
   // Form state
   const [fulfillmentType, setFulfillmentType] = useState(fulfillment?.type || 'delivery')
   const [paymentMethod, setPaymentMethod] = useState('cod')
   const [orderStatus, setOrderStatus] = useState({ type: '', message: '', orderId: '' })
-  
+
   // Form data
   const [formData, setFormData] = useState({
     name: '',
@@ -147,14 +147,14 @@ function CheckoutPage() {
   const subtotal = useMemo(() => {
     return items.reduce((total, item) => total + item.price * item.quantity, 0)
   }, [items])
-  
+
   const totalDeliveryFee = fulfillmentType === 'delivery' && items.length ? (deliveryFee || 5.99) : 0
   const total = subtotal + totalDeliveryFee
 
   // Validation functions
   const validateField = (name, value) => {
     let error = ''
-    
+
     switch (name) {
       case 'name':
         if (!value.trim()) {
@@ -178,14 +178,14 @@ function CheckoutPage() {
         }
         break
     }
-    
+
     return error
   }
 
   // Handle field changes
   const handleFieldChange = (field, value) => {
     setFormData(prev => ({ ...prev, [field]: value }))
-    
+
     if (touched[field]) {
       const error = validateField(field, value)
       setFieldErrors(prev => ({ ...prev, [field]: error }))
@@ -207,7 +207,7 @@ function CheckoutPage() {
     // Validate all fields
     Object.keys(formData).forEach(field => {
       if (field === 'address' && fulfillmentType !== 'delivery') return
-      
+
       const error = validateField(field, formData[field])
       if (error) {
         errors[field] = error
@@ -237,7 +237,7 @@ function CheckoutPage() {
   const handleFulfillmentTypeChange = (type) => {
     setFulfillmentType(type)
     setFulfillment({ type })
-    
+
     // Clear address error if switching to pickup
     if (type === 'pickup') {
       setFieldErrors(prev => ({ ...prev, address: '' }))
@@ -247,7 +247,7 @@ function CheckoutPage() {
   // Handle order submission
   const handlePlaceOrder = async (e) => {
     e?.preventDefault()
-    
+
     if (items.length === 0) {
       toast.error('Your cart is empty')
       return
@@ -278,15 +278,15 @@ function CheckoutPage() {
       }
 
       const orderResult = await submitOrder(customerInfo)
-      
-      setOrderStatus({ 
-        type: 'success', 
-        message: 'Order placed successfully!', 
-        orderId: orderResult.orderId 
+
+      setOrderStatus({
+        type: 'success',
+        message: 'Order placed successfully!',
+        orderId: orderResult.orderId
       })
 
       toast.success(`Order ${orderResult.orderId} placed successfully!`)
-      
+
       // Add notification
       addNotification({
         type: 'success',
@@ -297,14 +297,14 @@ function CheckoutPage() {
 
     } catch (error) {
       console.error("Order error:", error)
-      setOrderStatus({ 
-        type: 'error', 
-        message: error.message || 'Failed to place order. Please try again.' 
+      setOrderStatus({
+        type: 'error',
+        message: error.message || 'Failed to place order. Please try again.'
       })
-      
+
       toast.error(error.message || 'Failed to place order')
       setError('checkout', error.message)
-      
+
     } finally {
       setLoadingState('checkout', false)
     }
@@ -316,15 +316,15 @@ function CheckoutPage() {
       toast.error('Please select a rating')
       return
     }
-    
+
     setFeedbackSent(true)
     toast.success('Thank you for your feedback!')
-    
+
     // In a real app, you'd save this to a backend
-    console.log("Feedback sent:", { 
-      rating, 
-      feedback, 
-      orderId: orderStatus.orderId 
+    console.log("Feedback sent:", {
+      rating,
+      feedback,
+      orderId: orderStatus.orderId
     })
   }
 
@@ -370,9 +370,9 @@ function CheckoutPage() {
             <FiArrowLeft className="w-5 h-5" />
             Back
           </button>
-          
+
           <h1 className="text-xl font-bold text-gray-900">Checkout</h1>
-          
+
           <div className="w-20" />
         </div>
       </div>
@@ -429,11 +429,10 @@ function CheckoutPage() {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0 }}
-                    className={`p-4 rounded-2xl flex items-center gap-3 ${
-                      orderStatus.type === 'error'
+                    className={`p-4 rounded-2xl flex items-center gap-3 ${orderStatus.type === 'error'
                         ? 'bg-red-50 text-red-700 border border-red-200'
                         : 'bg-green-50 text-green-700 border border-green-200'
-                    }`}
+                      }`}
                   >
                     {orderStatus.type === 'error' ? (
                       <FiAlertCircle className="w-5 h-5 shrink-0" />
@@ -459,7 +458,7 @@ function CheckoutPage() {
                     Processing Order...
                   </span>
                 ) : (
-                  `Place Order • AED ${total.toFixed(2)}`
+                  `Place Order • PKR ${total.toFixed(2)}`
                 )}
               </motion.button>
             </form>
@@ -477,8 +476,8 @@ const CheckoutPageWithErrorBoundary = () => (
       <div className="bg-white rounded-2xl p-8 text-center">
         <h2 className="text-2xl font-bold text-red-600 mb-4">Checkout Error</h2>
         <p className="text-gray-600 mb-6">There was an error loading the checkout page.</p>
-        <button 
-          onClick={() => window.location.reload()} 
+        <button
+          onClick={() => window.location.reload()}
           className="bg-red-500 text-white px-6 py-3 rounded-xl hover:bg-red-600"
         >
           Refresh Page

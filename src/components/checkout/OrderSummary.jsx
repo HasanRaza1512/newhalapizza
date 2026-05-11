@@ -1,10 +1,10 @@
 import { motion } from 'framer-motion'
 import { FiPackage, FiMinus, FiPlus, FiTrash2 } from 'react-icons/fi'
 
-const OrderSummary = ({ 
-  items, 
-  subtotal, 
-  deliveryFee, 
+const OrderSummary = ({
+  items,
+  subtotal,
+  deliveryFee,
   total,
   increaseQuantity,
   decreaseQuantity,
@@ -24,7 +24,7 @@ const OrderSummary = ({
           {items.reduce((count, item) => count + item.quantity, 0)} items
         </span>
       </div>
-      
+
       {/* Order Items */}
       <div className="space-y-4 max-h-80 overflow-y-auto pr-2">
         {items.map((item, index) => (
@@ -41,11 +41,11 @@ const OrderSummary = ({
               alt={item.name}
               className="w-16 h-16 rounded-xl object-cover shrink-0"
             />
-            
+
             {/* Product Details */}
             <div className="flex-1 min-w-0">
               <h3 className="font-semibold text-gray-900 truncate">{item.name}</h3>
-              
+
               {/* Options */}
               {item.options.size && (
                 <p className="text-sm text-gray-500">
@@ -53,20 +53,20 @@ const OrderSummary = ({
                   {item.options.crust && ` • Crust: ${item.options.crust}`}
                 </p>
               )}
-              
+
               {/* Toppings */}
               {item.options.toppings && item.options.toppings.length > 0 && (
                 <p className="text-xs text-gray-400">
                   Toppings: {item.options.toppings.join(', ')}
                 </p>
               )}
-              
+
               {/* Price and Quantity Controls */}
               <div className="flex items-center justify-between mt-2">
                 <span className="text-sm font-semibold text-gray-900">
-                  AED {item.price.toFixed(2)} each
+                  PKR {item.price.toFixed(2)} each
                 </span>
-                
+
                 <div className="flex items-center gap-2">
                   {/* Quantity Controls */}
                   <div className="flex items-center bg-white border border-gray-200 rounded-xl">
@@ -77,11 +77,11 @@ const OrderSummary = ({
                     >
                       <FiMinus className="w-3 h-3 text-gray-600" />
                     </button>
-                    
+
                     <span className="px-3 py-1 text-sm font-semibold text-gray-900 min-w-12 text-center">
                       {item.quantity}
                     </span>
-                    
+
                     <button
                       onClick={() => increaseQuantity(item.cartKey)}
                       className="p-2 hover:bg-gray-100 transition-colors rounded-r-xl"
@@ -90,7 +90,7 @@ const OrderSummary = ({
                       <FiPlus className="w-3 h-3 text-gray-600" />
                     </button>
                   </div>
-                  
+
                   {/* Remove Button */}
                   <button
                     onClick={() => removeItem(item.cartKey)}
@@ -105,24 +105,24 @@ const OrderSummary = ({
           </motion.div>
         ))}
       </div>
-      
+
       {/* Order Totals */}
       <div className="border-t border-gray-200 pt-6 space-y-3">
         <div className="flex justify-between text-sm text-gray-600">
           <span>Subtotal</span>
-          <span className="font-medium">AED {subtotal.toFixed(2)}</span>
+          <span className="font-medium">PKR {subtotal.toFixed(2)}</span>
         </div>
-        
+
         {deliveryFee > 0 && (
           <div className="flex justify-between text-sm text-gray-600">
             <span>Delivery Fee</span>
-            <span className="font-medium">AED {deliveryFee.toFixed(2)}</span>
+            <span className="font-medium">PKR {deliveryFee.toFixed(2)}</span>
           </div>
         )}
-        
+
         <div className="flex justify-between text-lg font-bold text-gray-900 pt-3 border-t border-gray-100">
           <span>Total</span>
-          <span className="text-orange-600">AED {total.toFixed(2)}</span>
+          <span className="text-orange-600">PKR {total.toFixed(2)}</span>
         </div>
       </div>
     </motion.div>

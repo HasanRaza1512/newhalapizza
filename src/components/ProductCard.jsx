@@ -27,7 +27,7 @@ function ProductCard({ image, title, price, description, isNew, onAddToCart, onC
           className="h-full w-full object-cover"
           loading="lazy"
         />
-        
+
         {/* Soft shadow under image on hover */}
         <div className="absolute inset-0 rounded-full transition-opacity duration-300 opacity-0 group-hover:opacity-100 shadow-[0_15px_30px_rgba(0,0,0,0.15)] pointer-events-none" />
       </div>
@@ -55,13 +55,12 @@ function ProductCard({ image, title, price, description, isNew, onAddToCart, onC
           <button
             type="button"
             onClick={handleQuickAdd}
-            className={`rounded-full px-4 py-2 sm:px-5 sm:py-2 text-[13px] sm:text-sm font-medium transition-all active:scale-95 shadow-sm min-h-10 sm:min-h-0 ${
-              isAdded 
-                ? 'bg-emerald-500 text-white shadow-emerald-500/20' 
+            className={`rounded-full px-4 py-2 sm:px-5 sm:py-2 text-[13px] sm:text-sm font-medium transition-all active:scale-95 shadow-sm min-h-10 sm:min-h-0 ${isAdded
+                ? 'bg-emerald-500 text-white shadow-emerald-500/20'
                 : 'bg-orange-100 text-orange-600 shadow-orange-200/50 hover:bg-orange-500 hover:text-white hover:shadow-lg hover:shadow-orange-500/20'
-            }`}
+              }`}
           >
-            {isAdded ? 'Added!' : `AED ${price.toFixed(0)}`}
+            {isAdded ? 'Added!' : `PKR ${price.toFixed(0)}`}
           </button>
         </div>
       </div>

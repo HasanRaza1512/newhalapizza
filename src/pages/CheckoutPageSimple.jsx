@@ -7,17 +7,17 @@ import { useNavigate } from 'react-router-dom'
 
 function CheckoutPageSimple() {
   const navigate = useNavigate()
-  
+
   // Store hooks
-  const { 
-    items, 
-    clearCart, 
+  const {
+    items,
+    clearCart,
     getCartTotal,
     getCartItemCount
   } = useCartStore()
-  
-  const { 
-    selectedArea, 
+
+  const {
+    selectedArea,
     deliveryFee
   } = useLocationStore()
 
@@ -65,9 +65,9 @@ function CheckoutPageSimple() {
             <FiArrowLeft className="w-5 h-5" />
             Back
           </button>
-          
+
           <h1 className="text-xl font-bold text-gray-900">Checkout</h1>
-          
+
           <div className="w-20" />
         </div>
       </div>
@@ -88,7 +88,7 @@ function CheckoutPageSimple() {
                   {cartCount} items
                 </span>
               </div>
-              
+
               {/* Order Items */}
               <div className="space-y-4 max-h-80 overflow-y-auto pr-2">
                 {items.map((item) => (
@@ -98,38 +98,38 @@ function CheckoutPageSimple() {
                       alt={item.name}
                       className="w-16 h-16 rounded-xl object-cover shrink-0"
                     />
-                    
+
                     <div className="flex-1">
                       <h3 className="font-semibold text-gray-900">{item.name}</h3>
                       <p className="text-sm text-gray-500">
-                        {item.quantity} × AED {item.price.toFixed(2)}
+                        {item.quantity} × PKR {item.price.toFixed(2)}
                       </p>
                     </div>
-                    
+
                     <p className="font-semibold text-gray-900">
-                      AED {(item.price * item.quantity).toFixed(2)}
+                      PKR {(item.price * item.quantity).toFixed(2)}
                     </p>
                   </div>
                 ))}
               </div>
-              
+
               {/* Order Totals */}
               <div className="border-t border-gray-200 pt-6 space-y-3">
                 <div className="flex justify-between text-sm text-gray-600">
                   <span>Subtotal</span>
-                  <span className="font-medium">AED {subtotal.toFixed(2)}</span>
+                  <span className="font-medium">PKR {subtotal.toFixed(2)}</span>
                 </div>
-                
+
                 {deliveryFee > 0 && (
                   <div className="flex justify-between text-sm text-gray-600">
                     <span>Delivery Fee</span>
-                    <span className="font-medium">AED {deliveryFee.toFixed(2)}</span>
+                    <span className="font-medium">PKR {deliveryFee.toFixed(2)}</span>
                   </div>
                 )}
-                
+
                 <div className="flex justify-between text-lg font-bold text-gray-900 pt-3 border-t border-gray-100">
                   <span>Total</span>
-                  <span className="text-orange-600">AED {total.toFixed(2)}</span>
+                  <span className="text-orange-600">PKR {total.toFixed(2)}</span>
                 </div>
               </div>
             </motion.div>

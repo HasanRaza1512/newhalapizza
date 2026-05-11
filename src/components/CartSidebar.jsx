@@ -70,7 +70,7 @@ function CartSidebar({ isOpen, onClose }) {
             <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6 sm:py-8 no-scrollbar sm:custom-scrollbar">
               {items.length === 0 ? (
                 <div className="flex h-full flex-col items-center justify-center text-center">
-                  <motion.div 
+                  <motion.div
                     initial={{ scale: 0.8, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     className="mb-8 flex h-24 w-24 sm:h-32 sm:w-32 items-center justify-center rounded-full bg-gray-50 text-gray-200 ring-8 sm:ring-12 ring-gray-50/50"
@@ -133,7 +133,7 @@ function CartSidebar({ isOpen, onClose }) {
                           </p>
                           <div className="mt-3 flex items-center justify-between">
                             <p className="text-sm sm:text-base font-black text-orange-600">
-                              AED {(item.price * item.quantity).toFixed(0)}
+                              PKR {(item.price * item.quantity).toFixed(0)}
                             </p>
                             <div className="inline-flex items-center gap-2 sm:gap-3 rounded-xl sm:rounded-2xl bg-gray-50 p-1 sm:p-1.5">
                               <button
@@ -174,11 +174,11 @@ function CartSidebar({ isOpen, onClose }) {
                 <div className="space-y-3 sm:space-y-4">
                   <div className="flex items-center justify-between text-[10px] sm:text-xs font-bold uppercase tracking-widest text-gray-400">
                     <span>Subtotal</span>
-                    <span className="text-gray-900">AED {cartSubtotal.toFixed(0)}</span>
+                    <span className="text-gray-900">PKR {cartSubtotal.toFixed(0)}</span>
                   </div>
                   <div className="flex items-center justify-between text-[10px] sm:text-xs font-bold uppercase tracking-widest text-gray-400">
                     <span>Delivery Fee</span>
-                    <span className="text-gray-900">AED {deliveryFee.toFixed(0)}</span>
+                    <span className="text-gray-900">PKR {deliveryFee.toFixed(0)}</span>
                   </div>
                   <div className="flex items-center justify-between pt-2 sm:pt-4">
                     <span className="text-lg sm:text-xl font-black uppercase tracking-tight text-gray-900">Total</span>
@@ -188,7 +188,7 @@ function CartSidebar({ isOpen, onClose }) {
                       animate={{ scale: 1, opacity: 1 }}
                       className="text-2xl sm:text-3xl font-black text-gray-900"
                     >
-                      AED {grandTotal.toFixed(0)}
+                      PKR {grandTotal.toFixed(0)}
                     </motion.span>
                   </div>
                   <button

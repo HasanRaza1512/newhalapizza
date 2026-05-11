@@ -75,7 +75,7 @@ function AdminPage() {
                 />
               </div>
               <div className="space-y-2">
-                <label className="text-[11px] font-black uppercase tracking-widest text-gray-400">Price (AED)</label>
+                <label className="text-[11px] font-black uppercase tracking-widest text-gray-400">Price (PKR)</label>
                 <input
                   required
                   type="number"
@@ -138,9 +138,8 @@ function AdminPage() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0 }}
-                  className={`flex items-center gap-2 rounded-2xl p-4 text-sm font-bold ${
-                    status.type === 'success' ? 'bg-emerald-50 text-emerald-600' : 'bg-rose-50 text-rose-600'
-                  }`}
+                  className={`flex items-center gap-2 rounded-2xl p-4 text-sm font-bold ${status.type === 'success' ? 'bg-emerald-50 text-emerald-600' : 'bg-rose-50 text-rose-600'
+                    }`}
                 >
                   {status.type === 'success' ? <FiCheckCircle /> : <FiAlertCircle />}
                   {status.message}
@@ -163,7 +162,7 @@ function AdminPage() {
                 No products found in database.
               </div>
             )}
-            
+
             {products.map((product) => (
               <div key={product.id} className="flex items-center gap-4 rounded-3xl border border-gray-100 bg-white p-4 shadow-sm transition-all hover:shadow-md">
                 <img src={product.image} className="h-16 w-16 rounded-full object-cover" alt={product.name} />
@@ -171,7 +170,7 @@ function AdminPage() {
                   <h3 className="font-black text-gray-900">{product.name}</h3>
                   <div className="flex gap-2">
                     <span className="text-[10px] font-black uppercase tracking-widest text-orange-500">{product.category}</span>
-                    <span className="text-[10px] font-bold text-gray-400">AED {product.price}</span>
+                    <span className="text-[10px] font-bold text-gray-400">PKR {product.price}</span>
                   </div>
                 </div>
                 <button

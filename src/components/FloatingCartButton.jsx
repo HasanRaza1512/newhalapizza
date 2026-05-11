@@ -40,7 +40,7 @@ function FloatingCartButton() {
         >
           <div className="relative flex items-center justify-center">
             <FiShoppingBag className="h-6 w-6 text-white" />
-            <motion.span 
+            <motion.span
               key={cartCount}
               initial={{ scale: 0.5, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
@@ -52,13 +52,13 @@ function FloatingCartButton() {
           </div>
           <div className="flex flex-col items-start pl-4 border-l border-white/20">
             <span className="text-[10px] uppercase tracking-widest font-black text-white/80 leading-none mb-1">Your Order</span>
-            <motion.span 
+            <motion.span
               key={cartSubtotal}
               initial={{ y: -5, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               className="text-base font-black leading-none uppercase"
             >
-              AED {cartSubtotal.toFixed(0)}
+              PKR {cartSubtotal.toFixed(0)}
             </motion.span>
           </div>
         </motion.button>

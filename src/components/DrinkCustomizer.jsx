@@ -26,18 +26,17 @@ const DrinkCustomizer = ({
             <button
               key={option.label}
               onClick={() => setSelectedSize(option.label)}
-              className={`relative flex flex-col items-center justify-center p-5 rounded-2xl border-2 transition-all duration-300 ${
-                selectedSize === option.label
+              className={`relative flex flex-col items-center justify-center p-5 rounded-2xl border-2 transition-all duration-300 ${selectedSize === option.label
                   ? 'border-orange-500 bg-orange-50/50 shadow-lg shadow-orange-500/10'
                   : 'border-gray-100 bg-white hover:border-gray-200 hover:bg-gray-50'
-              }`}
+                }`}
             >
               <span className={`text-sm font-black ${selectedSize === option.label ? 'text-orange-600' : 'text-gray-900'}`}>
                 {option.label}
               </span>
               {option.extraPrice > 0 && (
                 <span className={`text-[10px] font-bold mt-1 ${selectedSize === option.label ? 'text-orange-400' : 'text-gray-400'}`}>
-                  +{option.extraPrice} AED
+                  +{option.extraPrice} PKR
                 </span>
               )}
             </button>

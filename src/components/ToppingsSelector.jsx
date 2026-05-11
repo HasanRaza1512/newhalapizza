@@ -21,11 +21,10 @@ function ToppingsSelector({ selectedToppings, onToggle }) {
               key={topping.id}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className={`flex cursor-pointer items-center gap-3 rounded-2xl border-2 px-4 py-3 transition-all duration-300 ${
-                isChecked
+              className={`flex cursor-pointer items-center gap-3 rounded-2xl border-2 px-4 py-3 transition-all duration-300 ${isChecked
                   ? 'border-orange-500 bg-orange-50/30 shadow-lg shadow-orange-500/5'
                   : 'border-gray-50 bg-gray-50/50 hover:border-gray-100 hover:bg-gray-100/50'
-              }`}
+                }`}
             >
               <span className="text-xl">{topping.icon}</span>
               <div className="flex-1 min-w-0">
@@ -33,13 +32,12 @@ function ToppingsSelector({ selectedToppings, onToggle }) {
                   {topping.label}
                 </span>
                 <span className="block text-[10px] font-bold text-gray-400">
-                  +AED {topping.price.toFixed(2)}
+                  +PKR {topping.price.toFixed(2)}
                 </span>
               </div>
-              
-              <div className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-lg border-2 transition-all ${
-                isChecked ? 'border-orange-500 bg-orange-500' : 'border-gray-200 bg-white'
-              }`}>
+
+              <div className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-lg border-2 transition-all ${isChecked ? 'border-orange-500 bg-orange-500' : 'border-gray-200 bg-white'
+                }`}>
                 {isChecked && (
                   <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }}>
                     <FiCheck className="h-3 w-3 text-white" strokeWidth={4} />

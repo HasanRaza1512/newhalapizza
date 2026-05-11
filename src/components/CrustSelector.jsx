@@ -17,11 +17,10 @@ function CrustSelector({ selectedCrust, onSelect }) {
               whileHover={{ x: 4 }}
               whileTap={{ scale: 0.99 }}
               onClick={() => onSelect(crust.label)}
-              className={`flex w-full items-center gap-4 rounded-2xl border-2 px-5 py-4 text-left transition-all duration-300 cursor-pointer ${
-                isActive
+              className={`flex w-full items-center gap-4 rounded-2xl border-2 px-5 py-4 text-left transition-all duration-300 cursor-pointer ${isActive
                   ? 'border-orange-500 bg-orange-50/30 shadow-lg shadow-orange-500/5'
                   : 'border-gray-50 bg-gray-50/50 hover:border-gray-100 hover:bg-gray-100/50'
-              }`}
+                }`}
             >
               <span className="text-2xl filter drop-shadow-sm">{crust.icon}</span>
               <div className="flex-1">
@@ -30,14 +29,13 @@ function CrustSelector({ selectedCrust, onSelect }) {
                 </span>
                 {crust.price > 0 && (
                   <span className="text-[10px] font-bold text-orange-500">
-                    +AED {crust.price.toFixed(2)} Premium
+                    +PKR {crust.price.toFixed(2)} Premium
                   </span>
                 )}
               </div>
-              
-              <div className={`flex h-6 w-6 items-center justify-center rounded-full border-2 transition-all ${
-                isActive ? 'border-orange-500 bg-orange-500 shadow-lg shadow-orange-500/40' : 'border-gray-200 bg-white'
-              }`}>
+
+              <div className={`flex h-6 w-6 items-center justify-center rounded-full border-2 transition-all ${isActive ? 'border-orange-500 bg-orange-500 shadow-lg shadow-orange-500/40' : 'border-gray-200 bg-white'
+                }`}>
                 {isActive && (
                   <motion.div
                     initial={{ scale: 0 }}
