@@ -4,6 +4,13 @@ import HomePage from './pages/HomePage'
 import MenuPage from './pages/MenuPage'
 import AdminPage from './pages/AdminPage'
 import TestPage from './pages/TestPage'
+import TestAuthPage from './pages/auth/TestAuthPage'
+import MinimalTestPage from './pages/auth/MinimalTestPage'
+import LoginPage from './pages/auth/LoginPage'
+import RegisterPage from './pages/auth/RegisterPage'
+import ForgotPasswordPage from './pages/auth/ForgotPasswordPage'
+import VerifyOtpPage from './pages/auth/VerifyOtpPage'
+import ResetPasswordPage from './pages/auth/ResetPasswordPage'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
 
@@ -16,7 +23,16 @@ function App() {
           <Route path="/menu" element={<MenuPage />} />
           <Route path="/checkout" element={<CheckoutPageSimple />} />
           <Route path="/test" element={<TestPage />} />
+          <Route path="/test-auth" element={<MinimalTestPage />} />
           <Route path="/admin" element={<AdminPage />} />
+          
+          {/* Authentication Routes */}
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/verify-otp" element={<VerifyOtpPage />} />
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
+          
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </AppLayout>
