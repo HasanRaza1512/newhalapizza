@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import ProductCard from '../components/ProductCard'
+import ProductCardMobile from '../components/ProductCardMobile'
 import ProductModal from '../components/ProductModal'
 import StickyCategoryBar from '../components/StickyCategoryBar'
 import FeaturedStories from '../components/FeaturedStories'
@@ -81,6 +82,7 @@ function HomePage() {
     <div className="space-y-12 pb-12 sm:space-y-16 lg:space-y-20">
       <FeaturedStories />
 
+      {/* Unified Category Bar - Works on Desktop & Mobile */}
       <StickyCategoryBar
         categories={categories}
         activeCategory={activeCategory}
@@ -107,7 +109,8 @@ function HomePage() {
               </span>
             </div>
 
-            <div className="grid grid-cols-1 gap-x-16 gap-y-20 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {/* Desktop Layout */}
+            <div className="hidden md:grid grid-cols-1 gap-x-16 gap-y-20 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {isLoading ? (
                 Array.from({ length: 4 }).map((_, i) => <ProductSkeleton key={i} />)
               ) : productsByCategory[category].length > 0 ? (
@@ -131,6 +134,37 @@ function HomePage() {
               ) : (
                 <div className="col-span-full rounded-3xl border-2 border-dashed border-gray-100 py-16 text-center">
                   <p className="text-sm font-black uppercase tracking-widest text-gray-300">
+                    No items found in this category
+                  </p>
+                </div>
+              )}
+            </div>
+
+            {/* Mobile Layout */}
+            <div className="md:hidden">
+              {isLoading ? (
+                Array.from({ length: 4 }).map((_, i) => <ProductSkeleton key={i} />)
+              ) : productsByCategory[category].length > 0 ? (
+                productsByCategory[category].map((product) => (
+                  <ProductCardMobile
+                    key={product.id}
+                    image={product.image}
+                    title={product.name}
+                    description={product.description}
+                    price={product.price}
+                    isNew={product.isNew}
+                    onAddToCart={(event) => {
+                      addItem(product)
+                      if (event) {
+                        addFlyingImage(product.image, event.clientX, event.clientY)
+                      }
+                    }}
+                    onClick={() => setSelectedProduct(product)}
+                  />
+                ))
+              ) : (
+                <div className="py-8 text-center">
+                  <p className="text-sm text-gray-500">
                     No items found in this category
                   </p>
                 </div>
