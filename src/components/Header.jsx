@@ -98,9 +98,9 @@ function Header() {
               )}
             </button>
 
-            <button className="hidden rounded-full bg-gray-900 px-6 py-2 text-sm font-black text-white uppercase tracking-wider transition-all hover:bg-black active:scale-95 sm:block">
+            <a href="#" className="hidden rounded-full bg-gray-900 px-6 py-2 text-sm font-black text-white uppercase tracking-wider transition-all hover:bg-black active:scale-95 sm:block">
               Login
-            </button>
+            </a>
           </div>
         </div>
       </header>
