@@ -94,7 +94,7 @@ function MenuPage() {
             <section
               key={category}
               id={category}
-              className="scroll-mt-[180px] py-16 border-b border-gray-100 last:border-0"
+              className="scroll-mt-45 py-16 border-b border-gray-100 last:border-0"
               ref={(el) => (sectionRefs.current[category] = el)}
             >
               <div className="mb-8 flex items-center justify-between">

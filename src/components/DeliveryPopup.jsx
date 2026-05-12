@@ -81,7 +81,7 @@ function DeliveryPopup() {
     <AnimatePresence>
       {isDeliveryPopupOpen && (
         <motion.div
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6"
+          className="fixed inset-0 z-100 flex items-center justify-center p-4 sm:p-6"
           variants={overlayVariants}
           initial="hidden"
           animate="visible"
@@ -92,7 +92,7 @@ function DeliveryPopup() {
 
           {/* Modal Content */}
           <motion.div
-            className="relative w-[95%] max-w-[440px] sm:max-w-lg overflow-visible rounded-[2rem] bg-white shadow-2xl"
+            className="relative w-[95%] max-w-110 sm:max-w-lg overflow-visible rounded-4xl bg-white shadow-2xl"
             variants={modalVariants}
           >
             <div className="p-6 sm:p-10">

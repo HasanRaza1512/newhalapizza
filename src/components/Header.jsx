@@ -51,7 +51,7 @@ function Header() {
           : 'bg-white border-b border-transparent'
           }`}
       >
-        <div className="mx-auto flex h-[64px] sm:h-[72px] items-center justify-between px-4 max-w-6xl sm:px-6 lg:px-8">
+        <div className="mx-auto flex h-16 sm:h-18 items-center justify-between px-4 max-w-6xl sm:px-6 lg:px-8">
           {/* Logo & Info */}
           <div className="flex items-center gap-4 sm:gap-8 lg:gap-12">
             <a href="/" className="group flex items-center gap-2 sm:gap-3">
@@ -65,7 +65,7 @@ function Header() {
 
             <button 
               onClick={openDeliveryPopup}
-              className="flex flex-col text-left group transition-all max-w-[120px] sm:max-w-none"
+              className="flex flex-col text-left group transition-all max-w-30 sm:max-w-none"
             >
               <span className="text-[10px] sm:text-sm font-black text-gray-900 uppercase tracking-tight group-hover:text-orange-500 transition-colors truncate">
                 {fulfillment ? (
