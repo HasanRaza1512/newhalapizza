@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useCartStore } from '../store'
 import CartSidebar from './CartSidebar'
-import { FiGlobe, FiUser, FiShoppingBag, FiTruck } from 'react-icons/fi'
+import { FiGlobe, FiUser, FiShoppingBag, FiTruck, FiMenu } from 'react-icons/fi'
 
 function Header() {
   const fulfillment = useCartStore((state) => state.fulfillment)
@@ -47,25 +47,25 @@ function Header() {
       {/* Main Header - Sticky and Stable */}
       <header
         className={`sticky top-0 z-50 w-full transition-all duration-300 ${isScrolled
-          ? 'bg-white/95 shadow-lg backdrop-blur-md border-b border-gray-200/50'
-          : 'bg-white border-b border-transparent'
+          ? 'bg-white shadow-sm sm:shadow-lg sm:bg-white/95 sm:backdrop-blur-md border-b border-gray-100 sm:border-gray-200/50'
+          : 'bg-white border-b border-gray-50 sm:border-transparent'
           }`}
       >
-        <div className="mx-auto flex h-16 sm:h-18 items-center justify-between px-4 max-w-6xl sm:px-6 lg:px-8">
+        <div className="mx-auto flex h-[72px] sm:h-18 items-center justify-between px-4 max-w-6xl sm:px-6 lg:px-8">
           {/* Logo & Info */}
           <div className="flex items-center gap-4 sm:gap-8 lg:gap-12">
             <a href="/" className="group flex items-center gap-2 sm:gap-3">
               <div className="flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-xl bg-orange-500 text-xl sm:text-2xl font-black text-white shadow-lg shadow-orange-500/20 transition-transform group-hover:scale-110">
                 <span className="leading-none">H</span>
               </div>
-              <span className="hidden text-lg sm:text-xl font-black tracking-tighter text-gray-900 min-[400px]:block uppercase">
+              <span className="text-lg sm:text-xl font-black tracking-tighter text-gray-900 min-[400px]:block uppercase">
                 Hala<span className="text-orange-500">Pizza</span>
               </span>
             </a>
 
             <button 
               onClick={openDeliveryPopup}
-              className="flex flex-col text-left group transition-all max-w-30 sm:max-w-none"
+              className="hidden sm:flex flex-col text-left group transition-all max-w-30 sm:max-w-none"
             >
               <span className="text-[10px] sm:text-sm font-black text-gray-900 uppercase tracking-tight group-hover:text-orange-500 transition-colors truncate">
                 {fulfillment ? (
@@ -83,14 +83,19 @@ function Header() {
 
           {/* Right Actions */}
           <div className="flex items-center gap-2 sm:gap-3">
-            <button className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-gray-50 text-gray-600 transition-all hover:bg-gray-100 hover:text-gray-900 active:scale-90">
+            {/* Mobile Hamburger Menu */}
+            <button className="flex h-10 w-10 items-center justify-center text-gray-900 sm:hidden">
+              <FiMenu className="h-6 w-6" />
+            </button>
+
+            <button className="hidden sm:flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-gray-50 text-gray-600 transition-all hover:bg-gray-100 hover:text-gray-900 active:scale-90">
               <FiUser className="h-4 w-4 sm:h-5 sm:w-5" />
             </button>
 
             <button
               id="header-cart-btn"
               onClick={openCart}
-              className="relative flex h-9 sm:h-10 items-center gap-1.5 sm:gap-2 rounded-full bg-orange-500 px-3 sm:px-4 font-black text-white shadow-lg shadow-orange-500/20 transition-all hover:bg-orange-600 hover:shadow-orange-500/30 active:scale-95"
+              className="hidden sm:flex relative h-9 sm:h-10 items-center gap-1.5 sm:gap-2 rounded-full bg-orange-500 px-3 sm:px-4 font-black text-white shadow-lg shadow-orange-500/20 transition-all hover:bg-orange-600 hover:shadow-orange-500/30 active:scale-95"
             >
               <FiShoppingBag className="h-4 w-4 sm:h-5 sm:w-5" />
               {cartCount > 0 && (

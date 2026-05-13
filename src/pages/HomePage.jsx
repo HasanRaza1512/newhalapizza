@@ -79,7 +79,7 @@ function HomePage() {
   }
 
   return (
-    <div className="space-y-12 pb-12 sm:space-y-16 lg:space-y-20">
+    <div className="space-y-10 pb-28 sm:space-y-16 lg:space-y-20">
       <FeaturedStories />
 
       {/* Unified Category Bar - Works on Desktop & Mobile */}
@@ -89,7 +89,7 @@ function HomePage() {
         onCategoryClick={scrollToCategory}
       />
 
-      <section className="px-4 sm:px-6 lg:px-8">
+      <section className="sm:px-6 lg:px-8">
 
         {categories.map((category) => (
           <section
@@ -100,7 +100,7 @@ function HomePage() {
             }}
             className="scroll-mt-44 py-16 border-b border-gray-100 last:border-0"
           >
-            <div className="mb-8 flex items-center justify-between">
+            <div className="mb-8 flex items-center justify-between px-4 sm:px-0">
               <h3 className="text-2xl font-black tracking-tight text-gray-900 sm:text-3xl uppercase">
                 {category}
               </h3>
