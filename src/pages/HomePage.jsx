@@ -79,7 +79,7 @@ function HomePage() {
   }
 
   return (
-    <div className="space-y-10 pb-28 sm:space-y-16 lg:space-y-20">
+    <div className="space-y-4 pb-28 sm:space-y-16 lg:space-y-20">
       <FeaturedStories />
 
       {/* Unified Category Bar - Works on Desktop & Mobile */}
@@ -98,9 +98,9 @@ function HomePage() {
             ref={(element) => {
               sectionRefs.current[category] = element
             }}
-            className="scroll-mt-44 py-16 border-b border-gray-100 last:border-0"
+            className="scroll-mt-44 py-8 border-b border-gray-100 last:border-0"
           >
-            <div className="mb-8 flex items-center justify-between px-4 sm:px-0">
+            <div className="mb-6 flex items-center justify-between px-4 sm:px-0">
               <h3 className="text-2xl font-black tracking-tight text-gray-900 sm:text-3xl uppercase">
                 {category}
               </h3>
