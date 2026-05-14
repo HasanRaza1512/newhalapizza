@@ -79,7 +79,7 @@ function HomePage() {
   }
 
   return (
-    <div className="space-y-5 pb-28 sm:space-y-16 lg:space-y-20">
+    <div className="space-y-5 pb-6 sm:space-y-16 lg:space-y-20 sm:pb-28">
       <FeaturedStories />
 
       {/* Unified Category Bar - Works on Desktop & Mobile */}
@@ -101,7 +101,7 @@ function HomePage() {
             className="scroll-mt-36 pt-6 pb-0 border-b border-gray-100 last:border-0 sm:scroll-mt-44 sm:py-8"
           >
             <div className="mb-6 flex items-center justify-between px-4 sm:px-0">
-              <h3 className="text-2xl font-black tracking-tight text-gray-900 sm:text-3xl uppercase">
+              <h3 className="text-[32px] font-black tracking-tight text-gray-900 sm:text-3xl uppercase">
                 {category}
               </h3>
               <span className="text-sm font-bold text-gray-400">

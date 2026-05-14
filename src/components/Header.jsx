@@ -52,15 +52,15 @@ function Header() {
           : 'bg-white border-b border-gray-50 sm:border-transparent'
           }`}
       >
-        <div className="mx-auto flex h-[92px] px-5 py-4 sm:h-18 items-center justify-between sm:px-6 lg:px-8 max-w-6xl">
+        <div className="mx-auto flex h-[68px] px-4 py-3 sm:h-18 items-center justify-between sm:px-6 lg:px-8 max-w-6xl">
           {/* Logo & Info */}
           <div className="flex items-center gap-2 sm:gap-8 lg:gap-12">
             <div className="flex items-center gap-3 sm:gap-3">
-              <a href="/" className="flex h-12 w-12 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-xl sm:rounded-xl bg-orange-500 text-2xl sm:text-2xl font-black text-white shadow-lg shadow-orange-500/20 transition-transform hover:scale-110">
+              <a href="/" className="flex h-10 w-10 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-xl sm:rounded-xl bg-orange-500 text-xl sm:text-2xl font-black text-white shadow-md shadow-orange-500/20 transition-transform hover:scale-110">
                 <span className="leading-none">H</span>
               </a>
               <div className="flex flex-col justify-center gap-0.5 sm:gap-0">
-                <a href="/" className="text-[24px] sm:text-xl font-extrabold tracking-tight text-gray-900 leading-none uppercase min-[400px]:block">
+                <a href="/" className="text-[20px] sm:text-xl font-extrabold tracking-tight text-gray-900 leading-none uppercase min-[400px]:block">
                   Hala<span className="text-orange-500">Pizza</span>
                 </a>
                 
@@ -69,9 +69,9 @@ function Header() {
                   onClick={openDeliveryPopup}
                   className="flex sm:hidden items-center text-left transition-all cursor-pointer active:opacity-70"
                 >
-                  <span className="text-[16px] text-gray-500 truncate flex items-center gap-1">
+                  <span className="text-[14px] text-gray-500 truncate flex items-center gap-1 font-medium">
                     {fulfillment ? (fulfillment.address?.split(',')[0] || 'Delivery') : 'Select location'}
-                    <span className="text-[10px] text-orange-500">▼</span>
+                    <span className="text-[10px] text-orange-500 ml-0.5">▼</span>
                   </span>
                 </button>
               </div>
@@ -101,9 +101,9 @@ function Header() {
             {/* Mobile Hamburger Menu */}
             <button 
               onClick={() => setIsMenuOpen(true)}
-              className="flex h-10 w-10 rounded-xl bg-gray-50 items-center justify-center text-gray-900 sm:hidden active:scale-95 transition-colors hover:bg-gray-100"
+              className="flex h-9 w-9 rounded-xl bg-gray-50 items-center justify-center text-gray-800 sm:hidden active:scale-95 transition-colors hover:bg-gray-100"
             >
-              <FiMenu className="h-6 w-6" />
+              <FiMenu className="h-5 w-5" />
             </button>
 
             <button className="hidden sm:flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-gray-50 text-gray-600 transition-all hover:bg-gray-100 hover:text-gray-900 active:scale-90">
