@@ -1,23 +1,35 @@
+import { useEffect, useRef } from 'react'
 import { useCartStore } from '../store'
 import { FiShoppingBag } from 'react-icons/fi'
 
 function StickyCategoryBar({ categories, activeCategory, onCategoryClick }) {
   const items = useCartStore((state) => state.items)
   const openCart = useCartStore((state) => state.openCart)
+  const navRef = useRef(null)
 
   const cartSubtotal = items.reduce((total, item) => total + item.price * item.quantity, 0)
   const cartCount = items.reduce((total, item) => total + item.quantity, 0)
+
+  useEffect(() => {
+    if (navRef.current) {
+      const activeElement = navRef.current.querySelector('[data-active="true"]')
+      if (activeElement) {
+        activeElement.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
+      }
+    }
+  }, [activeCategory])
 
   return (
     <div className="sticky top-16 z-40 w-full border-b border-gray-100 bg-white/80 py-2.5 backdrop-blur-xl transition-all duration-300 sm:top-18 sm:py-3">
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
 
         {/* Navigation Links - Responsive */}
-        <nav className="flex flex-1 items-center gap-2 overflow-x-auto whitespace-nowrap scrollbar-hide scroll-smooth sm:gap-3">
+        <nav ref={navRef} className="flex flex-1 items-center gap-2 overflow-x-auto whitespace-nowrap scrollbar-hide scroll-smooth sm:gap-3">
           {categories.map((category) => (
             <button
               key={category}
               type="button"
+              data-active={activeCategory === category}
               onClick={() => onCategoryClick(category)}
               className={`shrink-0 rounded-full px-5 py-2.5 text-[15px] font-medium transition-all duration-200 ${
                 activeCategory === category

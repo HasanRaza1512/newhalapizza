@@ -18,23 +18,23 @@ const ProductCardMobile = ({
           <img 
             src={image} 
             alt={title}
-            className="w-35 h-35 object-contain"
+            className="w-32 h-32 object-contain sm:w-35 sm:h-35"
             loading="lazy"
           />
         </div>
 
         {/* Product Info */}
         <div className="flex-1 min-w-0">
-          <h3 className="text-2xl font-bold text-black mb-1">
+          <h3 className="text-xl font-bold text-black mb-1 sm:text-2xl">
             {title}
           </h3>
           
-          <p className="text-gray-500 text-base leading-relaxed line-clamp-3 mb-2">
+          <p className="text-gray-500 text-sm leading-snug line-clamp-2 mb-2 sm:text-base sm:leading-relaxed sm:line-clamp-3">
             {description}
           </p>
 
           <button
-            className="inline-flex items-center px-5 py-2 bg-orange-50 text-orange-600 font-semibold rounded-full hover:bg-orange-100 transition-colors duration-200"
+            className="inline-flex items-center px-4 py-1.5 bg-orange-50 text-orange-600 text-sm font-semibold rounded-full hover:bg-orange-100 transition-colors duration-200 sm:px-5 sm:py-2 sm:text-base"
             onClick={(e) => {
               e.stopPropagation()
               onAddToCart?.(e)
@@ -46,7 +46,7 @@ const ProductCardMobile = ({
       </div>
 
       {/* Divider Line */}
-      <div className="border-b border-gray-100" />
+      <div className="border-b border-gray-100 mx-4" />
     </>
   )
 }
