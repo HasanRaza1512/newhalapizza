@@ -1,5 +1,6 @@
-import { motion } from 'framer-motion'
-import { FiPackage, FiMinus, FiPlus, FiTrash2 } from 'react-icons/fi'
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { FiPackage, FiMinus, FiPlus, FiTrash2, FiChevronDown, FiChevronUp } from 'react-icons/fi'
 
 const OrderSummary = ({
   items,
@@ -10,23 +11,48 @@ const OrderSummary = ({
   decreaseQuantity,
   removeItem
 }) => {
+  const [isExpanded, setIsExpanded] = useState(false)
+  const itemCount = items.reduce((count, item) => count + item.quantity, 0)
+
   return (
     <motion.div
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: 0.2 }}
-      className="bg-white rounded-3xl shadow-sm p-6 space-y-6"
+      className="bg-white rounded-3xl shadow-sm overflow-hidden"
     >
-      <div className="flex items-center gap-3">
-        <FiPackage className="w-5 h-5 text-orange-500" />
-        <h2 className="text-lg font-bold text-gray-900">Order Summary</h2>
-        <span className="ml-auto text-sm text-gray-500">
-          {items.reduce((count, item) => count + item.quantity, 0)} items
-        </span>
+      <div 
+        className="p-4 sm:p-6 flex items-center justify-between cursor-pointer sm:cursor-default bg-white border-b sm:border-b-0 border-gray-100 z-10 relative"
+        onClick={() => setIsExpanded(!isExpanded)}
+      >
+        <div className="flex items-center gap-3">
+          <FiPackage className="w-5 h-5 text-orange-500" />
+          <h2 className="text-lg font-bold text-gray-900">Order Summary</h2>
+          <span className="text-sm text-gray-500 hidden sm:inline">
+            ({itemCount} items)
+          </span>
+        </div>
+        <div className="flex items-center gap-3">
+          <span className="font-bold text-gray-900 sm:hidden">
+            PKR {total.toFixed(2)}
+          </span>
+          <button className="text-gray-400 sm:hidden">
+            {isExpanded ? <FiChevronUp className="w-5 h-5" /> : <FiChevronDown className="w-5 h-5" />}
+          </button>
+        </div>
       </div>
 
-      {/* Order Items */}
-      <div className="space-y-4 max-h-80 overflow-y-auto pr-2">
+      <AnimatePresence initial={false}>
+        {(isExpanded || typeof window !== 'undefined' && window.innerWidth >= 640) && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            className="sm:block"
+          >
+            <div className="p-4 sm:p-6 pt-0 sm:pt-0 space-y-6">
+              {/* Order Items */}
+              <div className="space-y-4 max-h-[50vh] sm:max-h-80 overflow-y-auto pr-2">
         {items.map((item, index) => (
           <motion.div
             key={item.cartKey}
@@ -106,25 +132,29 @@ const OrderSummary = ({
         ))}
       </div>
 
-      {/* Order Totals */}
-      <div className="border-t border-gray-200 pt-6 space-y-3">
-        <div className="flex justify-between text-sm text-gray-600">
-          <span>Subtotal</span>
-          <span className="font-medium">PKR {subtotal.toFixed(2)}</span>
-        </div>
+              {/* Order Totals */}
+              <div className="border-t border-gray-200 pt-6 space-y-3">
+                <div className="flex justify-between text-sm text-gray-600">
+                  <span>Subtotal</span>
+                  <span className="font-medium">PKR {subtotal.toFixed(2)}</span>
+                </div>
 
-        {deliveryFee > 0 && (
-          <div className="flex justify-between text-sm text-gray-600">
-            <span>Delivery Fee</span>
-            <span className="font-medium">PKR {deliveryFee.toFixed(2)}</span>
-          </div>
+                {deliveryFee > 0 && (
+                  <div className="flex justify-between text-sm text-gray-600">
+                    <span>Delivery Fee</span>
+                    <span className="font-medium">PKR {deliveryFee.toFixed(2)}</span>
+                  </div>
+                )}
+
+                <div className="flex justify-between text-lg font-bold text-gray-900 pt-3 border-t border-gray-100">
+                  <span>Total</span>
+                  <span className="text-orange-600">PKR {total.toFixed(2)}</span>
+                </div>
+              </div>
+            </div>
+          </motion.div>
         )}
-
-        <div className="flex justify-between text-lg font-bold text-gray-900 pt-3 border-t border-gray-100">
-          <span>Total</span>
-          <span className="text-orange-600">PKR {total.toFixed(2)}</span>
-        </div>
-      </div>
+      </AnimatePresence>
     </motion.div>
   )
 }

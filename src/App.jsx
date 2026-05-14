@@ -1,5 +1,5 @@
 import AppLayout from './components/AppLayout'
-import CheckoutPageSimple from './pages/CheckoutPageSimple'
+import CheckoutPage from './pages/CheckoutPage'
 import HomePage from './pages/HomePage'
 import MenuPage from './pages/MenuPage'
 import AdminPage from './pages/AdminPage'
@@ -21,7 +21,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/menu" element={<MenuPage />} />
-          <Route path="/checkout" element={<CheckoutPageSimple />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/test" element={<TestPage />} />
           <Route path="/test-auth" element={<MinimalTestPage />} />
           <Route path="/admin" element={<AdminPage />} />
