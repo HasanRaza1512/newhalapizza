@@ -10,7 +10,7 @@ const ProductCardMobile = ({
   return (
     <>
       <div 
-        className="flex items-center py-6 gap-4 px-4 cursor-pointer hover:bg-gray-50 transition-colors duration-200"
+        className="flex items-center py-6 gap-3 px-4 cursor-pointer hover:bg-gray-50 transition-colors duration-200"
         onClick={onClick}
       >
         {/* Product Image */}
@@ -18,18 +18,18 @@ const ProductCardMobile = ({
           <img 
             src={image} 
             alt={title}
-            className="w-32 h-32 object-contain sm:w-35 sm:h-35"
+            className="w-[120px] h-[120px] object-contain sm:w-35 sm:h-35"
             loading="lazy"
           />
         </div>
 
         {/* Product Info */}
         <div className="flex-1 min-w-0">
-          <h3 className="text-xl font-bold text-black mb-1 sm:text-2xl">
+          <h3 className="text-[30px] font-bold text-black mb-1 sm:text-2xl leading-none">
             {title}
           </h3>
           
-          <p className="text-gray-500 text-sm leading-snug line-clamp-2 mb-2 sm:text-base sm:leading-relaxed sm:line-clamp-3">
+          <p className="text-gray-500 text-[17px] leading-7 line-clamp-2 mb-2 sm:text-base sm:leading-relaxed sm:line-clamp-3">
             {description}
           </p>
 

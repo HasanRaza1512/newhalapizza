@@ -31,7 +31,7 @@ function StickyCategoryBar({ categories, activeCategory, onCategoryClick }) {
               type="button"
               data-active={activeCategory === category}
               onClick={() => onCategoryClick(category)}
-              className={`shrink-0 rounded-full px-5 py-2.5 text-[15px] font-medium transition-all duration-200 ${
+              className={`shrink-0 rounded-full px-5 py-2 text-[17px] font-medium transition-all duration-200 ${
                 activeCategory === category
                   ? 'bg-orange-100 text-orange-600'
                   : 'bg-gray-100 text-gray-600 hover:bg-gray-200'

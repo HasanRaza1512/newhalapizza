@@ -79,7 +79,7 @@ function HomePage() {
   }
 
   return (
-    <div className="space-y-4 pb-28 sm:space-y-16 lg:space-y-20">
+    <div className="space-y-5 pb-28 sm:space-y-16 lg:space-y-20">
       <FeaturedStories />
 
       {/* Unified Category Bar - Works on Desktop & Mobile */}

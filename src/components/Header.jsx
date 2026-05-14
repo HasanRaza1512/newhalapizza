@@ -12,6 +12,7 @@ function Header() {
   const closeCart = useCartStore((state) => state.closeCart)
   const items = useCartStore((state) => state.items)
   const [isScrolled, setIsScrolled] = useState(false)
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const cartCount = items.reduce((total, item) => total + item.quantity, 0)
 
@@ -53,16 +54,30 @@ function Header() {
       >
         <div className="mx-auto flex h-[72px] sm:h-18 items-center justify-between px-4 max-w-6xl sm:px-6 lg:px-8">
           {/* Logo & Info */}
-          <div className="flex items-center gap-4 sm:gap-8 lg:gap-12">
-            <a href="/" className="group flex items-center gap-2 sm:gap-3">
-              <div className="flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-xl bg-orange-500 text-xl sm:text-2xl font-black text-white shadow-lg shadow-orange-500/20 transition-transform group-hover:scale-110">
+          <div className="flex items-center gap-2 sm:gap-8 lg:gap-12">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <a href="/" className="flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-xl bg-orange-500 text-xl sm:text-2xl font-black text-white shadow-lg shadow-orange-500/20 transition-transform hover:scale-110">
                 <span className="leading-none">H</span>
+              </a>
+              <div className="flex flex-col justify-center">
+                <a href="/" className="text-[16px] sm:text-xl font-black tracking-tighter text-gray-900 leading-tight uppercase min-[400px]:block">
+                  Hala<span className="text-orange-500">Pizza</span>
+                </a>
+                
+                {/* Mobile Location Button */}
+                <button 
+                  onClick={openDeliveryPopup}
+                  className="flex sm:hidden items-center text-left transition-all mt-0.5 cursor-pointer active:opacity-70"
+                >
+                  <span className="text-[13px] font-medium text-gray-600 truncate flex items-center gap-1">
+                    {fulfillment ? (fulfillment.address?.split(',')[0] || 'Delivery') : 'Select location'}
+                    <span className="text-[9px] text-orange-500">▼</span>
+                  </span>
+                </button>
               </div>
-              <span className="text-lg sm:text-xl font-black tracking-tighter text-gray-900 min-[400px]:block uppercase">
-                Hala<span className="text-orange-500">Pizza</span>
-              </span>
-            </a>
+            </div>
 
+            {/* Desktop Location Button */}
             <button 
               onClick={openDeliveryPopup}
               className="hidden sm:flex flex-col text-left group transition-all max-w-30 sm:max-w-none"
@@ -84,7 +99,10 @@ function Header() {
           {/* Right Actions */}
           <div className="flex items-center gap-2 sm:gap-3">
             {/* Mobile Hamburger Menu */}
-            <button className="flex h-10 w-10 items-center justify-center text-gray-900 sm:hidden">
+            <button 
+              onClick={() => setIsMenuOpen(true)}
+              className="flex h-10 w-10 items-center justify-center text-gray-900 sm:hidden active:scale-95"
+            >
               <FiMenu className="h-6 w-6" />
             </button>
 
@@ -111,6 +129,36 @@ function Header() {
       </header>
 
       <CartSidebar isOpen={isCartOpen} onClose={closeCart} />
+
+      {/* Mobile Drawer Overlay */}
+      {isMenuOpen && (
+        <div 
+          className="fixed inset-0 z-50 bg-black/50 sm:hidden transition-opacity duration-300"
+          onClick={() => setIsMenuOpen(false)}
+        />
+      )}
+      
+      {/* Mobile Drawer */}
+      <div 
+        className={`fixed inset-y-0 right-0 z-50 w-64 bg-white shadow-xl transform transition-transform duration-300 sm:hidden flex flex-col ${
+          isMenuOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}
+      >
+        <div className="flex h-[72px] items-center justify-between px-6 border-b border-gray-100">
+          <span className="text-[18px] font-black tracking-tight uppercase">Menu</span>
+          <button onClick={() => setIsMenuOpen(false)} className="p-2 -mr-2 text-gray-500 hover:text-black">
+             ✕
+          </button>
+        </div>
+        <div className="py-2 flex flex-col">
+           <a href="#" className="px-6 py-4 text-[17px] font-medium text-gray-800 hover:bg-gray-50 transition-colors">Home</a>
+           <a href="#" className="px-6 py-4 text-[17px] font-medium text-gray-800 hover:bg-gray-50 transition-colors">Deals</a>
+           <a href="#" className="px-6 py-4 text-[17px] font-medium text-gray-800 hover:bg-gray-50 transition-colors">Orders</a>
+           <a href="#" className="px-6 py-4 text-[17px] font-medium text-gray-800 hover:bg-gray-50 transition-colors">Login</a>
+           <a href="#" className="px-6 py-4 text-[17px] font-medium text-gray-800 hover:bg-gray-50 transition-colors">Contact</a>
+           <a href="#" className="px-6 py-4 text-[17px] font-medium text-gray-800 hover:bg-gray-50 transition-colors">Store Info</a>
+        </div>
+      </div>
     </>
   )
 }

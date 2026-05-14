@@ -54,14 +54,14 @@ function FeaturedStories() {
 
   return (
     <section className="py-2 sm:py-2">
-      <div className="no-scrollbar flex scroll-smooth snap-x gap-3 overflow-x-auto px-4 sm:grid sm:grid-cols-2 sm:gap-4 md:grid-cols-6 sm:px-0 sm:snap-none pb-1">
+      <div className="no-scrollbar flex scroll-smooth snap-x gap-2 overflow-x-auto px-4 sm:grid sm:grid-cols-2 sm:gap-4 md:grid-cols-6 sm:px-0 sm:snap-none pb-1">
         {stories.map((story) => (
           <motion.button
             key={story.id}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => setSelectedStory(story)}
-            className="group relative h-[170px] w-[135px] shrink-0 snap-start overflow-hidden rounded-3xl bg-gray-50 text-left shadow-lg transition-all hover:shadow-2xl hover:shadow-orange-500/5 focus:outline-none focus:ring-2 focus:ring-orange-500 sm:h-auto sm:w-full sm:aspect-4/5 sm:shrink sm:rounded-4xl"
+            className="group relative h-[145px] w-[115px] shrink-0 snap-start overflow-hidden rounded-3xl bg-gray-50 text-left shadow-lg transition-all hover:shadow-2xl hover:shadow-orange-500/5 focus:outline-none focus:ring-2 focus:ring-orange-500 sm:h-auto sm:w-full sm:aspect-4/5 sm:shrink sm:rounded-4xl"
           >
             {/* Background Image */}
             <img
@@ -74,8 +74,8 @@ function FeaturedStories() {
             <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent transition-opacity group-hover:from-black/90" />
 
             {/* Text Content */}
-            <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
-              <p className="text-sm font-bold text-white sm:text-base lg:text-lg">
+            <div className="absolute inset-x-0 bottom-0 p-3 sm:p-5">
+              <p className="text-xs sm:text-sm font-bold text-white lg:text-base leading-tight">
                 {story.title}
               </p>
             </div>
