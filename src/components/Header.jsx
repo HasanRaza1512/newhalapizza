@@ -52,26 +52,26 @@ function Header() {
           : 'bg-white border-b border-gray-50 sm:border-transparent'
           }`}
       >
-        <div className="mx-auto flex h-[72px] sm:h-18 items-center justify-between px-4 max-w-6xl sm:px-6 lg:px-8">
+        <div className="mx-auto flex h-[92px] px-5 py-4 sm:h-18 items-center justify-between sm:px-6 lg:px-8 max-w-6xl">
           {/* Logo & Info */}
           <div className="flex items-center gap-2 sm:gap-8 lg:gap-12">
-            <div className="flex items-center gap-2 sm:gap-3">
-              <a href="/" className="flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-xl bg-orange-500 text-xl sm:text-2xl font-black text-white shadow-lg shadow-orange-500/20 transition-transform hover:scale-110">
+            <div className="flex items-center gap-3 sm:gap-3">
+              <a href="/" className="flex h-12 w-12 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-xl sm:rounded-xl bg-orange-500 text-2xl sm:text-2xl font-black text-white shadow-lg shadow-orange-500/20 transition-transform hover:scale-110">
                 <span className="leading-none">H</span>
               </a>
-              <div className="flex flex-col justify-center">
-                <a href="/" className="text-[16px] sm:text-xl font-black tracking-tighter text-gray-900 leading-tight uppercase min-[400px]:block">
+              <div className="flex flex-col justify-center gap-0.5 sm:gap-0">
+                <a href="/" className="text-[24px] sm:text-xl font-extrabold tracking-tight text-gray-900 leading-none uppercase min-[400px]:block">
                   Hala<span className="text-orange-500">Pizza</span>
                 </a>
                 
                 {/* Mobile Location Button */}
                 <button 
                   onClick={openDeliveryPopup}
-                  className="flex sm:hidden items-center text-left transition-all mt-0.5 cursor-pointer active:opacity-70"
+                  className="flex sm:hidden items-center text-left transition-all cursor-pointer active:opacity-70"
                 >
-                  <span className="text-[13px] font-medium text-gray-600 truncate flex items-center gap-1">
+                  <span className="text-[16px] text-gray-500 truncate flex items-center gap-1">
                     {fulfillment ? (fulfillment.address?.split(',')[0] || 'Delivery') : 'Select location'}
-                    <span className="text-[9px] text-orange-500">▼</span>
+                    <span className="text-[10px] text-orange-500">▼</span>
                   </span>
                 </button>
               </div>
@@ -101,7 +101,7 @@ function Header() {
             {/* Mobile Hamburger Menu */}
             <button 
               onClick={() => setIsMenuOpen(true)}
-              className="flex h-10 w-10 items-center justify-center text-gray-900 sm:hidden active:scale-95"
+              className="flex h-10 w-10 rounded-xl bg-gray-50 items-center justify-center text-gray-900 sm:hidden active:scale-95 transition-colors hover:bg-gray-100"
             >
               <FiMenu className="h-6 w-6" />
             </button>

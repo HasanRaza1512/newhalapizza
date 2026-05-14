@@ -53,7 +53,7 @@ function FeaturedStories() {
   const [selectedStory, setSelectedStory] = useState(null)
 
   return (
-    <section className="py-2 sm:py-2">
+    <section className="py-2 sm:py-2 hidden sm:block">
       <div className="no-scrollbar flex scroll-smooth snap-x gap-2 overflow-x-auto px-4 sm:grid sm:grid-cols-2 sm:gap-4 md:grid-cols-6 sm:px-0 sm:snap-none pb-1">
         {stories.map((story) => (
           <motion.button

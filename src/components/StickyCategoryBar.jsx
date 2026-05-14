@@ -24,17 +24,17 @@ function StickyCategoryBar({ categories, activeCategory, onCategoryClick }) {
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
 
         {/* Navigation Links - Responsive */}
-        <nav ref={navRef} className="flex flex-1 items-center gap-2 overflow-x-auto whitespace-nowrap scrollbar-hide scroll-smooth sm:gap-3">
+        <nav ref={navRef} className="flex flex-1 items-center gap-4 overflow-x-auto whitespace-nowrap scrollbar-hide scroll-smooth px-5 py-4 sm:gap-3 sm:px-0 sm:py-0">
           {categories.map((category) => (
             <button
               key={category}
               type="button"
               data-active={activeCategory === category}
               onClick={() => onCategoryClick(category)}
-              className={`shrink-0 rounded-full px-5 py-2 text-[17px] font-medium transition-all duration-200 ${
+              className={`shrink-0 rounded-full h-[56px] px-8 text-[20px] sm:h-auto sm:px-5 sm:py-2 sm:text-[17px] font-medium transition-all duration-200 ${
                 activeCategory === category
-                  ? 'bg-orange-100 text-orange-600'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  ? 'bg-orange-50 text-orange-500 sm:bg-orange-100 sm:text-orange-600'
+                  : 'bg-gray-100 text-gray-500 sm:text-gray-600 hover:bg-gray-200'
               }`}
             >
               {category}
