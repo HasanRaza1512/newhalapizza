@@ -25,12 +25,22 @@
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
+
   .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
 
-  h1, h2, h3, h4, h5, h6, button, nav, header, .font-headings {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  button,
+  nav,
+  header,
+  .font-headings {
     font-family: 'Outfit', sans-serif;
   }
 
@@ -51,6 +61,7 @@
   button:active {
     transform: scale(0.96);
   }
+
   textarea,
   select {
     font: inherit;
@@ -86,6 +97,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {

@@ -21,6 +21,36 @@ function MobileBottomNav() {
         const isActive = location.pathname === tab.path
         const Icon = tab.icon
 
+        const content = (
+          <>
+            <div className="relative mt-1">
+              <Icon className={`w-6 h-6 ${(isActive && tab.name !== 'Cart') || (tab.name === 'Cart' && useCartStore.getState().isCartOpen) ? 'stroke-[2.5px]' : 'stroke-2'}`} />
+              {tab.badge > 0 && (
+                <span className="absolute -top-1.5 -right-2 flex h-[15px] w-[15px] items-center justify-center rounded-full bg-orange-500 text-[9px] font-bold text-white ring-2 ring-white">
+                  {tab.badge}
+                </span>
+              )}
+            </div>
+            <span className={`text-[12px] ${(isActive && tab.name !== 'Cart') || (tab.name === 'Cart' && useCartStore.getState().isCartOpen) ? 'font-bold' : 'font-medium'}`}>
+              {tab.name}
+            </span>
+          </>
+        )
+
+        if (tab.name === 'Cart') {
+          return (
+            <button
+              key={tab.name}
+              onClick={() => useCartStore.getState().openCart()}
+              className={`flex flex-col items-center justify-center w-full h-full gap-1 transition-colors ${
+                useCartStore.getState().isCartOpen ? 'text-orange-500' : 'text-gray-400 hover:text-gray-600'
+              }`}
+            >
+              {content}
+            </button>
+          )
+        }
+
         return (
           <Link
             key={tab.name}
@@ -29,17 +59,7 @@ function MobileBottomNav() {
               isActive ? 'text-orange-500' : 'text-gray-400 hover:text-gray-600'
             }`}
           >
-            <div className="relative mt-1">
-              <Icon className={`w-6 h-6 ${isActive ? 'stroke-[2.5px]' : 'stroke-2'}`} />
-              {tab.badge > 0 && (
-                <span className="absolute -top-1.5 -right-2 flex h-[15px] w-[15px] items-center justify-center rounded-full bg-orange-500 text-[9px] font-bold text-white ring-2 ring-white">
-                  {tab.badge}
-                </span>
-              )}
-            </div>
-            <span className={`text-[12px] ${isActive ? 'font-bold' : 'font-medium'}`}>
-              {tab.name}
-            </span>
+            {content}
           </Link>
         )
       })}

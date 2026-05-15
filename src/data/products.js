@@ -39,7 +39,7 @@ export const heroSlides = [
 export const products = [
   {
     id: 0,
-    name: 'Hala Special Pizza',
+    name: 'Hala Special ',
     category: 'Pizza',
     price: 19.99,
     description: 'Our signature pizza with a secret blend of spices, premium toppings, and extra cheesy goodness.',
@@ -48,7 +48,7 @@ export const products = [
   },
   {
     id: 1,
-    name: 'Margherita Pizza',
+    name: 'Margherita ',
     category: 'Pizza',
     price: 12.99,
     description: 'Classic Italian pizza with fresh mozzarella, ripe tomatoes, and fragrant basil on a golden crust.',

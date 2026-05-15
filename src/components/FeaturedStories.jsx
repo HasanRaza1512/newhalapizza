@@ -53,15 +53,15 @@ function FeaturedStories() {
   const [selectedStory, setSelectedStory] = useState(null)
 
   return (
-    <section className="py-2 sm:py-2 hidden sm:block">
-      <div className="no-scrollbar flex scroll-smooth snap-x gap-2 overflow-x-auto px-4 sm:grid sm:grid-cols-2 sm:gap-4 md:grid-cols-6 sm:px-0 sm:snap-none pb-1">
+    <section className="py-2 sm:py-2 block">
+      <div className="no-scrollbar flex scroll-smooth snap-x gap-3 overflow-x-auto px-4 sm:grid sm:grid-cols-2 sm:gap-4 md:grid-cols-6 sm:px-0 sm:snap-none pb-1">
         {stories.map((story) => (
           <motion.button
             key={story.id}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => setSelectedStory(story)}
-            className="group relative h-[145px] w-[115px] shrink-0 snap-start overflow-hidden rounded-3xl bg-gray-50 text-left shadow-lg transition-all hover:shadow-2xl hover:shadow-orange-500/5 focus:outline-none focus:ring-2 focus:ring-orange-500 sm:h-auto sm:w-full sm:aspect-4/5 sm:shrink sm:rounded-4xl"
+            className="group relative h-[120px] w-[92px] shrink-0 snap-start overflow-hidden rounded-[20px] bg-gray-50 text-left shadow-md transition-all hover:shadow-2xl hover:shadow-orange-500/5 focus:outline-none focus:ring-2 focus:ring-orange-500 sm:h-auto sm:w-full sm:aspect-4/5 sm:shrink sm:rounded-4xl"
           >
             {/* Background Image */}
             <img

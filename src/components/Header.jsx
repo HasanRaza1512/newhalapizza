@@ -67,7 +67,7 @@ function Header() {
                 {/* Mobile Location Button */}
                 <button 
                   onClick={openDeliveryPopup}
-                  className="flex sm:hidden items-center text-left transition-all cursor-pointer active:opacity-70"
+                  className="flex md:hidden items-center text-left transition-all cursor-pointer active:opacity-70"
                 >
                   <span className="text-[14px] text-gray-500 truncate flex items-center gap-1 font-medium">
                     {fulfillment ? (fulfillment.address?.split(',')[0] || 'Delivery') : 'Select location'}
@@ -80,48 +80,48 @@ function Header() {
             {/* Desktop Location Button */}
             <button 
               onClick={openDeliveryPopup}
-              className="hidden sm:flex flex-col text-left group transition-all max-w-30 sm:max-w-none"
+              className="hidden md:flex flex-col text-left group transition-all max-w-30 md:max-w-none"
             >
-              <span className="text-[10px] sm:text-sm font-black text-gray-900 uppercase tracking-tight group-hover:text-orange-500 transition-colors truncate">
+              <span className="text-[10px] md:text-sm font-black text-gray-900 uppercase tracking-tight group-hover:text-orange-500 transition-colors truncate">
                 {fulfillment ? (
-                  <span className="flex items-center gap-1 sm:gap-1.5">
+                  <span className="flex items-center gap-1 md:gap-1.5">
                     {fulfillment.type === 'delivery' ? <FiTruck className="h-3 w-3 text-orange-500 shrink-0" /> : <FiShoppingBag className="h-3 w-3 text-orange-500 shrink-0" />}
                     <span className="truncate">{fulfillment.type === 'delivery' ? (fulfillment.address?.split(',')[0] || 'Delivery') : 'Pickup'}</span>
                   </span>
                 ) : 'Location'}
               </span>
-              <span className="text-[9px] sm:text-[11px] font-bold text-gray-400 group-hover:text-gray-600 transition-colors truncate">
+              <span className="text-[9px] md:text-[11px] font-bold text-gray-400 group-hover:text-gray-600 transition-colors truncate">
                 {fulfillment ? fulfillment.phone : 'Set location'} <span className="text-orange-500">★</span>
               </span>
             </button>
           </div>
 
           {/* Right Actions */}
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex items-center gap-3 sm:gap-3">
             {/* Mobile Hamburger Menu */}
             <button 
               onClick={() => setIsMenuOpen(true)}
-              className="flex h-9 w-9 rounded-xl bg-gray-50 items-center justify-center text-gray-800 sm:hidden active:scale-95 transition-colors hover:bg-gray-100"
+              className="flex h-10 w-10 rounded-xl bg-gray-50 items-center justify-center text-gray-800 md:hidden active:scale-95 transition-colors hover:bg-gray-100"
             >
-              <FiMenu className="h-5 w-5" />
+              <FiMenu className="h-6 w-6" />
             </button>
 
-            <button className="hidden sm:flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-gray-50 text-gray-600 transition-all hover:bg-gray-100 hover:text-gray-900 active:scale-90">
-              <FiUser className="h-4 w-4 sm:h-5 sm:w-5" />
+            <button className="hidden md:flex h-9 w-9 md:h-10 md:w-10 items-center justify-center rounded-full bg-gray-50 text-gray-600 transition-all hover:bg-gray-100 hover:text-gray-900 active:scale-90">
+              <FiUser className="h-4 w-4 md:h-5 md:w-5" />
             </button>
 
             <button
               id="header-cart-btn"
               onClick={openCart}
-              className="hidden sm:flex relative h-9 sm:h-10 items-center gap-1.5 sm:gap-2 rounded-full bg-orange-500 px-3 sm:px-4 font-black text-white shadow-lg shadow-orange-500/20 transition-all hover:bg-orange-600 hover:shadow-orange-500/30 active:scale-95"
+              className="hidden md:flex relative h-9 md:h-10 items-center gap-1.5 md:gap-2 rounded-full bg-orange-500 px-3 md:px-4 font-black text-white shadow-lg shadow-orange-500/20 transition-all hover:bg-orange-600 hover:shadow-orange-500/30 active:scale-95"
             >
-              <FiShoppingBag className="h-4 w-4 sm:h-5 sm:w-5" />
+              <FiShoppingBag className="h-4 w-4 md:h-5 md:w-5" />
               {cartCount > 0 && (
-                <span className="text-xs sm:text-sm">{cartCount}</span>
+                <span className="text-xs md:text-sm">{cartCount}</span>
               )}
             </button>
 
-            <a href="#" className="hidden rounded-full bg-gray-900 px-6 py-2 text-sm font-black text-white uppercase tracking-wider transition-all hover:bg-black active:scale-95 sm:block">
+            <a href="#" className="hidden rounded-full bg-gray-900 px-6 py-2 text-sm font-black text-white uppercase tracking-wider transition-all hover:bg-black active:scale-95 md:block">
               Login
             </a>
           </div>

@@ -25,7 +25,7 @@ const ProductCardMobile = ({
 
         {/* Product Info */}
         <div className="flex-1 min-w-0">
-          <h3 className="text-[20px] font-bold text-gray-900 mb-1 leading-tight sm:text-2xl sm:leading-none">
+          <h3 className="text-[18px] font-bold text-gray-900 mb-1 leading-tight sm:text-2xl sm:leading-none">
             {title}
           </h3>
           

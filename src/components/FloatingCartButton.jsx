@@ -35,7 +35,7 @@ function FloatingCartButton() {
           whileTap={{ scale: 0.95 }}
           transition={{ type: 'spring', stiffness: 400, damping: 25 }}
           onClick={openCart}
-          className="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 z-40 flex items-center gap-4 rounded-2xl bg-orange-500 px-6 py-4 text-white shadow-2xl shadow-orange-500/30 hover:bg-orange-600 focus:outline-none focus:ring-4 focus:ring-orange-500/20 cursor-pointer transition-all active:scale-95"
+          className="hidden sm:flex fixed bottom-6 right-6 sm:bottom-8 sm:right-8 z-40 items-center gap-4 rounded-2xl bg-orange-500 px-6 py-4 text-white shadow-2xl shadow-orange-500/30 hover:bg-orange-600 focus:outline-none focus:ring-4 focus:ring-orange-500/20 cursor-pointer transition-all active:scale-95"
           aria-label="View cart"
         >
           <div className="relative flex items-center justify-center">
