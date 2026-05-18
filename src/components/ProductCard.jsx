@@ -1,9 +1,7 @@
 import { motion } from 'framer-motion'
-import { FiPlus } from 'react-icons/fi'
-
 import { useState } from 'react'
 
-function ProductCard({ image, title, price, description, isNew, onAddToCart, onClick }) {
+function ProductCard({ image, title, price, description, isNew, oldPrice, isDeal, onAddToCart, onClick }) {
   const [isAdded, setIsAdded] = useState(false)
 
   const handleQuickAdd = (e) => {
@@ -12,6 +10,8 @@ function ProductCard({ image, title, price, description, isNew, onAddToCart, onC
     setIsAdded(true)
     setTimeout(() => setIsAdded(false), 2000)
   }
+
+  const badge = isDeal ? 'Deal' : isNew ? 'New' : null
 
   return (
     <article
@@ -35,9 +35,9 @@ function ProductCard({ image, title, price, description, isNew, onAddToCart, onC
       <div className="flex flex-col items-center mt-4 sm:mt-6 w-full px-2 sm:px-4 space-y-2 sm:space-y-3">
         {/* Title & Badge */}
         <div className="flex flex-col items-center gap-1 min-h-10 sm:min-h-12 justify-center">
-          {isNew && (
-            <span className="inline-flex items-center rounded-full bg-orange-500 px-2 py-0.5 text-[8px] sm:text-[9px] font-bold text-white uppercase tracking-wider mb-1">
-              New
+          {badge && (
+            <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[8px] sm:text-[9px] font-bold text-white uppercase tracking-wider mb-1 ${isDeal ? 'bg-red-500' : 'bg-orange-500'}`}>
+              {badge}
             </span>
           )}
           <h3 className="text-base sm:text-lg font-semibold text-gray-900 transition-colors group-hover:text-orange-500 line-clamp-1">
@@ -51,7 +51,12 @@ function ProductCard({ image, title, price, description, isNew, onAddToCart, onC
         </p>
 
         {/* Price Pill */}
-        <div className="pt-1 sm:pt-2">
+        <div className="pt-1 sm:pt-2 flex flex-col items-center gap-1">
+          {oldPrice && (
+            <span className="text-[10px] sm:text-xs text-gray-400 line-through font-medium">
+              PKR {oldPrice.toLocaleString()}
+            </span>
+          )}
           <button
             type="button"
             onClick={handleQuickAdd}
@@ -60,7 +65,7 @@ function ProductCard({ image, title, price, description, isNew, onAddToCart, onC
                 : 'bg-orange-100 text-orange-600 shadow-orange-200/50 hover:bg-orange-500 hover:text-white hover:shadow-lg hover:shadow-orange-500/20'
               }`}
           >
-            {isAdded ? 'Added!' : `PKR ${price.toFixed(0)}`}
+            {isAdded ? 'Added!' : `PKR ${price.toLocaleString()}`}
           </button>
         </div>
       </div>

@@ -1,5 +1,5 @@
 export const categories = [
-  'Offers',
+  'Deals',
   'Pizza',
   'Pasta',
   'Snacks',
@@ -177,7 +177,7 @@ export const products = [
   {
     id: 15,
     name: 'Weekend BOGO Combo',
-    category: 'Offers',
+    category: 'Deals',
     price: 18.99,
     description: 'Buy one get one free on any medium pizza. Available weekends only!',
     image:
@@ -186,7 +186,7 @@ export const products = [
   {
     id: 16,
     name: 'Family Feast Bundle',
-    category: 'Offers',
+    category: 'Deals',
     price: 24.99,
     description: 'Two large pizzas, garlic bread, chicken wings, and a 2L drink. Feeds the whole family.',
     image:

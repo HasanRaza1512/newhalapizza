@@ -7,6 +7,7 @@ import { sizeOptions, simpleSizeOptions, drinkSizeOptions, toppingOptions } from
 import PizzaCustomizer from './PizzaCustomizer'
 import SimpleCustomizer from './SimpleCustomizer'
 import DrinkCustomizer from './DrinkCustomizer'
+import DealCustomizer from './DealCustomizer'
 
 /* ───────────────── framer motion variants ───────────────────── */
 
@@ -65,6 +66,7 @@ function ProductModalContent({ product, onClose, onAddToCart }) {
   useEffect(() => {
     if (category === 'pizza') setSelectedSize(sizeOptions[1].label)
     else if (category === 'drinks') setSelectedSize(drinkSizeOptions[0].label)
+    else if (category === 'deals') setSelectedSize('')
     else setSelectedSize(simpleSizeOptions[0].label)
 
     setQuantity(1)
@@ -83,10 +85,12 @@ function ProductModalContent({ product, onClose, onAddToCart }) {
     if (!product) return 0
     let total = product.price
 
-    if (category === 'pizza') {
+    if (category === 'deals') {
+      // Deal price is fixed — no size multiplier
+      return product.price * quantity
+    } else if (category === 'pizza') {
       const sizeOpt = sizeOptions.find(s => s.label === selectedSize) || sizeOptions[1]
       total = product.price * sizeOpt.multiplier + toppingsTotal
-      // Note: Crust price could be added here if needed, but keeping it simple for now
     } else if (category === 'drinks') {
       const sizeOpt = drinkSizeOptions.find(s => s.label === selectedSize) || drinkSizeOptions[0]
       total = product.price + sizeOpt.extraPrice
@@ -221,14 +225,35 @@ function ProductModalContent({ product, onClose, onAddToCart }) {
                   {product.description}
                 </p>
 
-                <div className="inline-flex items-center gap-3 sm:gap-4 bg-orange-50/50 border border-orange-100 rounded-xl sm:rounded-2xl px-4 py-2 sm:px-6 sm:py-3">
-                  <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-orange-400">Base Price</span>
-                  <span className="text-xl sm:text-2xl font-black text-orange-600">PKR {product.price.toFixed(2)}</span>
-                </div>
+                {category === 'deals' && product.oldPrice ? (
+                  <div className="flex flex-wrap items-center gap-3">
+                    <div className="inline-flex items-center gap-3 sm:gap-4 bg-orange-50/50 border border-orange-100 rounded-xl sm:rounded-2xl px-4 py-2 sm:px-6 sm:py-3">
+                      <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-orange-400">Deal Price</span>
+                      <div className="flex items-baseline gap-2">
+                        <span className="text-sm font-bold text-gray-400 line-through">PKR {product.oldPrice.toLocaleString()}</span>
+                        <span className="text-xl sm:text-2xl font-black text-orange-600">PKR {product.price.toLocaleString()}</span>
+                      </div>
+                    </div>
+                    <span className="inline-flex items-center rounded-full bg-red-500 px-3 py-1 text-xs font-black text-white">
+                      Save PKR {(product.oldPrice - product.price).toLocaleString()}
+                    </span>
+                  </div>
+                ) : (
+                  <div className="inline-flex items-center gap-3 sm:gap-4 bg-orange-50/50 border border-orange-100 rounded-xl sm:rounded-2xl px-4 py-2 sm:px-6 sm:py-3">
+                    <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-orange-400">Base Price</span>
+                    <span className="text-xl sm:text-2xl font-black text-orange-600">PKR {product.price.toFixed(2)}</span>
+                  </div>
+                )}
               </motion.div>
 
               {/* Conditional Customizer Rendering */}
-              {category === 'pizza' ? (
+              {category === 'deals' ? (
+                <DealCustomizer
+                  items={product.items || []}
+                  quantity={quantity}
+                  setQuantity={setQuantity}
+                />
+              ) : category === 'pizza' ? (
                 <PizzaCustomizer
                   selectedSize={selectedSize}
                   setSelectedSize={setSelectedSize}

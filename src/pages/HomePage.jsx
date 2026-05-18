@@ -5,7 +5,9 @@ import ProductModal from '../components/ProductModal'
 import StickyCategoryBar from '../components/StickyCategoryBar'
 import FeaturedStories from '../components/FeaturedStories'
 import ProductSkeleton from '../components/ProductSkeleton'
+import DealsSection from '../components/DealsSection'
 import { categories } from '../data/products'
+import { deals } from '../data/deals'
 import { useCartStore } from '../store'
 import { useProductStore } from '../store/useProductStore'
 
@@ -105,71 +107,88 @@ function HomePage() {
                 {category}
               </h3>
               <span className="text-sm font-bold text-gray-400">
-                {productsByCategory[category].length} items
+                {category === 'Deals'
+                  ? `${deals.length} deals`
+                  : `${productsByCategory[category].length} items`}
               </span>
             </div>
 
-            {/* Desktop Layout */}
-            <div className="hidden md:grid grid-cols-1 gap-x-16 gap-y-20 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {isLoading ? (
-                Array.from({ length: 4 }).map((_, i) => <ProductSkeleton key={i} />)
-              ) : productsByCategory[category].length > 0 ? (
-                productsByCategory[category].map((product) => (
-                  <ProductCard
-                    key={product.id}
-                    image={product.image}
-                    title={product.name}
-                    description={product.description}
-                    price={product.price}
-                    isNew={product.isNew}
-                    onAddToCart={(event) => {
-                      addItem(product)
-                      if (event) {
-                        addFlyingImage(product.image, event.clientX, event.clientY)
-                      }
-                    }}
-                    onClick={() => setSelectedProduct(product)}
-                  />
-                ))
-              ) : (
-                <div className="col-span-full rounded-3xl border-2 border-dashed border-gray-100 py-16 text-center">
-                  <p className="text-sm font-black uppercase tracking-widest text-gray-300">
-                    No items found in this category
-                  </p>
+            {/* Deals category — render DealsSection cards */}
+            {category === 'Deals' ? (
+              <div className="px-4 sm:px-0">
+                <DealsSection
+                  onDealClick={(deal) => setSelectedProduct(deal)}
+                  onAddToCart={(deal, event) => {
+                    addItem(deal)
+                    if (event) addFlyingImage(deal.image, event.clientX, event.clientY)
+                  }}
+                />
+              </div>
+            ) : (
+              <>
+                {/* Desktop Layout */}
+                <div className="hidden md:grid grid-cols-1 gap-x-16 gap-y-20 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                  {isLoading ? (
+                    Array.from({ length: 4 }).map((_, i) => <ProductSkeleton key={i} />)
+                  ) : productsByCategory[category].length > 0 ? (
+                    productsByCategory[category].map((product) => (
+                      <ProductCard
+                        key={product.id}
+                        image={product.image}
+                        title={product.name}
+                        description={product.description}
+                        price={product.price}
+                        isNew={product.isNew}
+                        onAddToCart={(event) => {
+                          addItem(product)
+                          if (event) {
+                            addFlyingImage(product.image, event.clientX, event.clientY)
+                          }
+                        }}
+                        onClick={() => setSelectedProduct(product)}
+                      />
+                    ))
+                  ) : (
+                    <div className="col-span-full rounded-3xl border-2 border-dashed border-gray-100 py-16 text-center">
+                      <p className="text-sm font-black uppercase tracking-widest text-gray-300">
+                        No items found in this category
+                      </p>
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
 
-            {/* Mobile Layout */}
-            <div className="md:hidden">
-              {isLoading ? (
-                Array.from({ length: 4 }).map((_, i) => <ProductSkeleton key={i} />)
-              ) : productsByCategory[category].length > 0 ? (
-                productsByCategory[category].map((product) => (
-                  <ProductCardMobile
-                    key={product.id}
-                    image={product.image}
-                    title={product.name}
-                    description={product.description}
-                    price={product.price}
-                    isNew={product.isNew}
-                    onAddToCart={(event) => {
-                      addItem(product)
-                      if (event) {
-                        addFlyingImage(product.image, event.clientX, event.clientY)
-                      }
-                    }}
-                    onClick={() => setSelectedProduct(product)}
-                  />
-                ))
-              ) : (
-                <div className="py-8 text-center">
-                  <p className="text-sm text-gray-500">
-                    No items found in this category
-                  </p>
+                {/* Mobile Layout */}
+                <div className="md:hidden">
+                  {isLoading ? (
+                    Array.from({ length: 4 }).map((_, i) => <ProductSkeleton key={i} />)
+                  ) : productsByCategory[category].length > 0 ? (
+                    productsByCategory[category].map((product) => (
+                      <ProductCardMobile
+                        key={product.id}
+                        image={product.image}
+                        title={product.name}
+                        description={product.description}
+                        price={product.price}
+                        isNew={product.isNew}
+                        onAddToCart={(event) => {
+                          addItem(product)
+                          if (event) {
+                            addFlyingImage(product.image, event.clientX, event.clientY)
+                          }
+                        }}
+                        onClick={() => setSelectedProduct(product)}
+                      />
+                    ))
+                  ) : (
+                    <div className="py-8 text-center">
+                      <p className="text-sm text-gray-500">
+                        No items found in this category
+                      </p>
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
+              </>
+            )}
           </section>
         ))}
       </section>

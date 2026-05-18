@@ -3,10 +3,14 @@ const ProductCardMobile = ({
   title, 
   description, 
   price, 
-  isNew = false, 
+  isNew = false,
+  oldPrice,
+  isDeal = false,
   onAddToCart, 
   onClick 
 }) => {
+  const badge = isDeal ? 'Deal' : isNew ? 'New' : null
+
   return (
     <>
       <div 
@@ -25,6 +29,13 @@ const ProductCardMobile = ({
 
         {/* Product Info */}
         <div className="flex-1 min-w-0">
+          {/* Badge */}
+          {badge && (
+            <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[8px] font-bold text-white uppercase tracking-wider mb-1 ${isDeal ? 'bg-red-500' : 'bg-orange-500'}`}>
+              {badge}
+            </span>
+          )}
+
           <h3 className="text-[18px] font-bold text-gray-900 mb-1 leading-tight sm:text-2xl sm:leading-none">
             {title}
           </h3>
@@ -33,15 +44,22 @@ const ProductCardMobile = ({
             {description}
           </p>
 
-          <button
-            className="inline-flex items-center bg-orange-50 text-orange-500 rounded-full px-4 py-1.5 text-[16px] font-semibold hover:bg-orange-100 transition-colors duration-200 sm:text-base sm:px-5 sm:py-2"
-            onClick={(e) => {
-              e.stopPropagation()
-              onAddToCart?.(e)
-            }}
-          >
-            PKR {price}
-          </button>
+          <div className="flex items-center gap-2">
+            {oldPrice && (
+              <span className="text-xs text-gray-400 line-through font-medium">
+                PKR {oldPrice.toLocaleString()}
+              </span>
+            )}
+            <button
+              className="inline-flex items-center bg-orange-50 text-orange-500 rounded-full px-4 py-1.5 text-[16px] font-semibold hover:bg-orange-100 transition-colors duration-200 sm:text-base sm:px-5 sm:py-2"
+              onClick={(e) => {
+                e.stopPropagation()
+                onAddToCart?.(e)
+              }}
+            >
+              PKR {typeof price === 'number' ? price.toLocaleString() : price}
+            </button>
+          </div>
         </div>
       </div>
 
